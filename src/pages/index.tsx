@@ -1,9 +1,10 @@
 import type { NextPage } from 'next';
+import { Home as HomeComponent } from 'pages-components/Home';
 
 const Home: NextPage = () => {
   console.log('home page');
 
-  return <h1>home</h1>;
+  return <HomeComponent />;
 };
 
 export default Home;

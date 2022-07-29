@@ -2,6 +2,7 @@ const theme = {
   light: {
     title: 'light',
     colors: {
+      white: '#FFF',
       blue: {
         100: '#EBF2FF',
         200: '#D6E4FF',
@@ -60,6 +61,7 @@ const theme = {
   dark: {
     title: 'dark',
     colors: {
+      white: '#000',
       blue: {
         100: '#001029',
         200: '#001F52',

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { ThemeProvider } from 'styled-components';
@@ -8,6 +8,7 @@ import { ThemeProvider as CustomThemeProvider } from 'contexts/ThemeContext';
 import GlobalStyle from 'styles/global';
 
 import theme from 'styles/theme';
+import { PageLayout } from 'layouts/PageLayout';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -26,15 +27,17 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   });
 
-  useEffect(() => {
-    setColorMode('dark');
-  }, []);
-
   return (
     <CustomThemeProvider colorMode={colorMode} setColorMode={setColorMode}>
       <ThemeProvider theme={theme[colorMode]}>
-        {router.asPath !== '/login' && <SideBar />}
-        <Component {...pageProps} />
+        {router.asPath !== '/login' ? (
+          <PageLayout>
+            <SideBar />
+            <Component {...pageProps} />
+          </PageLayout>
+        ) : (
+          <Component {...pageProps} />
+        )}
         <GlobalStyle />
       </ThemeProvider>
     </CustomThemeProvider>

@@ -1,31 +1,34 @@
-import { useTheme } from 'hooks/useTheme';
-import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
-import { Overlay, Container } from './styles';
+import { useState } from 'react';
+import { FaAngleRight } from 'react-icons/fa';
+import { motion, useAnimation } from 'framer-motion';
+import { Container, CloseBtn } from './styles';
+
+import sideBarVariants from '../../framer-motion-variants/sideBar';
 
 export const SideBar = () => {
-  const [mounted, setMounted] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
 
-  useTheme();
+  const controls = useAnimation();
 
-  useEffect(() => {
-    setMounted(true);
+  async function handleToggleSidebarVisibility() {
+    if (isVisible) {
+      // await controls.start({ x: 'calc(-100%)', opacity: 0 });
+      // controls.start({ display: 'none' });
+      controls.start({ position: 'absolute', left: 'calc(-280px)' });
+      setIsVisible(false);
+    } else {
+      controls.start({ left: 0, position: 'relative' });
 
-    return () => setMounted(false);
-  }, []);
+      setIsVisible(true);
+    }
+  }
 
-  // I need to know if the component was mounted to get the document object
-  // Next.js has the node server to create page, and this is server side
-  // And document only exists in browser
-
-  return mounted
-    ? createPortal(
-        <Overlay>
-          <Container>
-            <p>Side bar</p>
-          </Container>
-        </Overlay>,
-        document?.getElementById('modal-root') as any
-      )
-    : null;
+  return (
+    <Container as={motion.div} variants={sideBarVariants} animate={controls}>
+      <CloseBtn onClick={handleToggleSidebarVisibility}>
+        <FaAngleRight />
+      </CloseBtn>
+      <p>Side bar</p>
+    </Container>
+  );
 };

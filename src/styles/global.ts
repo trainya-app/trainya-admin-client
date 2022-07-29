@@ -7,8 +7,6 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  /* body {} */
-
   html {
     font-size: 62.5%;
   }
@@ -18,6 +16,20 @@ const GlobalStyle = createGlobalStyle`
     width: 100vw;
     max-width: 100vw;
     overflow-x: hidden;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  body, input, textarea, select, button {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
   }
 
   button {

@@ -116,4 +116,8 @@ export const MenuBtn = styled.button<{ isActive?: boolean }>`
   span {
     font-weight: 700;
   }
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.blue[400]};
+  }
 `;

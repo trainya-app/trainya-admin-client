@@ -17,10 +17,12 @@ const GlobalStyle = createGlobalStyle`
     max-width: 100vw;
     overflow-x: hidden;
     font-family: 'Open Sans', sans-serif;
+    color: ${({ theme }) => theme.colors.blue[900]};
   }
 
   body, input, textarea, select, button {
     font-family: 'Open Sans', sans-serif;
+    font-size: 1.6rem;
   }
 
   ul {

@@ -90,29 +90,30 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     gap: ${({ theme }) => theme.gap.l};
-
-    button {
-      display: flex;
-      align-items: center;
-      gap: ${({ theme }) => theme.gap.sm};
-      color: ${({ theme }) => theme.colors.gray[500]};
-      cursor: pointer;
-      background: none;
-      border: 0;
-
-      .icon {
-        font-size: 2rem;
-      }
-
-      span {
-        font-weight: 700;
-      }
-    }
   }
 
   hr {
     margin-right: 1.6rem;
     background: ${({ theme }) => theme.colors.gray[200]};
     border-color: ${({ theme }) => theme.colors.gray[100]};
+  }
+`;
+
+export const MenuBtn = styled.button<{ isActive?: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.gap.sm};
+  color: ${({ theme, isActive }) =>
+    isActive ? theme.colors.blue[500] : theme.colors.gray[500]};
+  cursor: pointer;
+  background: none;
+  border: 0;
+
+  .icon {
+    font-size: 2rem;
+  }
+
+  span {
+    font-weight: 700;
   }
 `;

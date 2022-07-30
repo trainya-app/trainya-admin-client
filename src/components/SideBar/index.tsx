@@ -3,7 +3,7 @@ import { FaAngleRight } from 'react-icons/fa';
 import { motion, useAnimation } from 'framer-motion';
 import { Logo } from 'components/Logo';
 import { useRouter } from 'next/router';
-import { Container, CloseBtn, Content } from './styles';
+import { Container, CloseBtn, Content, MenuBtn } from './styles';
 
 import { firstGroup, secondGroup, thirdGroup } from './data';
 
@@ -40,27 +40,29 @@ export const SideBar = () => {
       <Content>
         <ul className="menu-group">
           {firstGroup.map(({ _id, icon: Icon, text, path }) => (
-            <button
+            <MenuBtn
               type="button"
               key={_id}
               onClick={() => handleNavigateTo(path as string)}
+              isActive={router.asPath === path}
             >
               <Icon className="icon" />
               <span>{text}</span>
-            </button>
+            </MenuBtn>
           ))}
         </ul>
 
         <ul className="menu-group">
           {secondGroup.map(({ _id, icon: Icon, text, path }) => (
-            <button
+            <MenuBtn
               type="button"
               key={_id}
               onClick={() => handleNavigateTo(path as string)}
+              isActive={router.asPath === path}
             >
               <Icon className="icon" />
               <span>{text}</span>
-            </button>
+            </MenuBtn>
           ))}
         </ul>
 
@@ -68,14 +70,15 @@ export const SideBar = () => {
 
         <ul className="menu-group">
           {thirdGroup.map(({ _id, icon: Icon, text, path }) => (
-            <button
+            <MenuBtn
               type="button"
               key={_id}
               onClick={() => handleNavigateTo(path as string)}
+              isActive={router.asPath === path}
             >
               <Icon className="icon" />
               <span>{text}</span>
-            </button>
+            </MenuBtn>
           ))}
         </ul>
       </Content>

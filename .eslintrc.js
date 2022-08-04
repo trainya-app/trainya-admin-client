@@ -10,6 +10,7 @@ module.exports = {
     'prettier',
     'next',
     'plugin:jest/recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -35,5 +36,7 @@ module.exports = {
     'class-methods-use-this': 'off',
     'no-underscore-dangle': 'off',
     'import/no-extraneous-dependencies': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
+    'no-unused-vars': 'off',
   },
 };

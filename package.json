@@ -41,7 +41,9 @@
     "eslint-plugin-react-hooks": "^4.5.0",
     "jest": "^28.1.2",
     "jest-environment-jsdom": "^28.1.2",
+    "jest-styled-components": "^7.0.8",
     "prettier": "^2.6.2",
+    "ts-jest": "^28.0.7",
     "typescript": "4.7.2"
   },
   "config": {

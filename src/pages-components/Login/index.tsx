@@ -7,6 +7,7 @@ export const Login = () => {
 
   return (
     <Container>
+      oioi
       <div className="image-box">
         <Image src={LoginBg} layout="fill" objectFit="cover" alt="" />
       </div>

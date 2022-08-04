@@ -23,6 +23,15 @@
     "baseUrl": "src",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/**/*.dt.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/**/*.dt.ts",
+    "tsconfig.jest.json",
+    "jest.setup.js",
+    "src/__tests__/components/SideBar.spec.jsx",
+    "jest.config.js"
+  ],
   "exclude": ["node_modules"]
 }

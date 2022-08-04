@@ -1,8 +1,10 @@
-import { useCallback, useState } from 'react';
+// import { useCallback, useState } from 'react';
+import { useState } from 'react';
+
 import { FaAngleRight } from 'react-icons/fa';
 import { motion, useAnimation } from 'framer-motion';
-import { Logo } from 'components/Logo';
 import { useRouter } from 'next/router';
+import { Logo } from '../Logo';
 import { Container, CloseBtn, Content, MenuBtn } from './styles';
 
 import { firstGroup, secondGroup, thirdGroup } from './data';
@@ -24,15 +26,19 @@ export const SideBar = () => {
     }
   }
 
-  const handleNavigateTo = useCallback(
-    (path: string) => {
-      router.push(path);
-    },
-    [router]
-  );
+  // const handleNavigateTo = useCallback(
+  //   (path: string) => {
+  //     router.push(path);
+  //   },
+  //   [router]
+  // );
+
+  const handleNavigateTo = (path: string) => {
+    router.push(path);
+  };
 
   return (
-    <Container as={motion.div} animate={controls}>
+    <Container as={motion.div} animate={controls} data-testid="sidebar">
       <CloseBtn onClick={handleToggleSidebarVisibility}>
         <FaAngleRight />
       </CloseBtn>
@@ -44,7 +50,7 @@ export const SideBar = () => {
               type="button"
               key={_id}
               onClick={() => handleNavigateTo(path as string)}
-              isActive={router.asPath === path}
+              isActive={router?.asPath === path}
             >
               <Icon className="icon" />
               <span>{text}</span>
@@ -58,7 +64,7 @@ export const SideBar = () => {
               type="button"
               key={_id}
               onClick={() => handleNavigateTo(path as string)}
-              isActive={router.asPath === path}
+              isActive={router?.asPath === path}
             >
               <Icon className="icon" />
               <span>{text}</span>
@@ -74,7 +80,7 @@ export const SideBar = () => {
               type="button"
               key={_id}
               onClick={() => handleNavigateTo(path as string)}
-              isActive={router.asPath === path}
+              isActive={router?.asPath === path}
             >
               <Icon className="icon" />
               <span>{text}</span>

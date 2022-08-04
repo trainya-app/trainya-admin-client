@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '../../test-utils';
 import '@testing-library/jest-dom';
-import { SideBar } from '../../components/SideBar';
+import { SideBar } from '.';
 import 'jest-styled-components';
 
 describe('<SideBar />', () => {

@@ -5,6 +5,7 @@ import { FaSort } from 'react-icons/fa';
 
 import { Header } from './Header';
 import { Container, NavButtons } from './styles';
+import { EmployeesTable } from './EmployeesTable';
 
 // const filterList = [
 //   'Filtrar',
@@ -54,7 +55,7 @@ export const Employees = () => {
           btnIcon={FaSort}
         />
       </NavButtons>
-      <p>Employees</p>
+      <EmployeesTable />
     </Container>
   );
 };

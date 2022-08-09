@@ -56,6 +56,17 @@ const EMPLOYEES_ARR = [
     payment_date: '2022-08-02T22:37:15.143-03:00',
   },
   {
+    id: 235,
+    profile_img: 'https://github.com/bryanmaraujo544.png',
+    name: 'Bryan',
+    roll: {
+      title: 'Instrutor',
+    },
+    phone: 11990002676,
+    wage: 2235000,
+    payment_date: '2022-08-02T22:37:15.143-03:00',
+  },
+  {
     id: 24,
     profile_img: 'https://github.com/diego3.png',
     name: 'Fernado martins',
@@ -74,10 +85,11 @@ export const Employees = () => {
   const [allEmployees, setAllEmployees] = useState<Employee[]>(
     [] as Employee[]
   );
+
   const [isSortSelectOpen, setIsSortSelectOpen] = useState(false);
   const [sortColumnSelected, setSortColumnSelected] = useState(0);
-
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+  const [searchContent, setSearchContent] = useState('');
 
   useEffect(() => {
     setAllEmployees(EMPLOYEES_ARR);
@@ -85,20 +97,31 @@ export const Employees = () => {
 
   const sort = sortList[sortColumnSelected];
 
+  const employeesSearched = useMemo(
+    () =>
+      allEmployees.filter((employee) =>
+        Object.values(employee)
+          .join('')
+          .toLowerCase()
+          .includes(searchContent.toLowerCase())
+      ),
+    [searchContent, allEmployees]
+  );
+
   const employeesSorted = useMemo(
     () =>
-      allEmployees.sort((a: any, b: any) => {
+      employeesSearched.sort((a: any, b: any) => {
         if (a[sort.prop] > b[sort.prop]) {
           return sortDirection === 'asc' ? 1 : -1;
         }
         return sortDirection === 'asc' ? -1 : 1;
       }),
-    [allEmployees, sortColumnSelected, sortDirection]
+    [allEmployees, sortColumnSelected, sortDirection, employeesSearched]
   );
 
   return (
     <Container>
-      <Header />
+      <Header search={searchContent} setSearch={setSearchContent} />
       <NavButtons>
         <Select
           options={sortList}

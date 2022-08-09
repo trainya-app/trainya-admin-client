@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { Container, Option } from './styles';
 
 interface SelectProps {
-  options: any[];
+  options: { text: string; prop: string }[];
   btnIcon?: any;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -47,7 +47,7 @@ export const Select = ({
         aria-haspopup="listbox"
         onClick={() => setIsOpen(true)}
       >
-        {options[selectedOption]}
+        {options[selectedOption].text}
         {BtnIcon && <BtnIcon className="icon" />}
       </button>
       <ul
@@ -61,7 +61,7 @@ export const Select = ({
       >
         {options.map((option, index) => (
           <Option
-            key={option}
+            key={option.prop}
             onKeyDown={handleKeyDown(index)}
             onClick={() => {
               setSelectedOption(index);
@@ -70,9 +70,9 @@ export const Select = ({
             role="listbox"
             className="dropdown-option"
             tabIndex={0}
-            isActive={index + 1 === selectedOption}
+            isActive={index === selectedOption}
           >
-            {option}
+            {option.text}
           </Option>
         ))}
       </ul>

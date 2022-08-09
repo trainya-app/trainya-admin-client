@@ -14,12 +14,8 @@ export const Button = ({
   onClick,
   variant = 'primary',
   ...rest
-}: ButtonProps) => {
-  console.log('Button');
-
-  return (
-    <Container onClick={onClick} variant={variant} {...rest}>
-      {isLoading ? <span>loading</span> : children}
-    </Container>
-  );
-};
+}: ButtonProps) => (
+  <Container onClick={onClick} variant={variant} {...rest}>
+    {isLoading ? <span>loading</span> : children}
+  </Container>
+);

@@ -13,8 +13,13 @@ export const Container = styled.div`
     th {
       text-align: left;
       padding: 1rem 2rem;
-
       color: ${({ theme }) => theme.colors.gray[700]};
+
+      div {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
     }
 
     tr {
@@ -53,5 +58,16 @@ export const Container = styled.div`
       border-radius: 0.4rem;
       overflow: hidden;
     }
+  }
+`;
+
+export const ArrowIcon = styled.div<{
+  dir: 'asc' | 'desc';
+}>`
+  cursor: pointer;
+
+  .icon {
+    transform: ${({ dir }) =>
+      dir === 'asc' ? 'rotate(0deg)' : 'rotate(180deg)'};
   }
 `;

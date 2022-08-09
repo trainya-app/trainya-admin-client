@@ -1,57 +1,77 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import Image from 'next/image';
-import { Container } from './styles';
+import { Dispatch, SetStateAction, useCallback } from 'react';
+import { FaArrowUp } from 'react-icons/fa';
+import { Container, ArrowIcon } from './styles';
 
-export const EmployeesTable = () => {
-  console.log('EmployeesTable');
+export interface Employee {
+  id: number;
+  name: string;
+  profile_img: string;
+  wage: number;
+  phone: number;
+  payment_date: string;
+  roll: {
+    title: string;
+  };
+}
+
+interface Props {
+  sortColumn: { text: string; prop: string };
+  sortDirection: 'asc' | 'desc';
+  setSortDirection: Dispatch<SetStateAction<'asc' | 'desc'>>;
+  employees: Employee[];
+}
+
+const columns = ['', 'Nome', 'Cargo', 'Telefone', 'Salário', 'Data de Pag.'];
+
+export const EmployeesTable = ({
+  sortColumn,
+  setSortDirection,
+  sortDirection,
+  employees,
+}: Props) => {
+  const handleToggleSortDir = useCallback(() => {
+    setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+  }, []);
 
   return (
     <Container>
       <table>
         <thead>
           <tr>
-            <th />
-            <th>Nome</th>
-            <th>Cargo</th>
-            <th>Telefone</th>
-            <th>Salário</th>
-            <th>Data de Pag.</th>
+            {columns.map((column) => (
+              <th key={column}>
+                <div>
+                  {column}
+                  {sortColumn.text === column && (
+                    <ArrowIcon
+                      dir={sortDirection}
+                      onClick={() => handleToggleSortDir()}
+                    >
+                      <FaArrowUp className="icon" />
+                    </ArrowIcon>
+                  )}
+                </div>
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          <tr onClick={() => console.log('tr clicked')}>
-            <td style={{ width: 0 }}>
-              <div className="image">
-                <Image
-                  src="https://github.com/bryanmaraujo544.png"
-                  alt=""
-                  layout="fill"
-                />
-              </div>
-            </td>
-            <td>Bryan</td>
-            <td>Instrutor</td>
-            <td>(11) 990002676</td>
-            <td>2.000</td>
-            <td>13 Fev.</td>
-          </tr>
-          <tr>
-            <td>
-              <div className="image">
-                <Image
-                  src="https://github.com/bryanmaraujo544.png"
-                  alt=""
-                  layout="fill"
-                />
-              </div>
-            </td>
-
-            <td>Bryan</td>
-            <td>Instrutor</td>
-            <td>(11) 990002676</td>
-            <td>2.000</td>
-            <td>13 Fev.</td>
-          </tr>
+          {employees.map((employee) => (
+            <tr key={`employeelistitem-${employee.id}`}>
+              <td style={{ width: 0 }}>
+                <div className="image">
+                  <Image src={employee.profile_img} alt="" layout="fill" />
+                </div>
+              </td>
+              <td>{employee.name}</td>
+              <td>{employee.roll.title}</td>
+              <td>{employee.phone}</td>
+              <td>{employee.wage}</td>
+              <td>{employee.payment_date}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </Container>

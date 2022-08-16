@@ -10,6 +10,8 @@ import GlobalStyle from 'styles/global';
 import theme from 'styles/theme';
 import { PageLayout } from 'layouts/PageLayout';
 
+import '../styles/index.css';
+
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 

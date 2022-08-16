@@ -31,7 +31,8 @@
     "tsconfig.jest.json",
     "jest.setup.js",
     "src/__tests__/components/SideBar.spec.jsx",
-    "jest.config.js"
+    "jest.config.js",
+    "postcss.config.js"
   ],
   "exclude": ["node_modules"]
 }

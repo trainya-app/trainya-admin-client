@@ -4,8 +4,8 @@ export const WorkoutsPlans = () => {
   console.log('WorkoutsPlans');
 
   return (
-    <Container>
-      <p>WorkoutsPlans</p>
-    </Container>
+    <div>
+      <p className="text-4xl">WorkoutsPlans</p>
+    </div>
   );
 };

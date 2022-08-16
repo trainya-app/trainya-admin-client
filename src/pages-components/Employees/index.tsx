@@ -3,9 +3,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { Select } from 'components/Select';
 import { FaSort } from 'react-icons/fa';
 
-import { Header } from './Header';
+import { Header } from './components/Header';
 import { Container, NavButtons } from './styles';
-import { Employee, EmployeesTable } from './EmployeesTable';
+import { Employee, EmployeesTable } from './components/EmployeesTable';
+import { CreateEmployeeModal } from './components/CreateEmployeeModal';
 
 // const filterList = [
 //   'Filtrar',
@@ -120,24 +121,27 @@ export const Employees = () => {
   );
 
   return (
-    <Container>
-      <Header search={searchContent} setSearch={setSearchContent} />
-      <NavButtons>
-        <Select
-          options={sortList}
-          setIsOpen={setIsSortSelectOpen}
-          isOpen={isSortSelectOpen}
-          selectedOption={sortColumnSelected}
-          setSelectedOption={setSortColumnSelected}
-          btnIcon={FaSort}
+    <>
+      <Container>
+        <Header search={searchContent} setSearch={setSearchContent} />
+        <NavButtons>
+          <Select
+            options={sortList}
+            setIsOpen={setIsSortSelectOpen}
+            isOpen={isSortSelectOpen}
+            selectedOption={sortColumnSelected}
+            setSelectedOption={setSortColumnSelected}
+            btnIcon={FaSort}
+          />
+        </NavButtons>
+        <EmployeesTable
+          sortColumn={sort}
+          sortDirection={sortDirection}
+          setSortDirection={setSortDirection}
+          employees={employeesSorted}
         />
-      </NavButtons>
-      <EmployeesTable
-        sortColumn={sort}
-        sortDirection={sortDirection}
-        setSortDirection={setSortDirection}
-        employees={employeesSorted}
-      />
-    </Container>
+      </Container>
+      <CreateEmployeeModal />
+    </>
   );
 };

@@ -4,7 +4,7 @@ import { Container } from './styles';
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: any;
   isLoading?: boolean;
-  onClick: any;
+  onClick?: any;
   variant?: 'primary' | 'outlined';
 }
 

@@ -8,7 +8,7 @@ export const PageLayout = styled.div`
   height: 100%;
   background: ${({ theme }) => theme.colors.blue[100]};
 
-  div + div {
+  /* div + div {
     flex: 1;
-  }
+  } */
 `;

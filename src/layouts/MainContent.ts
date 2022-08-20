@@ -5,4 +5,6 @@ export const MainContent = styled.div`
   min-height: 100vh;
   width: 100%;
   padding: 2.4rem;
+  /* flex: 0; */
+  /* background-color: red; */
 `;

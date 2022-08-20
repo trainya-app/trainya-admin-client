@@ -34,7 +34,7 @@ export const Container = styled.button<ContainerProps>`
   &:hover {
     background: ${({ theme, variant }) => theme.colors.blue[600]};
     color: ${({ variant, theme }) =>
-      variant === 'white' ? theme.colors.white : ''};
+      variant === 'white' || variant === 'outlined' ? theme.colors.white : ''};
   }
 
   &:active {

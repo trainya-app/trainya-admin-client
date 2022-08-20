@@ -10,10 +10,14 @@ const containerVariants = {
     border: 2px solid ${({ theme }) => theme.colors.blue[500]};
     color: ${({ theme }) => theme.colors.blue[500]};
   `,
+  white: css`
+    background: #fff;
+    color: ${({ theme }) => theme.colors.blue[500]};
+  `,
 };
 
 interface ContainerProps {
-  variant: 'primary' | 'outlined';
+  variant: 'primary' | 'outlined' | 'white';
 }
 
 export const Container = styled.button<ContainerProps>`
@@ -28,7 +32,9 @@ export const Container = styled.button<ContainerProps>`
   ${({ variant }) => containerVariants[variant] || containerVariants.primary};
 
   &:hover {
-    background: ${({ theme }) => theme.colors.blue[600]};
+    background: ${({ theme, variant }) => theme.colors.blue[600]};
+    color: ${({ variant, theme }) =>
+      variant === 'white' ? theme.colors.white : ''};
   }
 
   &:active {

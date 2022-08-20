@@ -11,9 +11,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import 'swiper/css/effect-cube';
 import { Button } from 'components/Button';
-
-// import { Swiper, SwiperSlide } from ''
 
 const FAKE_WORKOUTS = [
   {
@@ -71,6 +70,7 @@ export const WorkoutsPlans = () => {
           navigation
           pagination={{ clickable: true }}
           loop
+          style={{ borderRadius: '2rem' }}
         >
           {FAKE_WORKOUTS.map((workout) => (
             <SwiperSlide key={workout.id}>

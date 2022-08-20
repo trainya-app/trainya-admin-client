@@ -42,6 +42,18 @@ const GlobalStyle = createGlobalStyle`
     filter: brightness(0.7);
     cursor: not-allowed;
   }
+
+  .swiper-button-prev {
+    &::after {
+      font-size: 3.2rem !important;
+    }
+  }
+
+  .swiper-button-next {
+    &::after {
+      font-size: 3.2rem !important;
+    }
+  }
 `;
 
 export default GlobalStyle;

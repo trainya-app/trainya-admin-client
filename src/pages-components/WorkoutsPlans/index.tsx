@@ -5,6 +5,7 @@ import { Navigation, Pagination, Thumbs } from 'swiper';
 
 import { MainContent } from 'layouts/MainContent';
 import { SubTitle } from 'pages-components/Employees/components/SubTitle';
+import { Button } from 'components/Button';
 
 // eslint-disable-next-line import/no-unresolved
 import 'swiper/css';
@@ -12,7 +13,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/effect-cube';
-import { Button } from 'components/Button';
+import { useRouter } from 'next/router';
 
 const FAKE_WORKOUTS = [
   {
@@ -47,12 +48,18 @@ const FAKE_WORKOUTS = [
 
 export const WorkoutsPlans = () => {
   console.log('WorkoutsPlans');
+  const router = useRouter();
+
+  function handleGoToCreatePage() {
+    router.push('/workoutsPlans/create');
+  }
 
   return (
     <MainContent className="overflow-hidden">
       <button
         type="button"
         className="bg-blue-500 rounded-2xl h-[42px] gap-4 px-8 font-bold text-white flex items-center justify-center"
+        onClick={handleGoToCreatePage}
       >
         Criar plano de Treino
         <MdLibraryAdd />
@@ -79,7 +86,7 @@ export const WorkoutsPlans = () => {
                   backgroundImage:
                     "url('https://i.pinimg.com/564x/b8/ea/06/b8ea0615898a93c0fd3907a07bbda69c.jpg')",
                 }}
-                className="relative flex flex-col justify-center items-center gap-6 h-64 p-4 rounded-[2rem]  text-white"
+                className="relative flex flex-col justify-center items-center gap-6 h-64 p-4 rounded-[2rem]  text-white "
               >
                 <span className="text-white font-bold text-3xl">
                   Foco em fortalecimento

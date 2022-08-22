@@ -77,15 +77,17 @@ export const CreateWorkoutsPlans = () => {
       </div>
 
       <section className="grid grid-cols-[1fr_2fr] mt-16 gap-8">
-        <div>
-          <h3>Treinos</h3>
-          <div className="w-full bg-white rounded-3xl p-6">f</div>
+        <div className="flex flex-col h-full">
+          <h3 className="font-bold text-gray-600 text-3xl">Treinos</h3>
+          <div className="w-full flex-1 bg-white rounded-3xl mt-6 p-6">f</div>
         </div>
 
         {/* Suggestions */}
         <div>
-          <h3>Sugestões de Treinos</h3>
-          <div className="w-full bg-white rounded-3xl p-6">
+          <h3 className="font-bold text-gray-600 text-3xl">
+            Sugestões de Treinos
+          </h3>
+          <div className="w-full bg-white rounded-3xl mt-6 p-6">
             <header className="flex items-center justify-between w-full">
               <input
                 placeholder="Pesquisar por um treino"
@@ -93,29 +95,31 @@ export const CreateWorkoutsPlans = () => {
               />
             </header>
             {/* Workouts Grid */}
-            <div className="grid grid-cols-2 gap-4 mt-10 max-h-[50rem] overflow-y-scroll">
+            <div className="grid grid-cols-2 gap-6 mt-10 max-h-[50rem] overflow-y-scroll">
               {FAKE_WORKOUTS.map((workout) => (
                 <div
                   key={workout.id}
-                  className="flex flex-col items-center gap-4 bg-blue-100 p-4 rounded-[1.6rem]"
+                  className="flex flex-col items-center gap-4 bg-blue-100 p-6 rounded-[1.6rem] bg-center"
                   style={{
                     backgroundImage:
                       "url('https://i.pinimg.com/564x/b8/ea/06/b8ea0615898a93c0fd3907a07bbda69c.jpg')",
                   }}
                 >
-                  <span className="font-bold text-white">{workout.title}</span>
-                  <div className="flex gap-3">
-                    <div className="bg-blue-50 text-blue-500 font-bold py-1 px-6 rounded-xl">
+                  <span className="font-bold text-white text-3xl">
+                    {workout.title}
+                  </span>
+                  <div className="flex w-full gap-3">
+                    <div className="bg-blue-50 text-blue-500 font-bold text-center py-2 px-6 flex-1 rounded-2xl">
                       Sets: {workout.sets}
                     </div>
-                    <div className="bg-blue-50 text-blue-500 font-bold py-1 px-6 rounded-xl">
+                    <div className="bg-blue-50 text-blue-500 font-bold text-center py-2 px-6 flex-1 rounded-2xl">
                       Reps: {workout.reps}
                     </div>
                   </div>
                   <Button
                     type="button"
                     variant="outlined"
-                    className="w-full max-w-[150px] h-[3.2rem] mt-4"
+                    className="w-full h-[3.6rem] mt-4"
                   >
                     Adicionar
                   </Button>

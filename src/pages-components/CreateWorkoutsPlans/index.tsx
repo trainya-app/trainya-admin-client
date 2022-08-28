@@ -9,9 +9,11 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { useCallback, useState } from 'react';
+import { useCallback, useReducer, useState } from 'react';
+import { SelectedWorkouts } from './components/SelectedWorkouts';
+import { selectedWorkoutsReducer } from './reducers/selectedWorkoutsReducer';
 
-interface IWorkout {
+export interface IWorkout {
   id: number;
   title: string;
   sets: number;
@@ -78,7 +80,11 @@ export const CreateWorkoutsPlans = () => {
       reps: number;
     }[]
   >([]);
-  const [selectedWorkouts, setSelectedWorkouts] = useState<IWorkout[]>([]);
+  // const [selectedWorkouts, setSelectedWorkouts] = useState<IWorkout[]>([]);
+  const [selectedWorkouts, selectedWorkoutsDispatch] = useReducer(
+    selectedWorkoutsReducer,
+    { value: [] }
+  );
 
   const handleSeeMoreSuggestionWorkouts = useCallback(() => {
     try {
@@ -88,11 +94,7 @@ export const CreateWorkoutsPlans = () => {
   }, []);
 
   const handleSelectWorkout = useCallback((workout: IWorkout) => {
-    setSelectedWorkouts((prev) => [...prev, workout]);
-  }, []);
-
-  const handleRemoveSelectedWorkout = useCallback((workout: IWorkout) => {
-    setSelectedWorkouts((prev) => prev.filter((el) => el.id !== workout.id));
+    selectedWorkoutsDispatch({ type: 'ADD-WORKOUT', payload: workout });
   }, []);
 
   return (
@@ -126,53 +128,10 @@ export const CreateWorkoutsPlans = () => {
       </div>
 
       <section className="grid grid-cols-[1fr_2fr] mt-16 gap-8">
-        <div className="flex flex-col">
-          <h3 className="font-bold text-gray-600 text-3xl">Treinos</h3>
-          <div className="w-full flex flex-col gap-6 flex-1 bg-white rounded-3xl mt-6 p-6 overflow-y-scroll">
-            {selectedWorkouts.map((workout) => (
-              <div
-                key={workout.id}
-                className="relative flex flex-col items-center gap-4 bg-blue-100 p-6 rounded-[1.6rem] bg-center overflow-hidden"
-                style={{
-                  backgroundImage:
-                    "url('https://i.pinimg.com/564x/b8/ea/06/b8ea0615898a93c0fd3907a07bbda69c.jpg')",
-                }}
-              >
-                <div className="absolute w-full h-full left-0 top-0 bg-[#00000050]" />
-                {/* <div className='absolute w-full h-full top-0 '/> */}
-                <span className="font-bold text-white text-3xl z-10">
-                  {workout.title}
-                </span>
-                <div className="flex w-full gap-3">
-                  <div className="bg-blue-50 text-blue-500 font-bold text-center py-2 px-6 flex-1 rounded-2xl z-10">
-                    Sets: {workout.sets}
-                  </div>
-                  <div className="bg-blue-50 text-blue-500 font-bold text-center py-2 px-6 flex-1 rounded-2xl z-10">
-                    Reps: {workout.reps}
-                  </div>
-                </div>
-                <footer className="flex gap-2 w-full mt-4 z-10">
-                  <Button
-                    type="button"
-                    onClick={() => handleRemoveSelectedWorkout(workout)}
-                    variant="danger"
-                    className="w-full h-[3.6rem] flex-1"
-                  >
-                    Remover
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="white"
-                    className="bg-white flex-1 h-[3.6rem] rounded-2xl"
-                  >
-                    Editar
-                  </Button>
-                </footer>
-              </div>
-            ))}
-          </div>
-        </div>
-
+        <SelectedWorkouts
+          selectedWorkouts={selectedWorkouts.value}
+          selectedWorkoutsDispatch={selectedWorkoutsDispatch}
+        />
         {/* Suggestions */}
         <div>
           <h3 className="font-bold text-gray-600 text-3xl">

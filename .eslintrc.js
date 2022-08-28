@@ -38,5 +38,6 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
     'no-unused-vars': 'off',
+    'no-empty': ['error', { allowEmptyCatch: true }],
   },
 };

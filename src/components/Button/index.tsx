@@ -5,7 +5,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: any;
   isLoading?: boolean;
   onClick?: any;
-  variant?: 'primary' | 'outlined' | 'white';
+  variant?: 'primary' | 'outlined' | 'white' | 'danger';
 }
 
 export const Button = ({

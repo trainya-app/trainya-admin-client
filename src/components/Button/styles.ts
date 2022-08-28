@@ -9,15 +9,31 @@ const containerVariants = {
     background: transparent;
     border: 2px solid ${({ theme }) => theme.colors.blue[500]};
     color: ${({ theme }) => theme.colors.blue[500]};
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.blue[600]};
+    }
   `,
   white: css`
     background: #fff;
     color: ${({ theme }) => theme.colors.blue[500]};
+    &:hover {
+      background: ${({ theme }) => theme.colors.blue[500]};
+      color: ${({ theme }) => theme.colors.blue[100]};
+    }
+  `,
+  danger: css`
+    background: ${({ theme }) => theme.colors.red.bg};
+    color: ${({ theme }) => theme.colors.red.main};
+    &:hover {
+      background: ${({ theme }) => theme.colors.red.main};
+      color: ${({ theme }) => theme.colors.red.bg};
+    }
   `,
 };
 
 interface ContainerProps {
-  variant: 'primary' | 'outlined' | 'white';
+  variant: 'primary' | 'outlined' | 'white' | 'danger';
 }
 
 export const Container = styled.button<ContainerProps>`
@@ -32,7 +48,6 @@ export const Container = styled.button<ContainerProps>`
   ${({ variant }) => containerVariants[variant] || containerVariants.primary};
 
   &:hover {
-    background: ${({ theme, variant }) => theme.colors.blue[600]};
     color: ${({ variant, theme }) =>
       variant === 'white' || variant === 'outlined' ? theme.colors.white : ''};
   }

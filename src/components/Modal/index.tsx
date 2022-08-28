@@ -19,7 +19,7 @@ const overlayVariants = (delay?: number) => ({
   hidden: {
     transition: {
       when: 'afterChildren',
-      duration: 0.1,
+      duration: 0.01,
     },
     opacity: 0,
     display: 'none',
@@ -28,7 +28,7 @@ const overlayVariants = (delay?: number) => ({
     transition: {
       delay: delay || 0,
       when: 'beforeChildren',
-      duration: 0.1,
+      duration: 0.01,
     },
     opacity: 1,
     display: 'flex',

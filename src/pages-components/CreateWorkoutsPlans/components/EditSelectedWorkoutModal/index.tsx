@@ -2,6 +2,7 @@ import { Button } from 'components/Button';
 import { Input } from 'components/Input';
 import { Modal } from 'components/Modal';
 import { IWorkout } from 'pages-components/CreateWorkoutsPlans';
+import { useSelectedWorkouts } from 'pages-components/CreateWorkoutsPlans/hooks/useSelectedWorkouts';
 import { SetStateAction, Dispatch, useState, useEffect } from 'react';
 
 interface Props {
@@ -20,8 +21,9 @@ export const EditSelectedWorkout = ({
   const [sets, setSets] = useState(0);
   const [reps, setReps] = useState(0);
 
+  const { selectedWorkoutsDispatch } = useSelectedWorkouts();
+
   useEffect(() => {
-    // console.log({ workout });
     setSets(workout.sets);
     setReps(workout.reps);
   }, [workout, isOpen]);
@@ -31,7 +33,12 @@ export const EditSelectedWorkout = ({
   }
 
   function handleUpdateWorkout() {
-    console.log({ sets, reps });
+    const updatedWorkout = { ...workout, sets, reps };
+    selectedWorkoutsDispatch({
+      type: 'UPDATE-WORKOUT',
+      payload: updatedWorkout,
+    });
+    handleCloseModal();
   }
 
   return (

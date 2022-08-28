@@ -12,6 +12,7 @@ import 'swiper/css/scrollbar';
 import { useCallback, useReducer, useState } from 'react';
 import { SelectedWorkouts } from './components/SelectedWorkouts';
 import { selectedWorkoutsReducer } from './reducers/selectedWorkoutsReducer';
+import { useSelectedWorkouts } from './hooks/useSelectedWorkouts';
 
 export interface IWorkout {
   id: number;
@@ -80,11 +81,9 @@ export const CreateWorkoutsPlans = () => {
       reps: number;
     }[]
   >([]);
+
+  const { selectedWorkouts, selectedWorkoutsDispatch } = useSelectedWorkouts();
   // const [selectedWorkouts, setSelectedWorkouts] = useState<IWorkout[]>([]);
-  const [selectedWorkouts, selectedWorkoutsDispatch] = useReducer(
-    selectedWorkoutsReducer,
-    { value: [] }
-  );
 
   const handleSeeMoreSuggestionWorkouts = useCallback(() => {
     try {
@@ -129,7 +128,7 @@ export const CreateWorkoutsPlans = () => {
 
       <section className="grid grid-cols-[1fr_2fr] mt-16 gap-8">
         <SelectedWorkouts
-          selectedWorkouts={selectedWorkouts.value}
+          selectedWorkouts={selectedWorkouts}
           selectedWorkoutsDispatch={selectedWorkoutsDispatch}
         />
         {/* Suggestions */}

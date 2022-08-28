@@ -1,7 +1,7 @@
 import { IWorkout } from '..';
 
 export interface SelectedWorkoutsAction {
-  type: 'ADD-WORKOUT' | 'REMOVE-WORKOUT';
+  type: 'ADD-WORKOUT' | 'REMOVE-WORKOUT' | 'UPDATE-WORKOUT';
   payload: any;
 }
 
@@ -28,6 +28,17 @@ export const selectedWorkoutsReducer = (
       const { payload } = action;
       const filteredState = state.value.filter((el) => el.id !== payload.id);
       return { value: filteredState };
+    }
+    case 'UPDATE-WORKOUT': {
+      const { payload } = action;
+      const mappedState = state.value.map((el) => {
+        if (el.id === payload.id) {
+          return payload;
+        }
+        return el;
+      });
+
+      return { value: mappedState };
     }
     default:
       throw new Error('The type informed is invalid');

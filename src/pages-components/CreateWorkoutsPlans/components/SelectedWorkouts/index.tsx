@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { Button } from 'components/Button';
 import { IWorkout } from 'pages-components/CreateWorkoutsPlans';
 import { SelectedWorkoutsAction } from 'pages-components/CreateWorkoutsPlans/reducers/selectedWorkoutsReducer';
-import { EditSelectedWorkout } from './EditSelectedWorkoutModal';
+import { EditSelectedWorkout } from '../EditSelectedWorkoutModal';
 
 interface Props {
   selectedWorkouts: IWorkout[];

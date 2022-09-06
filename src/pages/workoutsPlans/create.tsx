@@ -1,14 +1,14 @@
 import type { NextPage } from 'next';
 import { CreateWorkoutsPlans as CreateWorkoutsPlansComponent } from 'pages-components/CreateWorkoutsPlans';
-import { SelectedWorkoutsProvider } from 'pages-components/CreateWorkoutsPlans/contexts/selectedWorkoutsContext';
+import { SelectedExercisesProvider } from 'pages-components/CreateWorkoutsPlans/contexts/selectedExercisesContext';
 
 const CreateWorkoutsPlans: NextPage = () => {
   console.log('home page');
 
   return (
-    <SelectedWorkoutsProvider>
+    <SelectedExercisesProvider>
       <CreateWorkoutsPlansComponent />
-    </SelectedWorkoutsProvider>
+    </SelectedExercisesProvider>
   );
 };
 

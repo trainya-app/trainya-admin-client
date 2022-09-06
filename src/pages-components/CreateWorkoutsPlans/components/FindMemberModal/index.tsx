@@ -30,8 +30,8 @@ const MOCK_MEMBERS = [
   },
   {
     id: 2,
-    name: 'Bryan Martins',
-    profileImage: 'https://github.com/bryanmaraujo544.png',
+    name: 'Gordão da XRE 191',
+    profileImage: 'https://github.com/gordo.png',
     document: {
       name: 'RG',
       value: '544709834',

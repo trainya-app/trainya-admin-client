@@ -1,9 +1,9 @@
 import { Button } from 'components/Button';
-import { IWorkout } from 'pages-components/CreateWorkoutsPlans';
-import { useSelectedWorkouts } from 'pages-components/CreateWorkoutsPlans/hooks/useSelectedWorkouts';
+import { IExercise } from 'pages-components/CreateWorkoutsPlans';
+import { useSelectedExercises } from 'pages-components/CreateWorkoutsPlans/hooks/useSelectedExercises';
 import { useCallback, useState } from 'react';
 
-const FAKE_WORKOUTS: IWorkout[] = [
+const FAKE_WORKOUTS: IExercise[] = [
   {
     id: 23,
     title: 'Supino Reto',
@@ -64,7 +64,7 @@ export const SuggestionsWorkouts = () => {
       reps: number;
     }[]
   >([]);
-  const { selectedWorkoutsDispatch } = useSelectedWorkouts();
+  const { selectedExercisesDispatch } = useSelectedExercises();
 
   const handleSeeMoreSuggestionWorkouts = useCallback(() => {
     try {
@@ -73,8 +73,8 @@ export const SuggestionsWorkouts = () => {
     } catch (err: any) {}
   }, []);
 
-  const handleSelectWorkout = useCallback((workout: IWorkout) => {
-    selectedWorkoutsDispatch({ type: 'ADD-WORKOUT', payload: workout });
+  const handleSelectWorkout = useCallback((workout: IExercise) => {
+    selectedExercisesDispatch({ type: 'ADD-WORKOUT', payload: workout });
   }, []);
 
   const filteredSuggestionWorkouts = suggestionsWorkouts.filter(

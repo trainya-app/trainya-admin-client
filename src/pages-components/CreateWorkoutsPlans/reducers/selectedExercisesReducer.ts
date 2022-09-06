@@ -1,17 +1,17 @@
-import { IWorkout } from '..';
+import { IExercise } from '..';
 
-export interface SelectedWorkoutsAction {
+export interface SelectedExercisesAction {
   type: 'ADD-WORKOUT' | 'REMOVE-WORKOUT' | 'UPDATE-WORKOUT';
   payload: any;
 }
 
-interface SelectedWorkoutsState {
-  value: IWorkout[];
+interface SelectedExercisesState {
+  value: IExercise[];
 }
 
-export const selectedWorkoutsReducer = (
-  state: SelectedWorkoutsState,
-  action: SelectedWorkoutsAction
+export const selectedExercisesReducer = (
+  state: SelectedExercisesState,
+  action: SelectedExercisesAction
 ) => {
   switch (action.type) {
     case 'ADD-WORKOUT': {

@@ -1,40 +1,40 @@
 import { Button } from 'components/Button';
 import { Input } from 'components/Input';
 import { Modal } from 'components/Modal';
-import { IWorkout } from 'pages-components/CreateWorkoutsPlans';
-import { useSelectedWorkouts } from 'pages-components/CreateWorkoutsPlans/hooks/useSelectedWorkouts';
+import { IExercise } from 'pages-components/CreateWorkoutsPlans';
+import { useSelectedExercises } from 'pages-components/CreateWorkoutsPlans/hooks/useSelectedExercises';
 import { SetStateAction, Dispatch, useState, useEffect } from 'react';
 
 interface Props {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   title?: string;
-  workout: IWorkout;
+  exercise: IExercise;
 }
 
 export const EditSelectedWorkout = ({
   isOpen,
   setIsOpen,
   title,
-  workout,
+  exercise,
 }: Props) => {
   const [sets, setSets] = useState(0);
   const [reps, setReps] = useState(0);
 
-  const { selectedWorkoutsDispatch } = useSelectedWorkouts();
+  const { selectedExercisesDispatch } = useSelectedExercises();
 
   useEffect(() => {
-    setSets(workout.sets);
-    setReps(workout.reps);
-  }, [workout, isOpen]);
+    setSets(exercise.sets);
+    setReps(exercise.reps);
+  }, [exercise, isOpen]);
 
   function handleCloseModal() {
     setIsOpen(false);
   }
 
   function handleUpdateWorkout() {
-    const updatedWorkout = { ...workout, sets, reps };
-    selectedWorkoutsDispatch({
+    const updatedWorkout = { ...exercise, sets, reps };
+    selectedExercisesDispatch({
       type: 'UPDATE-WORKOUT',
       payload: updatedWorkout,
     });

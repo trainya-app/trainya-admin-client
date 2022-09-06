@@ -11,12 +11,12 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import { ReactNode, useState } from 'react';
-import { SelectedWorkouts } from './components/SelectedWorkouts';
-import { useSelectedWorkouts } from './hooks/useSelectedWorkouts';
+import { SelectedExercises } from './components/SelectedExercises';
+import { useSelectedExercises } from './hooks/useSelectedExercises';
 import { SuggestionsWorkouts } from './components/SuggestionsWorkouts';
 import { FindMemberModal } from './components/FindMemberModal';
 
-export interface IWorkout {
+export interface IExercise {
   id: number;
   title: string;
   sets: number;
@@ -34,12 +34,11 @@ export interface IMember {
 }
 
 export const CreateWorkoutsPlans = () => {
-  const { selectedWorkouts, selectedWorkoutsDispatch } = useSelectedWorkouts();
+  const { selectedExercises, selectedExercisesDispatch } =
+    useSelectedExercises();
 
   const [selectedMember, setSelectedMember] = useState<IMember>({} as IMember);
   const [isFindMemberModalOpen, setIsFindMemberModalOpen] = useState(false);
-
-  console.log(selectedMember);
 
   function handleOpenFindMemberModal() {
     setIsFindMemberModalOpen(true);
@@ -62,12 +61,15 @@ export const CreateWorkoutsPlans = () => {
 
         <div className="flex justify-between mt-12">
           {/* <SubTitle>Selecione o aluno</SubTitle> */}
-          {selectedMember && (
-            <div className="flex gap-4 items-center ">
+          {selectedMember.id && (
+            <div className="flex gap-4 items-center">
               <div className="img relative h-[3.6rem] w-[3.6rem] rounded-2xl overflow-hidden">
                 <Image
                   layout="fill"
-                  src="https://github.com/bryanmaraujo544.png"
+                  src={
+                    selectedMember?.profileImage ||
+                    'https://github.com/bryanmaraujo544.png'
+                  }
                   alt={selectedMember?.name}
                 />
               </div>
@@ -106,9 +108,9 @@ export const CreateWorkoutsPlans = () => {
         </div>
 
         <section className="grid grid-cols-[1fr_2fr] mt-16 gap-8">
-          <SelectedWorkouts
-            selectedWorkouts={selectedWorkouts}
-            selectedWorkoutsDispatch={selectedWorkoutsDispatch}
+          <SelectedExercises
+            selectedExercises={selectedExercises}
+            selectedExercisesDispatch={selectedExercisesDispatch}
           />
           {/* Suggestions */}
           <SuggestionsWorkouts />

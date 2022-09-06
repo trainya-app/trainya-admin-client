@@ -55,6 +55,7 @@ const FAKE_WORKOUTS: IWorkout[] = [
 ];
 
 export const SuggestionsWorkouts = () => {
+  const [searchWorkouts, setSearchWorkouts] = useState('');
   const [suggestionsWorkouts, setSuggestionsWorkouts] = useState<
     {
       id: number;
@@ -75,6 +76,13 @@ export const SuggestionsWorkouts = () => {
   const handleSelectWorkout = useCallback((workout: IWorkout) => {
     selectedWorkoutsDispatch({ type: 'ADD-WORKOUT', payload: workout });
   }, []);
+
+  const filteredSuggestionWorkouts = suggestionsWorkouts.filter(
+    (suggestion) => {
+      const obj = Object.values(suggestion).join('').toLowerCase();
+      return obj.includes(searchWorkouts.toLowerCase());
+    }
+  );
   return (
     <div>
       <h3 className="font-bold text-gray-600 text-3xl">Sugestões de Treinos</h3>
@@ -83,11 +91,13 @@ export const SuggestionsWorkouts = () => {
           <input
             placeholder="Pesquisar por um treino"
             className="w-full bg-blue-50 text-blue-500 font-semibold placeholder-gray-500 h-16 px-4 rounded-2xl shadow-sm"
+            value={searchWorkouts}
+            onChange={(e) => setSearchWorkouts(e.target.value)}
           />
         </header>
         {/* Workouts Grid */}
         <div className="grid grid-cols-2 gap-6 mt-10 max-h-[40rem] overflow-y-scroll">
-          {suggestionsWorkouts.map((workout) => (
+          {filteredSuggestionWorkouts.map((workout) => (
             <div
               key={workout.id}
               className="relative flex flex-col items-center gap-4 bg-blue-100 p-6 rounded-[1.6rem] bg-center overflow-hidden "

@@ -1,9 +1,10 @@
-import { Dispatch, useCallback, useState } from 'react';
+/* eslint-disable no-return-assign */
+import { Dispatch, useCallback, useRef, useState } from 'react';
 
 import { Button } from 'components/Button';
 import { IExercise } from 'pages-components/CreateWorkoutsPlans';
 import { SelectedExercisesAction } from 'pages-components/CreateWorkoutsPlans/reducers/selectedExercisesReducer';
-import { EditSelectedWorkout } from '../EditSelectedWorkoutModal';
+import { EditSelectedExerciseModal } from '../EditSelectedExerciseModal';
 
 interface Props {
   selectedExercises: IExercise[];
@@ -14,21 +15,26 @@ export const SelectedExercises = ({
   selectedExercises,
   selectedExercisesDispatch,
 }: Props) => {
-  const [isEditSelectedWorkoutModalOpen, setIsEditSelectedWorkoutModalOpen] =
+  const [isEditSelectedExerciseModalOpen, setIsEditSelectedExerciseModalOpen] =
     useState(false);
+  const [exerciseToEdit, setExerciseToEdit] = useState({} as IExercise);
+  const workoutTitle = useRef<string>('');
 
-  const handleRemoveSelectedWorkout = useCallback(
+  const handleRemoveSelectedExercise = useCallback(
     (exercise: IExercise) => {
       selectedExercisesDispatch({ type: 'REMOVE-WORKOUT', payload: exercise });
     },
     [selectedExercisesDispatch]
   );
 
-  const [workoutToEdit, setWorkoutToEdit] = useState({} as IExercise);
+  function handleOpenEditExerciseModal(exercise: IExercise) {
+    setExerciseToEdit(exercise);
+    setIsEditSelectedExerciseModalOpen(true);
+  }
 
-  function handleOpenEditWorkoutModal(exercise: IExercise) {
-    setWorkoutToEdit(exercise);
-    setIsEditSelectedWorkoutModalOpen(true);
+  function handleSaveWorkout() {
+    console.log('save workout in list');
+    console.log(selectedExercises, workoutTitle.current);
   }
 
   return (
@@ -38,6 +44,9 @@ export const SelectedExercises = ({
         <input
           className="bg-white h-[4.2rem] p-4 rounded-xl mt-4"
           placeholder="Título do treino"
+          onChange={(e) => {
+            workoutTitle.current = e.target.value;
+          }}
         />
         <div className="w-full flex flex-col gap-6 flex-1 bg-white rounded-3xl mt-6 p-6 overflow-y-scroll">
           {selectedExercises?.map((exercise) => (
@@ -65,7 +74,7 @@ export const SelectedExercises = ({
               <footer className="flex gap-2 w-full mt-4 z-10">
                 <Button
                   type="button"
-                  onClick={() => handleRemoveSelectedWorkout(exercise)}
+                  onClick={() => handleRemoveSelectedExercise(exercise)}
                   variant="danger"
                   className="w-full h-[3.6rem] flex-1"
                 >
@@ -75,7 +84,7 @@ export const SelectedExercises = ({
                   type="button"
                   variant="white"
                   className="bg-white flex-1 h-[3.6rem] rounded-2xl"
-                  onClick={() => handleOpenEditWorkoutModal(exercise)}
+                  onClick={() => handleOpenEditExerciseModal(exercise)}
                 >
                   Editar
                 </Button>
@@ -83,12 +92,18 @@ export const SelectedExercises = ({
             </div>
           ))}
         </div>
-        <Button className="h-[3.6rem] mt-8">Salvar treino</Button>
+        <Button
+          className="h-[3.6rem] mt-8"
+          variant="primary"
+          onClick={() => handleSaveWorkout()}
+        >
+          Salvar treino
+        </Button>
       </div>
-      <EditSelectedWorkout
-        isOpen={isEditSelectedWorkoutModalOpen}
-        setIsOpen={setIsEditSelectedWorkoutModalOpen}
-        exercise={workoutToEdit}
+      <EditSelectedExerciseModal
+        isOpen={isEditSelectedExerciseModalOpen}
+        setIsOpen={setIsEditSelectedExerciseModalOpen}
+        exercise={exerciseToEdit}
       />
     </>
   );

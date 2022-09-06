@@ -12,7 +12,7 @@ interface Props {
   exercise: IExercise;
 }
 
-export const EditSelectedWorkout = ({
+export const EditSelectedExerciseModal = ({
   isOpen,
   setIsOpen,
   title,
@@ -32,11 +32,11 @@ export const EditSelectedWorkout = ({
     setIsOpen(false);
   }
 
-  function handleUpdateWorkout() {
-    const updatedWorkout = { ...exercise, sets, reps };
+  function handleUpdateExercise() {
+    const updatedExercise = { ...exercise, sets, reps };
     selectedExercisesDispatch({
       type: 'UPDATE-WORKOUT',
-      payload: updatedWorkout,
+      payload: updatedExercise,
     });
     handleCloseModal();
   }
@@ -68,7 +68,7 @@ export const EditSelectedWorkout = ({
             onChange={(e) => setReps(Number(e.target.value))}
           />
         </div>
-        <Button className="h-[4.2rem]" onClick={handleUpdateWorkout}>
+        <Button className="h-[4.2rem]" onClick={handleUpdateExercise}>
           Confirmar
         </Button>
       </div>

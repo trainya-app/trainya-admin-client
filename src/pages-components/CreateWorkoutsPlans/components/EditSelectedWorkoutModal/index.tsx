@@ -46,6 +46,7 @@ export const EditSelectedWorkout = ({
       title={title || ''}
       isModalOpen={isOpen}
       handleCloseModal={handleCloseModal}
+      className="max-w-[50rem]"
     >
       <div className="flex flex-col gap-6">
         <div>

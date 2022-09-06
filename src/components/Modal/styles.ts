@@ -21,16 +21,18 @@ export const Overlay = styled.div<Props>`
 `;
 
 export const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   background: ${({ theme }) => theme.colors.white};
   min-width: 30rem;
   width: 100%;
-  max-width: 40rem;
   padding: 2.4rem;
   border-radius: 1.2rem;
   flex-direction: column;
   align-items: center;
+  height: auto;
   max-height: calc(100vh - 16px);
-  overflow: hidden;
+
   .header {
     display: flex;
     justify-content: space-between;
@@ -51,5 +53,8 @@ export const ModalContainer = styled.div`
   .body {
     width: 100%;
     margin-top: 1.2rem;
+    height: 100%;
+    flex: 1;
+    overflow-y: scroll;
   }
 `;

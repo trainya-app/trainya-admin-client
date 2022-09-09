@@ -6,49 +6,49 @@ import { useCallback, useState } from 'react';
 const FAKE_WORKOUTS: IExercise[] = [
   {
     id: 23,
-    title: 'Supino Reto',
+    name: 'Supino Reto',
     sets: 3,
     reps: 12,
   },
   {
     id: 22,
-    title: 'Supino Inclinado',
+    name: 'Supino Inclinado',
     sets: 3,
     reps: 15,
   },
   {
     id: 24,
-    title: 'Rosca Direte',
+    name: 'Rosca Direte',
     sets: 3,
     reps: 15,
   },
   {
     id: 424,
-    title: 'Rosca Direte',
+    name: 'Rosca Direte',
     sets: 3,
     reps: 15,
   },
   {
     id: 22290,
-    title: 'Rosca Direte',
+    name: 'Rosca Direte',
     sets: 3,
     reps: 15,
   },
   {
     id: 290290,
-    title: 'Rosca Direte',
+    name: 'Rosca Direte',
     sets: 3,
     reps: 15,
   },
   {
     id: 22311090,
-    title: 'Rosca Direte',
+    name: 'Rosca Direte',
     sets: 3,
     reps: 15,
   },
   {
     id: 230090,
-    title: 'Rosca Direte',
+    name: 'Rosca Direte',
     sets: 3,
     reps: 15,
   },
@@ -57,12 +57,7 @@ const FAKE_WORKOUTS: IExercise[] = [
 export const SuggestionsWorkouts = () => {
   const [searchWorkouts, setSearchWorkouts] = useState('');
   const [suggestionsWorkouts, setSuggestionsWorkouts] = useState<
-    {
-      id: number;
-      title: string;
-      sets: number;
-      reps: number;
-    }[]
+    { id: number; name: string }[]
   >([]);
   const { selectedExercisesDispatch } = useSelectedExercises();
 
@@ -73,9 +68,15 @@ export const SuggestionsWorkouts = () => {
     } catch (err: any) {}
   }, []);
 
-  const handleSelectWorkout = useCallback((workout: IExercise) => {
-    selectedExercisesDispatch({ type: 'ADD-WORKOUT', payload: workout });
-  }, []);
+  const handleSelectWorkout = useCallback(
+    (workout: { id: number; name: string }) => {
+      selectedExercisesDispatch({
+        type: 'ADD-WORKOUT',
+        payload: { id: workout.id, name: workout.name, sets: 3, reps: 12 },
+      });
+    },
+    []
+  );
 
   const filteredSuggestionWorkouts = suggestionsWorkouts.filter(
     (suggestion) => {
@@ -109,19 +110,13 @@ export const SuggestionsWorkouts = () => {
               <div className="absolute w-full h-full left-0 top-0 bg-[#00000050]" />
               {/* <div className='absolute w-full h-full top-0 '/> */}
               <span className="font-bold text-white text-3xl z-10">
-                {workout.title}
+                {workout.name}
               </span>
-              <div className="flex w-full gap-3">
-                <div className="bg-blue-50 text-blue-500 font-bold text-center py-2 px-6 flex-1 rounded-2xl z-10">
-                  Sets: {workout.sets}
-                </div>
-                <div className="bg-blue-50 text-blue-500 font-bold text-center py-2 px-6 flex-1 rounded-2xl z-10">
-                  Reps: {workout.reps}
-                </div>
-              </div>
               <Button
                 type="button"
-                onClick={() => handleSelectWorkout(workout)}
+                onClick={() =>
+                  handleSelectWorkout({ id: workout.id, name: workout.name })
+                }
                 variant="outlined"
                 className="w-full h-[3.6rem] mt-4 z-10"
               >

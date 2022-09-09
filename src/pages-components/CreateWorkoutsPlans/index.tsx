@@ -1,5 +1,6 @@
 /* eslint-disable import/no-unresolved */
 import { FaArrowLeft } from 'react-icons/fa';
+import { AiFillCloseCircle } from 'react-icons/ai';
 
 import { Button } from 'components/Button';
 import { MainContent } from 'layouts/MainContent';
@@ -15,12 +16,14 @@ import { SelectedExercises } from './components/SelectedExercises';
 import { useSelectedExercises } from './hooks/useSelectedExercises';
 import { SuggestionsWorkouts } from './components/SuggestionsWorkouts';
 import { FindMemberModal } from './components/FindMemberModal';
+import { SelectedWorkouts } from './components/SelectedWorkouts';
 
 export interface IExercise {
   id: number;
-  title: string;
+  name: string;
   sets: number;
   reps: number;
+  comment?: string;
 }
 
 export interface IMember {
@@ -91,21 +94,26 @@ export const CreateWorkoutsPlans = () => {
             Selecionar Aluno
           </Button>
         </div>
-        <div className="mt-10">
-          <SubTitle>Título do Plano de Treino</SubTitle>
-          <input
-            placeholder="Ex: Fortalecimento Total"
-            className="w-full h-20 rounded-[1.2rem] px-6 mt-3"
-          />
-        </div>
 
-        <div className="mt-10">
-          <SubTitle>Descrição</SubTitle>
-          <input
-            placeholder="Ex: Fortalecimento Total"
-            className="w-full h-20 rounded-[1.2rem] px-6 mt-3"
-          />
-        </div>
+        <section className="flex w-100 gap-6 mt-10">
+          <div className="flex-1">
+            <SubTitle>Título do Plano de Treino</SubTitle>
+            <input
+              placeholder="Ex: Fortalecimento Total"
+              className="w-full h-[4.2rem] rounded-[1.2rem] px-6 mt-3"
+            />
+          </div>
+
+          <div className="flex-1">
+            <SubTitle>Descrição</SubTitle>
+            <input
+              placeholder="Ex: Fortalecimento Total"
+              className="w-full h-[4.2rem] rounded-[1.2rem] px-6 mt-3"
+            />
+          </div>
+        </section>
+
+        <SelectedWorkouts />
 
         <section className="grid grid-cols-[1fr_2fr] mt-16 gap-8">
           <SelectedExercises

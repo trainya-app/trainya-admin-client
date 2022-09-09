@@ -4,6 +4,7 @@ import { Dispatch, useCallback, useRef, useState } from 'react';
 import { Button } from 'components/Button';
 import { IExercise } from 'pages-components/CreateWorkoutsPlans';
 import { SelectedExercisesAction } from 'pages-components/CreateWorkoutsPlans/reducers/selectedExercisesReducer';
+import { useSelectedWorkouts } from 'pages-components/CreateWorkoutsPlans/hooks/useSelectedWorkouts';
 import { EditSelectedExerciseModal } from '../EditSelectedExerciseModal';
 
 interface Props {
@@ -20,6 +21,8 @@ export const SelectedExercises = ({
   const [exerciseToEdit, setExerciseToEdit] = useState({} as IExercise);
   const workoutTitle = useRef<string>('');
 
+  const { selectedWorkoutsDispatch } = useSelectedWorkouts();
+
   const handleRemoveSelectedExercise = useCallback(
     (exercise: IExercise) => {
       selectedExercisesDispatch({ type: 'REMOVE-WORKOUT', payload: exercise });
@@ -35,6 +38,33 @@ export const SelectedExercises = ({
   function handleSaveWorkout() {
     console.log('save workout in list');
     console.log(selectedExercises, workoutTitle.current);
+
+    // TODO: grab the employeeId
+    const employeeId = 1;
+    const title = workoutTitle?.current;
+
+    const workout = {
+      employeeId,
+      title,
+    };
+
+    // TODO: do the api call to create workout and grab the id from database
+    const workoutId = 1; // this will be the id from database
+
+    // TODO: save exercixes
+    selectedExercises.forEach(({ sets, reps, id }) => {
+      // grab the id from exercise and save the connection between workout and exercise
+      // api call to POST /workoutExercises
+      const exerciseId = id;
+      const fakeWorkoutExercise = {
+        workoutId,
+        exerciseId,
+        sets,
+        reps,
+      };
+    });
+
+    // selectedWorkoutsDispatch({ type: 'ADD-WORKOUT' });
   }
 
   return (
@@ -61,7 +91,7 @@ export const SelectedExercises = ({
               <div className="absolute w-full h-full left-0 top-0 bg-[#00000050]" />
               {/* <div className='absolute w-full h-full top-0 '/> */}
               <span className="font-bold text-white text-3xl z-10">
-                {exercise.title}
+                {exercise.name}
               </span>
               <div className="flex w-full gap-3">
                 <div className="bg-blue-50 text-blue-500 font-bold text-center py-2 px-6 flex-1 rounded-2xl z-10">

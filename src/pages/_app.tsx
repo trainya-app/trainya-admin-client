@@ -11,6 +11,7 @@ import theme from 'styles/theme';
 import { PageLayout } from 'layouts/PageLayout';
 
 import '../styles/index.css';
+import { ToastContainer } from 'components/Toast/ToastContainer';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -41,6 +42,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         )}
         <GlobalStyle />
+        <ToastContainer />
       </ThemeProvider>
     </CustomThemeProvider>
   );

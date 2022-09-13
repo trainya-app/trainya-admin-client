@@ -1,5 +1,13 @@
-import { Dispatch, SetStateAction } from 'react';
+import {
+  Dispatch,
+  HTMLAttributes,
+  InputHTMLAttributes,
+  SetStateAction,
+  useState,
+} from 'react';
 import { Modal } from 'components/Modal';
+import { Button } from 'components/Button';
+import { toast } from 'utils/toast';
 
 interface CreateExercisesModalProps {
   isOpen: boolean;
@@ -10,10 +18,38 @@ export const CreateExerciseModal = ({
   isOpen,
   setIsOpen,
 }: CreateExercisesModalProps) => {
-  console.log('create exercise');
+  const [needsEquipment, setNeedsEquipment] = useState(false);
+  const [name, setName] = useState('');
+  const [advise, setAdvise] = useState('');
 
   function handleCloseModal() {
     setIsOpen(false);
+  }
+
+  function handleChangleNeedsEquipment(value: 'yes' | 'no') {
+    if (value === 'yes') {
+      setNeedsEquipment(true);
+      return;
+    }
+    setNeedsEquipment(false);
+  }
+
+  function handleCreateExercise() {
+    console.log('create exercise');
+    try {
+      if (!name || !advise) {
+        toast({
+          status: 'error',
+          text: 'Campos obrigatórios não foram preenchidos.',
+          duration: 1000,
+        });
+      }
+      console.log({ name, advise, needsEquipment });
+      console.log(needsEquipment);
+    } catch (err: any) {
+      // TODO: put toast with error message
+      console.log('err');
+    }
   }
 
   return (
@@ -21,11 +57,87 @@ export const CreateExerciseModal = ({
       isModalOpen={isOpen}
       title="Criar exercício"
       handleCloseModal={handleCloseModal}
-      className="max-w-[100px]"
+      modalContainer={{
+        className: 'max-w-[600px]',
+      }}
     >
-      <div>
-        <p>Modal to create exercised</p>
+      <div className="flex flex-col gap-6">
+        <Label className="w-full">
+          Nome do exercício
+          <Input
+            placeholder="Supino Reto"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </Label>
+        <Label className="w-full">
+          Avisos
+          <Input
+            placeholder="Muito cuidado com o apoio do pulso"
+            value={advise}
+            onChange={(e) => setAdvise(e.target.value)}
+          />
+        </Label>
+        <span className="text-[1.4rem] text-gray-500 text-semibold mt-4">
+          Precisa de equipamento?
+        </span>
+        <div className="flex gap-6 mt-[-0.8rem]">
+          <Label>
+            <input
+              type="radio"
+              name="equip"
+              value="yes"
+              placeholder="Sim"
+              onChange={(e) =>
+                handleChangleNeedsEquipment(e.target.value as 'yes' | 'no')
+              }
+            />
+            Sim
+          </Label>
+          <Label>
+            <input
+              type="radio"
+              name="equip"
+              value="no"
+              placeholder="Sim"
+              checked
+              onChange={(e) =>
+                handleChangleNeedsEquipment(e.target.value as 'yes' | 'no')
+              }
+            />
+            Não
+          </Label>
+        </div>
+        <Button
+          className="h-[4.2rem] mt-4"
+          onClick={() => handleCreateExercise()}
+        >
+          Criar
+        </Button>
       </div>
     </Modal>
   );
 };
+
+const Input = ({
+  className,
+  ...props
+}: InputHTMLAttributes<HTMLInputElement>) => (
+  <input
+    className={`h-[4.2rem] w-full px-4 rounded-xl bg-blue-100 place placeholder:text-gray-600 text-blue-600 font-semibold ${className}`}
+    {...props}
+  />
+);
+
+const Label = ({
+  className,
+  children,
+  ...props
+}: HTMLAttributes<HTMLLabelElement>) => (
+  <label
+    className={` text-[1.4rem] text-gray-500 text-semibold ${className}`}
+    {...props}
+  >
+    {children}
+  </label>
+);

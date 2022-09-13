@@ -137,15 +137,19 @@ export const SuggestionsWorkouts = ({
           ))}
         </div>
 
-        <footer>
+        <footer className="flex justify-between items-center gap-6 mt-4">
           <button
             type="button"
             onClick={() => handleSeeMoreSuggestionWorkouts()}
-            className="bg-blue-50 text-blue-500 py-2 px-6 rounded-2xl mt-4 hover:bg-blue-500 hover:text-blue-100 transition-all"
+            className="bg-blue-50 text-blue-500 h-[3.2rem] px-6 rounded-2xl  hover:bg-blue-500 hover:text-blue-100 transition-all"
           >
             Ver mais
           </button>
-          <button type="button" onClick={() => handleOpenCreateExerciseModal()}>
+          <button
+            type="button"
+            onClick={() => handleOpenCreateExerciseModal()}
+            className="border-2 border-blue-500 rounded-2xl px-4 h-[3.2rem] text-blue-500 hover:bg-blue-500 hover:text-white transition-all"
+          >
             Criar exercício
           </button>
         </footer>

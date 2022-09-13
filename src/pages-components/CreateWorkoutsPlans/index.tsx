@@ -17,6 +17,7 @@ import { useSelectedExercises } from './hooks/useSelectedExercises';
 import { SuggestionsWorkouts } from './components/SuggestionsWorkouts';
 import { FindMemberModal } from './components/FindMemberModal';
 import { SelectedWorkouts } from './components/SelectedWorkouts';
+import { CreateExerciseModal } from './components/CreateExerciseModal';
 
 export interface IExercise {
   id: number;
@@ -42,6 +43,8 @@ export const CreateWorkoutsPlans = () => {
 
   const [selectedMember, setSelectedMember] = useState<IMember>({} as IMember);
   const [isFindMemberModalOpen, setIsFindMemberModalOpen] = useState(false);
+  const [isCreateExerciseModalOpen, setIsCreateExerciseModalOpen] =
+    useState(false);
 
   function handleOpenFindMemberModal() {
     setIsFindMemberModalOpen(true);
@@ -121,13 +124,19 @@ export const CreateWorkoutsPlans = () => {
             selectedExercisesDispatch={selectedExercisesDispatch}
           />
           {/* Suggestions */}
-          <SuggestionsWorkouts />
+          <SuggestionsWorkouts
+            setIsCreateExerciseModalOpen={setIsCreateExerciseModalOpen}
+          />
         </section>
       </MainContent>
       <FindMemberModal
         isOpen={isFindMemberModalOpen}
         setIsOpen={setIsFindMemberModalOpen}
         setSelectedMember={setSelectedMember}
+      />
+      <CreateExerciseModal
+        isOpen={isCreateExerciseModalOpen}
+        setIsOpen={setIsCreateExerciseModalOpen}
       />
     </>
   );

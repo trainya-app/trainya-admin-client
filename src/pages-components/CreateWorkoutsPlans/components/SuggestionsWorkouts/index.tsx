@@ -1,7 +1,7 @@
 import { Button } from 'components/Button';
 import { IExercise } from 'pages-components/CreateWorkoutsPlans';
 import { useSelectedExercises } from 'pages-components/CreateWorkoutsPlans/hooks/useSelectedExercises';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, Dispatch, SetStateAction } from 'react';
 
 const FAKE_WORKOUTS: IExercise[] = [
   {
@@ -54,7 +54,13 @@ const FAKE_WORKOUTS: IExercise[] = [
   },
 ];
 
-export const SuggestionsWorkouts = () => {
+interface SuggestionsWorkoutsProps {
+  setIsCreateExerciseModalOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+export const SuggestionsWorkouts = ({
+  setIsCreateExerciseModalOpen,
+}: SuggestionsWorkoutsProps) => {
   const [searchWorkouts, setSearchWorkouts] = useState('');
   const [suggestionsWorkouts, setSuggestionsWorkouts] = useState<
     { id: number; name: string }[]
@@ -77,6 +83,11 @@ export const SuggestionsWorkouts = () => {
     },
     []
   );
+
+  const handleOpenCreateExerciseModal = useCallback(() => {
+    // TODO: Open the create exercise modal
+    setIsCreateExerciseModalOpen(true);
+  }, []);
 
   const filteredSuggestionWorkouts = suggestionsWorkouts.filter(
     (suggestion) => {
@@ -125,13 +136,19 @@ export const SuggestionsWorkouts = () => {
             </div>
           ))}
         </div>
-        <button
-          type="button"
-          onClick={() => handleSeeMoreSuggestionWorkouts()}
-          className="bg-blue-50 text-blue-500 py-2 px-6 rounded-2xl mt-4 hover:bg-blue-500 hover:text-blue-100 transition-all"
-        >
-          Ver mais
-        </button>
+
+        <footer>
+          <button
+            type="button"
+            onClick={() => handleSeeMoreSuggestionWorkouts()}
+            className="bg-blue-50 text-blue-500 py-2 px-6 rounded-2xl mt-4 hover:bg-blue-500 hover:text-blue-100 transition-all"
+          >
+            Ver mais
+          </button>
+          <button type="button" onClick={() => handleOpenCreateExerciseModal()}>
+            Criar exercício
+          </button>
+        </footer>
       </div>
     </div>
   );

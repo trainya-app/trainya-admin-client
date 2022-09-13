@@ -1,18 +1,24 @@
 /* eslint-disable consistent-return */
-import { motion, useAnimation } from 'framer-motion';
+import {
+  ForwardRefComponent,
+  HTMLMotionProps,
+  motion,
+  MotionProps,
+  useAnimation,
+} from 'framer-motion';
 import { DetailedHTMLProps, HTMLAttributes, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 import { Overlay, ModalContainer } from './styles';
 
-interface Props {
+interface Props
+  extends ForwardRefComponent<HTMLDivElement, HTMLMotionProps<'div'>> {
   children: any;
   title: string;
   isModalOpen: any;
   handleCloseModal: any;
   delayToOpen?: number;
-  style?: any;
 }
 
 const overlayVariants = (delay?: number) => ({
@@ -52,9 +58,8 @@ export const Modal = ({
   isModalOpen,
   handleCloseModal,
   delayToOpen,
-  style,
   ...rest
-}: any) => {
+}: Props) => {
   const [isMounted, setIsMounted] = useState(false);
 
   const overlayControls = useAnimation();
@@ -88,14 +93,9 @@ export const Modal = ({
       as={motion.div}
       variants={overlayVariants(delayToOpen)}
       animate={overlayControls}
-      style={style}
+      // style={style ?? {}}
     >
-      <ModalContainer
-        as={motion.div}
-        variants={modalVariants}
-        style={style}
-        {...rest}
-      >
+      <ModalContainer as={motion.div} variants={modalVariants} {...rest}>
         <div className="header">
           <h3>{title}</h3>
           <AiOutlineCloseCircle className="icon" onClick={() => closeModal()} />

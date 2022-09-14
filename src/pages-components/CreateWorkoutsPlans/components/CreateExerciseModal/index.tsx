@@ -8,6 +8,7 @@ import {
 import { Modal } from 'components/Modal';
 import { Button } from 'components/Button';
 import { toast } from 'utils/toast';
+import ExercisesService from 'pages-components/CreateWorkoutsPlans/services/ExercisesService';
 
 interface CreateExercisesModalProps {
   isOpen: boolean;
@@ -34,7 +35,7 @@ export const CreateExerciseModal = ({
     setNeedsEquipment(false);
   }
 
-  function handleCreateExercise() {
+  async function handleCreateExercise() {
     console.log('create exercise');
     try {
       if (!name || !advise) {
@@ -43,12 +44,16 @@ export const CreateExerciseModal = ({
           text: 'Campos obrigatórios não foram preenchidos.',
           duration: 1000,
         });
+        return;
       }
-      console.log({ name, advise, needsEquipment });
-      console.log(needsEquipment);
+      const { message, exercise } = await ExercisesService.store({
+        name,
+        advise,
+        needsEquipment,
+      });
+      toast({ status: 'success', text: message });
     } catch (err: any) {
-      // TODO: put toast with error message
-      console.log('err');
+      toast({ status: 'error', text: err?.response?.data?.message });
     }
   }
 
@@ -70,6 +75,7 @@ export const CreateExerciseModal = ({
             onChange={(e) => setName(e.target.value)}
           />
         </Label>
+
         <Label className="w-full">
           Avisos
           <Input
@@ -78,6 +84,7 @@ export const CreateExerciseModal = ({
             onChange={(e) => setAdvise(e.target.value)}
           />
         </Label>
+
         <span className="text-[1.4rem] text-gray-500 text-semibold mt-4">
           Precisa de equipamento?
         </span>
@@ -88,6 +95,7 @@ export const CreateExerciseModal = ({
               name="equip"
               value="yes"
               placeholder="Sim"
+              checked={!!needsEquipment}
               onChange={(e) =>
                 handleChangleNeedsEquipment(e.target.value as 'yes' | 'no')
               }
@@ -100,7 +108,7 @@ export const CreateExerciseModal = ({
               name="equip"
               value="no"
               placeholder="Sim"
-              checked
+              checked={!needsEquipment}
               onChange={(e) =>
                 handleChangleNeedsEquipment(e.target.value as 'yes' | 'no')
               }

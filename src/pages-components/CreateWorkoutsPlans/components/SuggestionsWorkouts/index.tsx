@@ -1,7 +1,16 @@
+import axios from 'axios';
 import { Button } from 'components/Button';
 import { IExercise } from 'pages-components/CreateWorkoutsPlans';
 import { useSelectedExercises } from 'pages-components/CreateWorkoutsPlans/hooks/useSelectedExercises';
-import { useCallback, useState, Dispatch, SetStateAction } from 'react';
+import ExercisesService from 'pages-components/CreateWorkoutsPlans/services/ExercisesService';
+import {
+  useCallback,
+  useState,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+} from 'react';
+import { serverApi } from 'services/serverApi';
 
 const FAKE_WORKOUTS: IExercise[] = [
   {
@@ -62,15 +71,23 @@ export const SuggestionsWorkouts = ({
   setIsCreateExerciseModalOpen,
 }: SuggestionsWorkoutsProps) => {
   const [searchWorkouts, setSearchWorkouts] = useState('');
-  const [suggestionsWorkouts, setSuggestionsWorkouts] = useState<
+  const [suggestionsExercises, setSuggestionsExercises] = useState<
     { id: number; name: string }[]
   >([]);
   const { selectedExercisesDispatch } = useSelectedExercises();
 
-  const handleSeeMoreSuggestionWorkouts = useCallback(() => {
+  useEffect(() => {
+    (async () => {
+      const allExercises = await ExercisesService.getAll();
+      setSuggestionsExercises(allExercises);
+      console.log('allExercises', allExercises);
+    })();
+  }, []);
+
+  const handleSeeMoreSuggestionWorkouts = useCallback(async () => {
     try {
       // Grab more suggestions workouts
-      setSuggestionsWorkouts(FAKE_WORKOUTS);
+      setSuggestionsExercises(FAKE_WORKOUTS);
     } catch (err: any) {}
   }, []);
 
@@ -89,7 +106,7 @@ export const SuggestionsWorkouts = ({
     setIsCreateExerciseModalOpen(true);
   }, []);
 
-  const filteredSuggestionWorkouts = suggestionsWorkouts.filter(
+  const filteredSuggestionWorkouts = suggestionsExercises.filter(
     (suggestion) => {
       const obj = Object.values(suggestion).join('').toLowerCase();
       return obj.includes(searchWorkouts.toLowerCase());
@@ -97,7 +114,9 @@ export const SuggestionsWorkouts = ({
   );
   return (
     <div>
-      <h3 className="font-bold text-gray-600 text-3xl">Sugestões de Treinos</h3>
+      <h3 className="font-bold text-gray-600 text-3xl">
+        Sugestões de Exercícios
+      </h3>
       <div className="w-full bg-white rounded-3xl mt-6 p-6">
         <header className="flex items-center justify-between w-full">
           <input
@@ -113,14 +132,9 @@ export const SuggestionsWorkouts = ({
             <div
               key={workout.id}
               className="relative flex flex-col items-center gap-4 bg-blue-100 p-6 rounded-[1.6rem] bg-center overflow-hidden "
-              style={{
-                backgroundImage:
-                  "url('https://i.pinimg.com/564x/b8/ea/06/b8ea0615898a93c0fd3907a07bbda69c.jpg')",
-              }}
             >
-              <div className="absolute w-full h-full left-0 top-0 bg-[#00000050]" />
               {/* <div className='absolute w-full h-full top-0 '/> */}
-              <span className="font-bold text-white text-3xl z-10">
+              <span className="font-bold text-blue-600 text-3xl z-10">
                 {workout.name}
               </span>
               <Button

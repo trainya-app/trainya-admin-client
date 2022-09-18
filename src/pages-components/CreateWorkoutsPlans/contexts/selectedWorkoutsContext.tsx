@@ -1,12 +1,12 @@
 import { createContext, Dispatch, ReactNode, useMemo, useReducer } from 'react';
-import { Workout } from '../@types/Workout';
 import {
   SelectedWorkoutsAction,
   selectedWorkoutsReducer,
+  SelectedWorkout,
 } from '../reducers/selectedWorkoutsReducer';
 
 export interface IValues {
-  selectedWorkouts: Workout[];
+  selectedWorkouts: SelectedWorkout[];
   selectedWorkoutsDispatch: Dispatch<SelectedWorkoutsAction>;
 }
 

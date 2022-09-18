@@ -14,7 +14,7 @@ import 'swiper/css/scrollbar';
 import { ReactNode, useState } from 'react';
 import { SelectedExercises } from './components/SelectedExercises';
 import { useSelectedExercises } from './hooks/useSelectedExercises';
-import { SuggestionsWorkouts } from './components/SuggestionsWorkouts';
+import { SuggestionsExercises } from './components/SuggestionsExercises';
 import { FindMemberModal } from './components/FindMemberModal';
 import { SelectedWorkouts } from './components/SelectedWorkouts';
 import { CreateExerciseModal } from './components/CreateExerciseModal';
@@ -124,7 +124,7 @@ export const CreateWorkoutsPlans = () => {
             selectedExercisesDispatch={selectedExercisesDispatch}
           />
           {/* Suggestions */}
-          <SuggestionsWorkouts
+          <SuggestionsExercises
             setIsCreateExerciseModalOpen={setIsCreateExerciseModalOpen}
           />
         </section>

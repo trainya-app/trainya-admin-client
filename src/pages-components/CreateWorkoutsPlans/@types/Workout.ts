@@ -1,10 +1,10 @@
 export interface Workout {
   id: number;
-  employeeId: number;
+  employee_id: number;
   title: string;
   description?: string;
-  previewImageUrl?: string;
-  videoUrl?: string;
-  level?: string;
-  duration?: number;
+  type?: string;
+  preview_image_url?: string;
+  video_url?: string;
+  duration: string;
 }

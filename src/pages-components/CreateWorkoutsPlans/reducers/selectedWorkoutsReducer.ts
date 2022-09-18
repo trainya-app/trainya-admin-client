@@ -1,12 +1,16 @@
 import { Workout } from '../@types/Workout';
 
+export interface SelectedWorkout extends Workout {
+  exercisesCount: number;
+}
+
 export interface SelectedWorkoutsAction {
   type: 'ADD-WORKOUT' | 'REMOVE-WORKOUT' | 'UPDATE-WORKOUT';
   payload: any;
 }
 
 interface SelectedWorkoutsState {
-  value: Workout[];
+  value: SelectedWorkout[];
 }
 
 export const selectedWorkoutsReducer = (

@@ -62,9 +62,7 @@ export const CreateExerciseModal = ({
       isModalOpen={isOpen}
       title="Criar exercício"
       handleCloseModal={handleCloseModal}
-      modalContainer={{
-        className: 'max-w-[600px]',
-      }}
+      className="max-w-[600px]"
     >
       <div className="flex flex-col gap-6">
         <Label className="w-full">

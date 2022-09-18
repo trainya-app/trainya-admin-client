@@ -18,7 +18,7 @@ interface Props {
   isModalOpen: any;
   handleCloseModal: any;
   delayToOpen?: number;
-  modalContainer: any;
+  className: string;
 }
 
 const overlayVariants = (delay?: number) => ({
@@ -58,7 +58,6 @@ export const Modal = ({
   isModalOpen,
   handleCloseModal,
   delayToOpen,
-  modalContainer,
   ...rest
 }: Props) => {
   const [isMounted, setIsMounted] = useState(false);
@@ -96,12 +95,7 @@ export const Modal = ({
       animate={overlayControls}
       // style={style ?? {}}
     >
-      <ModalContainer
-        as={motion.div}
-        variants={modalVariants}
-        {...modalContainer}
-        {...rest}
-      >
+      <ModalContainer as={motion.div} variants={modalVariants} {...rest}>
         <div className="header">
           <h3>{title}</h3>
           <AiOutlineCloseCircle className="icon" onClick={() => closeModal()} />

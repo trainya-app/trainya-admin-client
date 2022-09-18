@@ -67,10 +67,10 @@ interface SuggestionsWorkoutsProps {
   setIsCreateExerciseModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const SuggestionsWorkouts = ({
+export const SuggestionsExercises = ({
   setIsCreateExerciseModalOpen,
 }: SuggestionsWorkoutsProps) => {
-  const [searchWorkouts, setSearchWorkouts] = useState('');
+  const [searchExercises, setSearchExercises] = useState('');
   const [suggestionsExercises, setSuggestionsExercises] = useState<
     { id: number; name: string }[]
   >([]);
@@ -80,7 +80,6 @@ export const SuggestionsWorkouts = ({
     (async () => {
       const allExercises = await ExercisesService.getAll();
       setSuggestionsExercises(allExercises);
-      console.log('allExercises', allExercises);
     })();
   }, []);
 
@@ -102,14 +101,13 @@ export const SuggestionsWorkouts = ({
   );
 
   const handleOpenCreateExerciseModal = useCallback(() => {
-    // TODO: Open the create exercise modal
     setIsCreateExerciseModalOpen(true);
   }, []);
 
   const filteredSuggestionWorkouts = suggestionsExercises.filter(
     (suggestion) => {
       const obj = Object.values(suggestion).join('').toLowerCase();
-      return obj.includes(searchWorkouts.toLowerCase());
+      return obj.includes(searchExercises.toLowerCase());
     }
   );
   return (
@@ -122,8 +120,8 @@ export const SuggestionsWorkouts = ({
           <input
             placeholder="Pesquisar por um treino"
             className="w-full bg-blue-50 text-blue-500 font-semibold placeholder-gray-500 h-16 px-4 rounded-2xl shadow-sm"
-            value={searchWorkouts}
-            onChange={(e) => setSearchWorkouts(e.target.value)}
+            value={searchExercises}
+            onChange={(e) => setSearchExercises(e.target.value)}
           />
         </header>
         {/* Workouts Grid */}

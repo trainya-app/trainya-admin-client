@@ -5,6 +5,9 @@ import { Button } from 'components/Button';
 import { IExercise } from 'pages-components/CreateWorkoutsPlans';
 import { SelectedExercisesAction } from 'pages-components/CreateWorkoutsPlans/reducers/selectedExercisesReducer';
 import { useSelectedWorkouts } from 'pages-components/CreateWorkoutsPlans/hooks/useSelectedWorkouts';
+import WorkoutExercisesService from 'pages-components/CreateWorkoutsPlans/services/WorkoutExercisesService';
+import WorkoutService from 'pages-components/CreateWorkoutsPlans/services/WorkoutService';
+import { toast } from 'utils/toast';
 import { EditSelectedExerciseModal } from '../EditSelectedExerciseModal';
 
 interface Props {
@@ -19,7 +22,11 @@ export const SelectedExercises = ({
   const [isEditSelectedExerciseModalOpen, setIsEditSelectedExerciseModalOpen] =
     useState(false);
   const [exerciseToEdit, setExerciseToEdit] = useState({} as IExercise);
+
   const workoutTitle = useRef<string>('');
+  const workoutDuration = useRef<string>('');
+  const workoutTitleRef = useRef<HTMLInputElement>(null);
+  const workoutDurationRef = useRef<HTMLInputElement>(null);
 
   const { selectedWorkoutsDispatch } = useSelectedWorkouts();
 
@@ -35,36 +42,59 @@ export const SelectedExercises = ({
     setIsEditSelectedExerciseModalOpen(true);
   }
 
-  function handleSaveWorkout() {
-    console.log('save workout in list');
-    console.log(selectedExercises, workoutTitle.current);
+  async function handleSaveWorkout() {
+    try {
+      // TODO: grab the employeeId
+      const employeeId = 1;
 
-    // TODO: grab the employeeId
-    const employeeId = 1;
-    const title = workoutTitle?.current;
-
-    const workout = {
-      employeeId,
-      title,
-    };
-
-    // TODO: do the api call to create workout and grab the id from database
-    const workoutId = 1; // this will be the id from database
-
-    // TODO: save exercixes
-    selectedExercises.forEach(({ sets, reps, id }) => {
-      // grab the id from exercise and save the connection between workout and exercise
-      // api call to POST /workoutExercises
-      const exerciseId = id;
-      const fakeWorkoutExercise = {
-        workoutId,
-        exerciseId,
-        sets,
-        reps,
+      const workout = {
+        employeeId,
+        title: workoutTitle?.current,
+        duration: workoutDuration.current,
       };
-    });
 
-    // selectedWorkoutsDispatch({ type: 'ADD-WORKOUT' });
+      // TODO: do the api call to create workout and grab the id from database
+      const workoutStored = await WorkoutService.store({
+        title: workout.title,
+        duration: workout.duration,
+        employeeId: workout.employeeId,
+      });
+
+      // TODO: save exercixes
+      const allWorkoutExercises = await Promise.all(
+        selectedExercises.map((exercise) =>
+          WorkoutExercisesService.store({
+            exerciseId: exercise.id,
+            sets: exercise.sets,
+            repetitions: exercise.reps,
+            workoutId: workoutStored.workout.id,
+          })
+        )
+      );
+
+      resetWorkoutFields();
+
+      toast({ status: 'success', text: 'Treino criado!', duration: 2000 });
+
+      selectedWorkoutsDispatch({
+        type: 'ADD-WORKOUT',
+        payload: {
+          ...workoutStored.workout,
+          exercisesCount: allWorkoutExercises.length,
+        },
+      });
+    } catch (err: any) {
+      toast({ status: 'error', text: err?.response?.data?.message });
+    }
+  }
+
+  function resetWorkoutFields() {
+    selectedExercisesDispatch({ type: 'PLACE-EXERCISES', payload: [] });
+
+    if (workoutTitleRef.current && workoutDurationRef.current) {
+      workoutTitleRef.current.value = '';
+      workoutDurationRef.current.value = '';
+    }
   }
 
   return (
@@ -74,8 +104,17 @@ export const SelectedExercises = ({
         <input
           className="bg-white h-[4.2rem] p-4 rounded-xl mt-4"
           placeholder="Título do treino"
+          ref={workoutTitleRef}
           onChange={(e) => {
             workoutTitle.current = e.target.value;
+          }}
+        />
+        <input
+          className="bg-white h-[4.2rem] p-4 rounded-xl mt-4"
+          placeholder='Duração. Ex: "15 minutos" '
+          ref={workoutDurationRef}
+          onChange={(e) => {
+            workoutDuration.current = e.target.value;
           }}
         />
         <div className="w-full flex flex-col gap-6 flex-1 bg-white rounded-3xl mt-6 p-6 overflow-y-scroll">

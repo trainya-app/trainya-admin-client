@@ -12,6 +12,7 @@ import { PageLayout } from 'layouts/PageLayout';
 
 import '../styles/index.css';
 import { ToastContainer } from 'components/Toast/ToastContainer';
+import { serverApi } from 'services/serverApi';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -29,6 +30,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       return 'light';
     }
   });
+
+  const token =
+    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYzNTIyMjc3LCJleHAiOjE2NjYxMTQyNzd9.IyPEPbroW5k147XHZj7pTms2g_KHZ_-IG5tuu-sx8RM';
+  serverApi.defaults.headers.Authorization = token;
 
   return (
     <CustomThemeProvider colorMode={colorMode} setColorMode={setColorMode}>

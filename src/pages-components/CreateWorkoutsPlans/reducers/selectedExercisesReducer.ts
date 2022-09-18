@@ -1,7 +1,7 @@
 import { IExercise } from '..';
 
 export interface SelectedExercisesAction {
-  type: 'ADD-WORKOUT' | 'REMOVE-WORKOUT' | 'UPDATE-WORKOUT';
+  type: 'ADD-WORKOUT' | 'REMOVE-WORKOUT' | 'UPDATE-WORKOUT' | 'PLACE-EXERCISES';
   payload: any;
 }
 
@@ -39,6 +39,10 @@ export const selectedExercisesReducer = (
       });
 
       return { value: mappedState };
+    }
+    case 'PLACE-EXERCISES': {
+      const { payload } = action;
+      return { value: payload };
     }
     default:
       throw new Error('The type informed is invalid');

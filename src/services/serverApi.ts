@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const dev = 'http://localhost:8080';
-const prod = 'https://trainya-app-api.herokuapp.com/';
+const prod = process.env.SERVER_API;
 
 export const serverApi = axios.create({
-  baseURL: prod,
+  baseURL: process.env.NODE_ENV === 'development' ? dev : prod,
 });

@@ -1,8 +1,8 @@
 import { Button } from 'components/Button';
 import { Input } from 'components/Input';
 import { Modal } from 'components/Modal';
-import { IExercise } from 'pages-components/CreateWorkoutsPlans';
-import { useSelectedExercises } from 'pages-components/CreateWorkoutsPlans/hooks/useSelectedExercises';
+import { IExercise } from 'types/IExercise';
+import { useSelectedExercises } from 'pages-components/CreateWorkout/hooks/useSelectedExercises';
 import { SetStateAction, Dispatch, useState, useEffect } from 'react';
 
 interface Props {
@@ -25,7 +25,7 @@ export const EditSelectedExerciseModal = ({
 
   useEffect(() => {
     setSets(exercise.sets);
-    setReps(exercise.reps);
+    setReps(exercise.repetitions);
   }, [exercise, isOpen]);
 
   function handleCloseModal() {

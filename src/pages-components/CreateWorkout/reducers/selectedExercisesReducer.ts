@@ -1,4 +1,4 @@
-import { IExercise } from '..';
+import { IExercise } from 'types/IExercise';
 
 export interface SelectedExercisesAction {
   type: 'ADD-WORKOUT' | 'REMOVE-WORKOUT' | 'UPDATE-WORKOUT' | 'PLACE-EXERCISES';

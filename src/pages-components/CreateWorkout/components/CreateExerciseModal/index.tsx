@@ -8,16 +8,19 @@ import {
 import { Modal } from 'components/Modal';
 import { Button } from 'components/Button';
 import { toast } from 'utils/toast';
-import ExercisesService from 'pages-components/CreateWorkoutsPlans/services/ExercisesService';
+import ExercisesService from 'services/ExercisesService';
+import { IExercise } from 'types/IExercise';
 
 interface CreateExercisesModalProps {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setSuggestionExercises: Dispatch<SetStateAction<IExercise[]>>;
 }
 
 export const CreateExerciseModal = ({
   isOpen,
   setIsOpen,
+  setSuggestionExercises,
 }: CreateExercisesModalProps) => {
   const [needsEquipment, setNeedsEquipment] = useState(false);
   const [name, setName] = useState('');
@@ -36,9 +39,8 @@ export const CreateExerciseModal = ({
   }
 
   async function handleCreateExercise() {
-    console.log('create exercise');
     try {
-      if (!name || !advise) {
+      if (!name) {
         toast({
           status: 'error',
           text: 'Campos obrigatórios não foram preenchidos.',
@@ -51,7 +53,10 @@ export const CreateExerciseModal = ({
         advise,
         needsEquipment,
       });
+      setSuggestionExercises((prev) => [...prev, exercise]);
+
       toast({ status: 'success', text: message });
+      setIsOpen(false);
     } catch (err: any) {
       toast({ status: 'error', text: err?.response?.data?.message });
     }

@@ -51,10 +51,10 @@ export const secondGroup = [
     path: '/employees',
   },
   {
-    _id: `Planos de treino ${String(Math.random())}`,
+    _id: `Treino ${String(Math.random())}`,
     icon: HiOutlineBookOpen,
-    text: 'Planos de treino',
-    path: '/workoutsPlans',
+    text: 'Treinos',
+    path: '/workouts',
   },
   {
     _id: `Assinaturas ${String(Math.random())}`,

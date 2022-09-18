@@ -46,25 +46,15 @@ const FAKE_WORKOUTS = [
   },
 ];
 
-export const WorkoutsPlans = () => {
-  console.log('WorkoutsPlans');
+export const Workouts = () => {
   const router = useRouter();
 
   function handleGoToCreatePage() {
-    router.push('/workoutsPlans/create');
+    router.push('/workouts/create-workout-plan');
   }
 
   return (
     <MainContent className="overflow-hidden">
-      <button
-        type="button"
-        className="bg-blue-500 rounded-2xl h-[42px] gap-4 px-8 font-bold text-white flex items-center justify-center"
-        onClick={handleGoToCreatePage}
-      >
-        Criar plano de Treino
-        <MdLibraryAdd />
-      </button>
-
       <SubTitle className="mt-16 mb-8">Planos de Treinos</SubTitle>
       <section className="w-[100%] bg-white p-8 rounded-[2rem] shadow-sm">
         <Swiper
@@ -105,6 +95,15 @@ export const WorkoutsPlans = () => {
             </SwiperSlide>
           ))}
         </Swiper>
+        <Button
+          type="button"
+          variant="primary"
+          className=" h-[42px] gap-4 px-8 mt-6 font-bold text-white flex items-center justify-center"
+          onClick={handleGoToCreatePage}
+        >
+          Criar plano de Treino
+          <MdLibraryAdd />
+        </Button>
       </section>
 
       <SubTitle className="mt-16 mb-8">Em destaque</SubTitle>

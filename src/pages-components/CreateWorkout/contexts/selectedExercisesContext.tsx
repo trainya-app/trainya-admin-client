@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useReducer, Dispatch, useMemo } from 'react';
-import { IExercise } from '..';
+import { IExercise } from 'types/IExercise';
+
 import {
   SelectedExercisesAction,
   selectedExercisesReducer,

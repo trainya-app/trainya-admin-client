@@ -1,92 +1,25 @@
-import axios from 'axios';
 import { Button } from 'components/Button';
-import { IExercise } from 'pages-components/CreateWorkoutsPlans';
-import { useSelectedExercises } from 'pages-components/CreateWorkoutsPlans/hooks/useSelectedExercises';
-import ExercisesService from 'pages-components/CreateWorkoutsPlans/services/ExercisesService';
-import {
-  useCallback,
-  useState,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-} from 'react';
-import { serverApi } from 'services/serverApi';
-
-const FAKE_WORKOUTS: IExercise[] = [
-  {
-    id: 23,
-    name: 'Supino Reto',
-    sets: 3,
-    reps: 12,
-  },
-  {
-    id: 22,
-    name: 'Supino Inclinado',
-    sets: 3,
-    reps: 15,
-  },
-  {
-    id: 24,
-    name: 'Rosca Direte',
-    sets: 3,
-    reps: 15,
-  },
-  {
-    id: 424,
-    name: 'Rosca Direte',
-    sets: 3,
-    reps: 15,
-  },
-  {
-    id: 22290,
-    name: 'Rosca Direte',
-    sets: 3,
-    reps: 15,
-  },
-  {
-    id: 290290,
-    name: 'Rosca Direte',
-    sets: 3,
-    reps: 15,
-  },
-  {
-    id: 22311090,
-    name: 'Rosca Direte',
-    sets: 3,
-    reps: 15,
-  },
-  {
-    id: 230090,
-    name: 'Rosca Direte',
-    sets: 3,
-    reps: 15,
-  },
-];
+import { IExercise } from 'types/IExercise';
+import { useSelectedExercises } from 'pages-components/CreateWorkout/hooks/useSelectedExercises';
+import { useCallback, useState, Dispatch, SetStateAction } from 'react';
 
 interface SuggestionsWorkoutsProps {
   setIsCreateExerciseModalOpen: Dispatch<SetStateAction<boolean>>;
+  suggestionExercises: IExercise[];
+  setSuggestionExercises: Dispatch<IExercise[]>;
 }
 
 export const SuggestionsExercises = ({
   setIsCreateExerciseModalOpen,
+  suggestionExercises,
+  setSuggestionExercises,
 }: SuggestionsWorkoutsProps) => {
   const [searchExercises, setSearchExercises] = useState('');
-  const [suggestionsExercises, setSuggestionsExercises] = useState<
-    { id: number; name: string }[]
-  >([]);
   const { selectedExercisesDispatch } = useSelectedExercises();
-
-  useEffect(() => {
-    (async () => {
-      const allExercises = await ExercisesService.getAll();
-      setSuggestionsExercises(allExercises);
-    })();
-  }, []);
 
   const handleSeeMoreSuggestionWorkouts = useCallback(async () => {
     try {
       // Grab more suggestions workouts
-      setSuggestionsExercises(FAKE_WORKOUTS);
     } catch (err: any) {}
   }, []);
 
@@ -94,7 +27,12 @@ export const SuggestionsExercises = ({
     (workout: { id: number; name: string }) => {
       selectedExercisesDispatch({
         type: 'ADD-WORKOUT',
-        payload: { id: workout.id, name: workout.name, sets: 3, reps: 12 },
+        payload: {
+          id: workout.id,
+          name: workout.name,
+          sets: 3,
+          repetitions: 12,
+        },
       });
     },
     []
@@ -104,18 +42,17 @@ export const SuggestionsExercises = ({
     setIsCreateExerciseModalOpen(true);
   }, []);
 
-  const filteredSuggestionWorkouts = suggestionsExercises.filter(
+  const filteredSuggestionWorkouts = suggestionExercises.filter(
     (suggestion) => {
       const obj = Object.values(suggestion).join('').toLowerCase();
       return obj.includes(searchExercises.toLowerCase());
     }
   );
+
   return (
-    <div>
-      <h3 className="font-bold text-gray-600 text-3xl">
-        Sugestões de Exercícios
-      </h3>
-      <div className="w-full bg-white rounded-3xl mt-6 p-6">
+    <div className="flex flex-col  h-full">
+      <h3 className="font-bold text-gray-600 text-3xl">Sugestões</h3>
+      <div className="w-full flex-1 bg-white rounded-3xl mt-6 p-6">
         <header className="flex items-center justify-between w-full">
           <input
             placeholder="Pesquisar por um treino"
@@ -129,10 +66,10 @@ export const SuggestionsExercises = ({
           {filteredSuggestionWorkouts.map((workout) => (
             <div
               key={workout.id}
-              className="relative flex flex-col items-center gap-4 bg-blue-100 p-6 rounded-[1.6rem] bg-center overflow-hidden "
+              className="relative flex flex-col items-center justify-between gap-4 bg-blue-100 p-6 rounded-[1.6rem] bg-center overflow-hidden "
             >
               {/* <div className='absolute w-full h-full top-0 '/> */}
-              <span className="font-bold text-blue-600 text-3xl z-10">
+              <span className="font-bold text-blue-800 text-3xl text-center z-10">
                 {workout.name}
               </span>
               <Button
@@ -149,7 +86,7 @@ export const SuggestionsExercises = ({
           ))}
         </div>
 
-        <footer className="flex justify-between items-center gap-6 mt-4">
+        <footer className="flex justify-between items-center gap-6 mt-8">
           <button
             type="button"
             onClick={() => handleSeeMoreSuggestionWorkouts()}

@@ -11,6 +11,6 @@ export const toast = ({ status = 'default', text, duration }: Props) => {
   toastEventManager.emit('addtoast', {
     status,
     text,
-    duration: duration ?? 1000,
+    duration: duration ?? 2000,
   });
 };

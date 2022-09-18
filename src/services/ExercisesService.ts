@@ -1,4 +1,5 @@
 import { serverApi } from 'services/serverApi';
+import { IExercise } from 'types/IExercise';
 
 interface Store {
   name: string;
@@ -15,8 +16,15 @@ class ExercisesController {
     return data?.exercises;
   }
 
-  async store({ name, advise, needsEquipment }: Store) {
-    const { data } = await serverApi.post('/exercises', {
+  async store({
+    name,
+    advise,
+    needsEquipment,
+  }: Store): Promise<{ message: string; exercise: IExercise }> {
+    const { data } = await serverApi.post<{
+      message: string;
+      exercise: IExercise;
+    }>('/exercises', {
       name,
       comment: advise,
       needsEquipment,

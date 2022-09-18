@@ -4,6 +4,10 @@ const containerVariants = {
   primary: css`
     background: ${({ theme }) => theme.colors.blue[500]};
     color: ${({ theme }) => theme.colors.blue[100]};
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.blue[600]};
+    }
   `,
   outlined: css`
     background: transparent;

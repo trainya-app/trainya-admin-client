@@ -2,7 +2,6 @@ import { useSelectedWorkouts } from 'pages-components/CreateWorkoutsPlans/hooks/
 import { AiFillCloseCircle } from 'react-icons/ai';
 
 export const SelectedWorkouts = () => {
-  console.log('selected workoutsl');
   const { selectedWorkouts, selectedWorkoutsDispatch } = useSelectedWorkouts();
 
   function handleUnselectWorkout(id: number) {

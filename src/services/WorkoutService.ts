@@ -20,6 +20,29 @@ interface IWorkout {
   duration: string;
 }
 
+export type AllWorkouts = {
+  id: number;
+  employee_id: number;
+  title: string;
+  description: string;
+  type: string;
+  preview_image_url: string;
+  video_url: string;
+  level: string;
+  duration: string;
+  workoutExercise: {
+    id: number;
+    sets: number;
+    repetitions: number;
+    duration: number;
+    exercise: {
+      id: number;
+      name: string;
+      comment: string;
+    };
+  }[];
+}[];
+
 class WorkoutsService {
   async store({
     employeeId,
@@ -42,6 +65,11 @@ class WorkoutsService {
     });
 
     return data;
+  }
+
+  async getAll(): Promise<AllWorkouts> {
+    const { data } = await serverApi.get('/workouts');
+    return data?.workouts;
   }
 }
 

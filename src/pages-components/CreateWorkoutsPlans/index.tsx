@@ -17,6 +17,7 @@ import WorkoutService, { AllWorkouts } from 'services/WorkoutService';
 import { FindMemberModal } from './components/FindMemberModal';
 import { SelectedWorkouts } from './components/SelectedWorkouts';
 import { CreateExerciseModal } from '../CreateWorkout/components/CreateExerciseModal';
+import { SeeWorkoutModal } from './components/SeeWorkoutModal';
 
 export interface IMember {
   id: number;
@@ -34,10 +35,10 @@ export const CreateWorkoutsPlans = () => {
   const [workouts, setWorkouts] = useState<AllWorkouts>([] as AllWorkouts);
 
   const [workoutSearch, setWorkoutSearch] = useState('');
-
-  function handleOpenFindMemberModal() {
-    setIsFindMemberModalOpen(true);
-  }
+  const [isSeeWorkoutModalOpen, setIsSeeWorkoutModalOpen] = useState(false);
+  const [workoutToSee, setWorkoutToSee] = useState<AllWorkouts[0]>(
+    {} as AllWorkouts[0]
+  );
 
   useEffect(() => {
     (async () => {
@@ -45,6 +46,15 @@ export const CreateWorkoutsPlans = () => {
       setWorkouts(allWorkouts);
     })();
   }, []);
+
+  function handleOpenFindMemberModal() {
+    setIsFindMemberModalOpen(true);
+  }
+
+  function handleSeeWorkout(workout: AllWorkouts[0]) {
+    setWorkoutToSee(workout);
+    setIsSeeWorkoutModalOpen(true);
+  }
 
   const filteredWorkouts = workouts.filter((workout) => {
     const objStr = Object.values(workout).join('');
@@ -148,7 +158,11 @@ export const CreateWorkoutsPlans = () => {
                   {workout.title}
                 </p>
                 <footer className="flex gap-2 w-full">
-                  <Button variant="white" className="flex-1 h-[3.6rem]">
+                  <Button
+                    variant="white"
+                    className="flex-1 h-[3.6rem]"
+                    onClick={() => handleSeeWorkout(workout)}
+                  >
                     Ver Treino
                   </Button>
                   <Button className="flex-1 h-[3.6rem]">Adicionar</Button>
@@ -162,6 +176,11 @@ export const CreateWorkoutsPlans = () => {
         isOpen={isFindMemberModalOpen}
         setIsOpen={setIsFindMemberModalOpen}
         setSelectedMember={setSelectedMember}
+      />
+      <SeeWorkoutModal
+        workoutToSee={workoutToSee}
+        isOpen={isSeeWorkoutModalOpen}
+        setIsOpen={setIsSeeWorkoutModalOpen}
       />
     </>
   );

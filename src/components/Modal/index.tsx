@@ -18,7 +18,7 @@ interface Props {
   isModalOpen: any;
   handleCloseModal: any;
   delayToOpen?: number;
-  className: string;
+  className?: string;
 }
 
 const overlayVariants = (delay?: number) => ({

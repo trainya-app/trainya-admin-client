@@ -14,10 +14,12 @@ import 'swiper/css/scrollbar';
 import { ReactNode, useEffect, useState } from 'react';
 import { BackButton } from 'components/BackButton';
 import WorkoutService, { AllWorkouts } from 'services/WorkoutService';
+import { useRouter } from 'next/router';
 import { FindMemberModal } from './components/FindMemberModal';
 import { SelectedWorkouts } from './components/SelectedWorkouts';
 import { CreateExerciseModal } from '../CreateWorkout/components/CreateExerciseModal';
 import { SeeWorkoutModal } from './components/SeeWorkoutModal';
+import { useSelectedWorkouts } from './hooks/useSelectedWorkouts';
 
 export interface IMember {
   id: number;
@@ -40,6 +42,10 @@ export const CreateWorkoutsPlans = () => {
     {} as AllWorkouts[0]
   );
 
+  const { selectedWorkoutsDispatch } = useSelectedWorkouts();
+
+  const router = useRouter();
+
   useEffect(() => {
     (async () => {
       const allWorkouts = await WorkoutService.getAll();
@@ -56,6 +62,17 @@ export const CreateWorkoutsPlans = () => {
     setIsSeeWorkoutModalOpen(true);
   }
 
+  function handleAddWorkout(workout: AllWorkouts[0]) {
+    selectedWorkoutsDispatch({
+      type: 'ADD-WORKOUT',
+      payload: { ...workout, exercisesCount: workout.workoutExercise.length },
+    });
+  }
+
+  function handleGoBack() {
+    router.back();
+  }
+
   const filteredWorkouts = workouts.filter((workout) => {
     const objStr = Object.values(workout).join('');
     if (objStr.toLowerCase().includes(workoutSearch.toLowerCase())) {
@@ -68,7 +85,7 @@ export const CreateWorkoutsPlans = () => {
     <>
       <MainContent className="overflow-hidden">
         <header className="flex items-center gap-4">
-          <BackButton />
+          <BackButton onClick={handleGoBack} />
           <h2 className="font-bold text-gray-700 text-3xl">
             Criar Planos de Treinos
           </h2>
@@ -165,7 +182,12 @@ export const CreateWorkoutsPlans = () => {
                   >
                     Ver Treino
                   </Button>
-                  <Button className="flex-1 h-[3.6rem]">Adicionar</Button>
+                  <Button
+                    className="flex-1 h-[3.6rem]"
+                    onClick={() => handleAddWorkout(workout)}
+                  >
+                    Adicionar
+                  </Button>
                 </footer>
               </div>
             ))}

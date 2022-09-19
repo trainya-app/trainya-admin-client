@@ -22,8 +22,10 @@ export const CreateWorkout = () => {
 
   const workoutTitle = useRef<string>('');
   const workoutDuration = useRef<string>('');
-  const workoutTitleRef = useRef<HTMLInputElement>(null);
-  const workoutDurationRef = useRef<HTMLInputElement>(null);
+  const workoutDescription = useRef<string>('');
+  const workoutTitleRef = useRef<any>(null);
+  const workoutDurationRef = useRef<any>(null);
+  const workoutDescriptionRef = useRef<any>(null);
 
   const { selectedExercises, selectedExercisesDispatch } =
     useSelectedExercises();
@@ -43,19 +45,26 @@ export const CreateWorkout = () => {
 
   async function handleSaveWorkout() {
     try {
+      if (selectedExercises.length < 1) {
+        toast({ status: 'error', text: 'Nenhum exercício foi selecionado.' });
+        return;
+      }
+
       // TODO: grab the employeeId
       const employeeId = 1;
 
       const workout = {
         employeeId,
         title: workoutTitle?.current,
-        duration: workoutDuration.current,
+        duration: workoutDuration?.current,
+        description: workoutDescription?.current,
       };
 
       // TODO: do the api call to create workout and grab the id from database
       const workoutStored = await WorkoutService.store({
         title: workout.title,
         duration: workout.duration,
+        description: workout.description,
         employeeId: workout.employeeId,
       });
 
@@ -73,7 +82,7 @@ export const CreateWorkout = () => {
 
       resetWorkoutFields();
 
-      toast({ status: 'success', text: 'Treino criado!', duration: 2000 });
+      // toast({ status: 'success', text: 'Treino criado!', duration: 2000 });
     } catch (err: any) {
       toast({ status: 'error', text: err?.response?.data?.message });
     }
@@ -82,10 +91,9 @@ export const CreateWorkout = () => {
   function resetWorkoutFields() {
     selectedExercisesDispatch({ type: 'PLACE-EXERCISES', payload: [] });
 
-    if (workoutTitleRef.current && workoutDurationRef.current) {
-      workoutTitleRef.current.value = '';
-      workoutDurationRef.current.value = '';
-    }
+    workoutTitleRef.current.value = '';
+    workoutDurationRef.current.value = '';
+    workoutDescriptionRef.current.value = '';
   }
 
   return (
@@ -105,6 +113,14 @@ export const CreateWorkout = () => {
             ref={workoutTitleRef}
             onChange={(e) => {
               workoutTitle.current = e.target.value;
+            }}
+          />
+          <input
+            className="bg-white h-[4.2rem] p-4 rounded-xl mt-4"
+            placeholder='Descrição. Ex: "Treino destinado a fortalecimento de quadríceps" '
+            ref={workoutDescriptionRef}
+            onChange={(e) => {
+              workoutDescription.current = e.target.value;
             }}
           />
           <input

@@ -14,6 +14,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/effect-cube';
 import { useRouter } from 'next/router';
+import { FaDumbbell } from 'react-icons/fa';
 
 const FAKE_WORKOUTS = [
   {
@@ -49,8 +50,12 @@ const FAKE_WORKOUTS = [
 export const Workouts = () => {
   const router = useRouter();
 
-  function handleGoToCreatePage() {
+  function handleGoToCreateWorkoutPlan() {
     router.push('/workouts/create-workout-plan');
+  }
+
+  function handleGoToCreateWorkout() {
+    router.push('/workouts/create-workout');
   }
 
   return (
@@ -99,14 +104,14 @@ export const Workouts = () => {
           type="button"
           variant="primary"
           className=" h-[42px] gap-4 px-8 mt-6 font-bold text-white flex items-center justify-center"
-          onClick={handleGoToCreatePage}
+          onClick={handleGoToCreateWorkoutPlan}
         >
           Criar plano de Treino
           <MdLibraryAdd />
         </Button>
       </section>
 
-      <SubTitle className="mt-16 mb-8">Em destaque</SubTitle>
+      <SubTitle className="mt-16 mb-8">Treinos</SubTitle>
       <section className="w-[100%] bg-white p-8 rounded-[2rem] shadow-sm">
         <Swiper
           id="customSwiper"
@@ -137,14 +142,19 @@ export const Workouts = () => {
                 >
                   Ver mais
                 </Button>
-                <footer className="absolute flex items-center gap-2 bottom-4 right-6 mt-auto">
-                  <MdOutlinePeopleAlt />
-                  <span className="font-bold">129</span>
-                </footer>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
+        <Button
+          type="button"
+          variant="primary"
+          className=" h-[42px] gap-4 px-8 mt-6 font-bold text-white flex items-center justify-center"
+          onClick={handleGoToCreateWorkout}
+        >
+          Criar Treino
+          <FaDumbbell />
+        </Button>
       </section>
     </MainContent>
   );

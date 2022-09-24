@@ -64,8 +64,6 @@ export const Workouts = () => {
       <section className="w-[100%] bg-white p-8 rounded-[2rem] shadow-sm">
         <Swiper
           id="customSwiper"
-          onSlideChange={() => console.log('slide change')}
-          onSwiper={(swiper) => console.log(swiper)}
           modules={[Navigation, Pagination, Thumbs]}
           slidesPerView={3}
           spaceBetween={16}
@@ -115,8 +113,6 @@ export const Workouts = () => {
       <section className="w-[100%] bg-white p-8 rounded-[2rem] shadow-sm">
         <Swiper
           id="customSwiper"
-          onSlideChange={() => console.log('slide change')}
-          onSwiper={(swiper) => console.log(swiper)}
           modules={[Navigation, Pagination, Thumbs]}
           slidesPerView={3}
           spaceBetween={16}

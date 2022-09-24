@@ -13,6 +13,7 @@ import { PageLayout } from 'layouts/PageLayout';
 import '../styles/index.css';
 import { ToastContainer } from 'components/Toast/ToastContainer';
 import { serverApi } from 'services/serverApi';
+import { UserContextProvider } from 'contexts/UserContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -38,16 +39,18 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <CustomThemeProvider colorMode={colorMode} setColorMode={setColorMode}>
       <ThemeProvider theme={theme[colorMode]}>
-        {router.asPath !== '/login' ? (
-          <PageLayout>
-            <SideBar />
+        <UserContextProvider>
+          {router.asPath !== '/login' ? (
+            <PageLayout>
+              <SideBar />
+              <Component {...pageProps} />
+            </PageLayout>
+          ) : (
             <Component {...pageProps} />
-          </PageLayout>
-        ) : (
-          <Component {...pageProps} />
-        )}
-        <GlobalStyle />
-        <ToastContainer />
+          )}
+          <GlobalStyle />
+          <ToastContainer />
+        </UserContextProvider>
       </ThemeProvider>
     </CustomThemeProvider>
   );

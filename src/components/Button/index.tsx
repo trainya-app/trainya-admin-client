@@ -14,6 +14,6 @@ export const Button = ({
   ...rest
 }: ButtonProps) => (
   <Container variant={variant || 'primary'} {...rest}>
-    {isLoading ? <span>loading</span> : children}
+    {isLoading ? <span>Carregando</span> : children}
   </Container>
 );

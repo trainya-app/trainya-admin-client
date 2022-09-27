@@ -52,6 +52,7 @@ export const CreateEmployeeModal = ({ isOpen, setIsOpen }: Props) => {
       const res = await EmployeesService.store(formattedData);
       console.log(res);
       toast({ status: 'success', text: res.message });
+      setIsOpen(false);
     } catch (err: any) {
       toast({ status: 'error', text: err?.response?.data?.message });
     }

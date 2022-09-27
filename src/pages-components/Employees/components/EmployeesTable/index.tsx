@@ -11,7 +11,7 @@ export interface Employee {
   wage: number;
   phone: number;
   payment_date: string;
-  roll: {
+  role: {
     title: string;
   };
 }
@@ -61,12 +61,12 @@ export const EmployeesTable = ({
           {employees.map((employee) => (
             <tr key={`employeelistitem-${employee.id}`}>
               <td style={{ width: 0 }}>
-                <div className="image">
-                  <Image src={employee.profile_img} alt="" layout="fill" />
+                <div className="image bg-blue-400">
+                  <Image src="" alt="" layout="fill" />
                 </div>
               </td>
               <td>{employee.name}</td>
-              <td>{employee.roll.title}</td>
+              <td>{employee.role.title}</td>
               <td>{employee.phone}</td>
               <td>{employee.wage}</td>
               <td>{employee.payment_date}</td>

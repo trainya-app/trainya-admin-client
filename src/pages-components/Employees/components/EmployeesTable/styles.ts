@@ -52,7 +52,6 @@ export const Container = styled.div`
     .image {
       position: relative;
       display: inline-block;
-      background-color: red;
       width: 2.6rem;
       height: 2.6rem;
       border-radius: 0.4rem;

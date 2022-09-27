@@ -17,5 +17,10 @@ class EmployeesService {
     const { data } = await serverApi.post('/employees', input);
     return data;
   }
+
+  async getAll() {
+    const { data } = await serverApi.get('/employees');
+    return data.employees;
+  }
 }
 export default new EmployeesService();

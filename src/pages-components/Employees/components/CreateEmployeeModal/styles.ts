@@ -17,8 +17,10 @@ export const Overlay = styled(Dialog.Overlay)`
   left: 0;
   right: 0;
   bottom: 0;
-  display: 'flex';
+  display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #00000050;
+  background-color: #00000080;
+  backdrop-filter: blur(2px);
+  z-index: 999;
 `;

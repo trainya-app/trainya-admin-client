@@ -7,14 +7,15 @@ import { Container, InputContainer, Input } from './styles';
 interface HeaderProps {
   search: string;
   setSearch: Dispatch<SetStateAction<string>>;
+  handleOpenCreateEmployeeModal: () => void;
 }
 
-export const Header = ({ search, setSearch }: HeaderProps) => {
+export const Header = ({
+  search,
+  setSearch,
+  handleOpenCreateEmployeeModal,
+}: HeaderProps) => {
   const [isInputFocused, setIsInputFocused] = useState(false);
-
-  const handleOpenAddNewEmployeeModal = useCallback(() => {
-    // Open modal
-  }, []);
 
   return (
     <Container>
@@ -35,7 +36,7 @@ export const Header = ({ search, setSearch }: HeaderProps) => {
       </InputContainer>
       <Button
         type="button"
-        onClick={() => handleOpenAddNewEmployeeModal()}
+        onClick={() => handleOpenCreateEmployeeModal()}
         className="new-employee-btn"
       >
         Novo Funcionário

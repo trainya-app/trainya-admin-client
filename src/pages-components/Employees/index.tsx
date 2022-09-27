@@ -92,6 +92,9 @@ export const Employees = () => {
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [searchContent, setSearchContent] = useState('');
 
+  const [isCreateEmployeeModalOpen, setIsCreateEmployeeModalOpen] =
+    useState(false);
+
   useEffect(() => {
     setAllEmployees(EMPLOYEES_ARR);
   }, []);
@@ -120,10 +123,18 @@ export const Employees = () => {
     [allEmployees, sortColumnSelected, sortDirection, employeesSearched]
   );
 
+  function handleOpenCreateEmployeeModal() {
+    setIsCreateEmployeeModalOpen(true);
+  }
+
   return (
     <>
       <Container>
-        <Header search={searchContent} setSearch={setSearchContent} />
+        <Header
+          search={searchContent}
+          setSearch={setSearchContent}
+          handleOpenCreateEmployeeModal={handleOpenCreateEmployeeModal}
+        />
         <NavButtons>
           <Select
             options={sortList}
@@ -141,7 +152,10 @@ export const Employees = () => {
           employees={employeesSorted}
         />
       </Container>
-      <CreateEmployeeModal />
+      <CreateEmployeeModal
+        isOpen={isCreateEmployeeModalOpen}
+        setIsOpen={setIsCreateEmployeeModalOpen}
+      />
     </>
   );
 };

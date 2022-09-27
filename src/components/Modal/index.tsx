@@ -14,7 +14,7 @@ import { Overlay, ModalContainer } from './styles';
 
 interface Props {
   children: any;
-  title: string;
+  title?: string;
   isModalOpen: any;
   handleCloseModal: any;
   delayToOpen?: number;
@@ -97,7 +97,7 @@ export const Modal = ({
     >
       <ModalContainer as={motion.div} variants={modalVariants} {...rest}>
         <div className="header">
-          <h3>{title}</h3>
+          <h3>{title || ''}</h3>
           <AiOutlineCloseCircle className="icon" onClick={() => closeModal()} />
         </div>
         <div className="body">{children}</div>

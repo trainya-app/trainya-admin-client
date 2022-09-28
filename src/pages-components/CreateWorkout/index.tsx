@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import { toast } from 'utils/toast';
 import { IExercise } from 'types/IExercise';
 import ExercisesService from 'services/ExercisesService';
+import { useUser } from 'hooks/useUser';
 import { CreateExerciseModal } from './components/CreateExerciseModal';
 import { SelectedExercises } from './components/SelectedExercises';
 import { SuggestionsExercises } from './components/SuggestionsExercises';
@@ -31,6 +32,7 @@ export const CreateWorkout = () => {
     useSelectedExercises();
 
   const router = useRouter();
+  const { user } = useUser();
 
   useEffect(() => {
     (async () => {
@@ -45,13 +47,22 @@ export const CreateWorkout = () => {
 
   async function handleSaveWorkout() {
     try {
+      if (
+        !workoutTitle.current ||
+        !workoutDescription.current ||
+        !workoutDuration.current
+      ) {
+        toast({ status: 'error', text: 'Preencha os campos obrigatórios.' });
+        return;
+      }
+
       if (selectedExercises.length < 1) {
         toast({ status: 'error', text: 'Nenhum exercício foi selecionado.' });
         return;
       }
 
       // TODO: grab the employeeId
-      const employeeId = 1;
+      const employeeId = user.id;
 
       const workout = {
         employeeId,
@@ -80,6 +91,7 @@ export const CreateWorkout = () => {
         )
       );
 
+      toast({ status: 'success', text: 'Treino criado com sucesso!' });
       resetWorkoutFields();
 
       // toast({ status: 'success', text: 'Treino criado!', duration: 2000 });

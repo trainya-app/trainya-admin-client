@@ -42,7 +42,6 @@ export const CreateEmployeeModal = ({ isOpen, setIsOpen }: Props) => {
 
   const handleCreateEmployee: SubmitHandler<Inputs> = async (data) => {
     try {
-      console.log(data);
       const formattedData: Inputs & { documentValue: string } = {
         ...data,
         birthDate: dayjs(data.birthDate).format('DD/MM/YYYY'),
@@ -50,7 +49,6 @@ export const CreateEmployeeModal = ({ isOpen, setIsOpen }: Props) => {
       };
 
       const res = await EmployeesService.store(formattedData);
-      console.log(res);
       toast({ status: 'success', text: res.message });
       setIsOpen(false);
     } catch (err: any) {
@@ -60,7 +58,6 @@ export const CreateEmployeeModal = ({ isOpen, setIsOpen }: Props) => {
 
   function handleChangeDocumentValue(value: string) {
     const docType: 'RG' | 'CPF' | 'CNH' | 'CNPJ' = watch('documentType');
-    console.log({ docType });
 
     switch (docType) {
       case 'RG': {

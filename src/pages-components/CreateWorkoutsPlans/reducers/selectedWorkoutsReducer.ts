@@ -5,7 +5,11 @@ export interface SelectedWorkout extends Workout {
 }
 
 export interface SelectedWorkoutsAction {
-  type: 'ADD-WORKOUT' | 'REMOVE-WORKOUT' | 'UPDATE-WORKOUT';
+  type:
+    | 'ADD-WORKOUT'
+    | 'REMOVE-WORKOUT'
+    | 'UPDATE-WORKOUT'
+    | 'REPLACE-WORKOUTS';
   payload: any;
 }
 
@@ -43,6 +47,9 @@ export const selectedWorkoutsReducer = (
       });
 
       return { value: mappedState };
+    }
+    case 'REPLACE-WORKOUTS': {
+      return { value: action.payload };
     }
     default:
       throw new Error('The type informed is invalid');

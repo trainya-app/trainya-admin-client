@@ -15,6 +15,9 @@ import { ReactNode, useEffect, useState } from 'react';
 import { BackButton } from 'components/BackButton';
 import WorkoutService, { AllWorkouts } from 'services/WorkoutService';
 import { useRouter } from 'next/router';
+import { toast } from 'utils/toast';
+import WorkoutPlansService from 'services/WorkoutPlansService';
+import { useUser } from 'hooks/useUser';
 import { FindMemberModal } from './components/FindMemberModal';
 import { SelectedWorkouts } from './components/SelectedWorkouts';
 import { CreateExerciseModal } from '../CreateWorkout/components/CreateExerciseModal';
@@ -32,8 +35,8 @@ export interface IMember {
 }
 
 export const CreateWorkoutsPlans = () => {
-  const [selectedMember, setSelectedMember] = useState<IMember>({} as IMember);
-  const [isFindMemberModalOpen, setIsFindMemberModalOpen] = useState(false);
+  const [goal, setGoal] = useState('');
+
   const [workouts, setWorkouts] = useState<AllWorkouts>([] as AllWorkouts);
 
   const [workoutSearch, setWorkoutSearch] = useState('');
@@ -42,9 +45,10 @@ export const CreateWorkoutsPlans = () => {
     {} as AllWorkouts[0]
   );
 
-  const { selectedWorkoutsDispatch } = useSelectedWorkouts();
+  const { selectedWorkoutsDispatch, selectedWorkouts } = useSelectedWorkouts();
 
   const router = useRouter();
+  const { user } = useUser();
 
   useEffect(() => {
     (async () => {
@@ -52,10 +56,6 @@ export const CreateWorkoutsPlans = () => {
       setWorkouts(allWorkouts);
     })();
   }, []);
-
-  function handleOpenFindMemberModal() {
-    setIsFindMemberModalOpen(true);
-  }
 
   function handleSeeWorkout(workout: AllWorkouts[0]) {
     setWorkoutToSee(workout);
@@ -81,6 +81,38 @@ export const CreateWorkoutsPlans = () => {
     return false;
   });
 
+  async function handleCreateWorkoutPlan() {
+    try {
+      if (!goal) {
+        toast({ status: 'error', text: 'Preencha os campos obrigatórios' });
+        return;
+      }
+      if (selectedWorkouts.length < 1) {
+        toast({ status: 'error', text: 'Selecione pelo menos 1 treino.' });
+        return;
+      }
+
+      const workoutPlanWorkouts = selectedWorkouts.map((workout) => ({
+        workout_id: workout.id,
+      }));
+      const { workoutPlan } = await WorkoutPlansService.store({
+        goal,
+        employeeId: user.id,
+        workoutPlanWorkouts,
+      });
+      console.log({ workoutPlan });
+      resetFields();
+      toast({ status: 'success', text: 'Plano de Treino criado com sucesso!' });
+    } catch (err: any) {
+      toast({ status: 'error', text: err?.response?.data?.message });
+    }
+  }
+
+  function resetFields() {
+    selectedWorkoutsDispatch({ type: 'REPLACE-WORKOUTS', payload: [] });
+    setGoal('');
+  }
+
   return (
     <>
       <MainContent className="overflow-hidden">
@@ -91,8 +123,8 @@ export const CreateWorkoutsPlans = () => {
           </h2>
         </header>
 
-        <div className="flex justify-between mt-12">
-          {/* <SubTitle>Selecione o aluno</SubTitle> */}
+        {/* <div className="flex justify-between mt-12">
+          <SubTitle>Selecione o aluno</SubTitle>
           {selectedMember.id && (
             <div className="flex gap-4 items-center">
               <div className="img relative h-[3.6rem] w-[3.6rem] rounded-2xl overflow-hidden">
@@ -122,24 +154,25 @@ export const CreateWorkoutsPlans = () => {
           >
             Selecionar Aluno
           </Button>
-        </div>
+        </div> */}
 
-        <section className="flex w-100 gap-6 mt-10">
+        <section className="flex w-100 gap-6 mt-10 items-end">
           <div className="flex-1">
-            <SubTitle>Título do Plano de Treino</SubTitle>
+            <SubTitle>Objetivo do Plano de Treino</SubTitle>
             <input
-              placeholder="Ex: Fortalecimento Total"
+              placeholder="Ex: Fortalecimento do Abdômen"
               className="w-full h-[4.2rem] rounded-[1.2rem] px-6 mt-3"
+              value={goal}
+              onChange={(e) => setGoal(e.target.value)}
             />
           </div>
 
-          <div className="flex-1">
-            <SubTitle>Descrição</SubTitle>
-            <input
-              placeholder="Ex: Fortalecimento Total"
-              className="w-full h-[4.2rem] rounded-[1.2rem] px-6 mt-3"
-            />
-          </div>
+          <Button
+            className="h-[4.2rem] px-4"
+            onClick={() => handleCreateWorkoutPlan()}
+          >
+            Criar Plano de Treino
+          </Button>
         </section>
 
         <SelectedWorkouts />
@@ -156,8 +189,8 @@ export const CreateWorkoutsPlans = () => {
             value={workoutSearch}
             onChange={(e) => setWorkoutSearch(e.target.value)}
           />
-
-          <div className="grid grid-cols-1 gap-4 mt-6 md:grid-cols-3 lg:grid-cols-4">
+          <div className="w-100 h-[.1rem] my-10 bg-gray-300" />
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-4">
             {filteredWorkouts.map((workout) => (
               <div
                 key={`workout-plans-all-exercies-${workout.id}`}
@@ -194,11 +227,11 @@ export const CreateWorkoutsPlans = () => {
           </div>
         </section>
       </MainContent>
-      <FindMemberModal
+      {/* <FindMemberModal
         isOpen={isFindMemberModalOpen}
         setIsOpen={setIsFindMemberModalOpen}
         setSelectedMember={setSelectedMember}
-      />
+      /> */}
       <SeeWorkoutModal
         workoutToSee={workoutToSee}
         isOpen={isSeeWorkoutModalOpen}

@@ -9,26 +9,34 @@ export const SelectedWorkouts = () => {
   }
 
   return (
-    <section className="flex gap-8 mt-16">
-      {selectedWorkouts.map((workout) => (
-        <div
-          key={`selected-workout-${workout.id}`}
-          className="relative flex flex-col justify-center bg-white p-4 px-6 rounded-2xl border"
-        >
-          <button
-            type="button"
-            className="absolute right-2 bottom-0 text-blue-400"
-            style={{ right: '-1rem', top: '-1rem' }}
-            onClick={() => handleUnselectWorkout(workout.id)}
+    <section className="flex gap-8 my-12">
+      {selectedWorkouts.length > 0 ? (
+        selectedWorkouts.map((workout) => (
+          <div
+            key={`selected-workout-${workout.id}`}
+            className="relative flex flex-col justify-center bg-white p-4 px-6 rounded-2xl border"
           >
-            <AiFillCloseCircle style={{ fontSize: '2rem', color: '#575757' }} />
-          </button>
-          <p className="font-semibold text-center">{workout.title}</p>
-          <span className="text-center">
-            {workout.exercisesCount} exercícios
-          </span>
-        </div>
-      ))}
+            <button
+              type="button"
+              className="absolute right-2 bottom-0 text-blue-400"
+              style={{ right: '-1rem', top: '-1rem' }}
+              onClick={() => handleUnselectWorkout(workout.id)}
+            >
+              <AiFillCloseCircle
+                style={{ fontSize: '2rem', color: '#575757' }}
+              />
+            </button>
+            <p className="font-semibold text-center">{workout.title}</p>
+            <span className="text-center">
+              {workout.exercisesCount} exercícios
+            </span>
+          </div>
+        ))
+      ) : (
+        <p className="text-gray-500 text-3xl font-semibold bg-white p-4 rounded-2xl border">
+          Selecione um treino para este plano de treino
+        </p>
+      )}
     </section>
   );
 };

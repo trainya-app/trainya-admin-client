@@ -100,8 +100,8 @@ export const CreateWorkoutsPlans = () => {
         employeeId: user.id,
         workoutPlanWorkouts,
       });
-      resetFields();
       toast({ status: 'success', text: 'Plano de Treino criado com sucesso!' });
+      resetFields();
     } catch (err: any) {
       toast({ status: 'error', text: err?.response?.data?.message });
     }

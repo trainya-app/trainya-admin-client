@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
-import { Login as LoginComponent } from 'pages-components/Login';
 
-const Dashboard: NextPage = () => <LoginComponent />;
+// import { Dashboard as DashboardComponent } from 'pages-components/Dashboard';
+
+const Dashboard: NextPage = () => <div />;
 
 export default Dashboard;

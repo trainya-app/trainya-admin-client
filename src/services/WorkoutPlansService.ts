@@ -7,6 +7,11 @@ interface Store {
 }
 
 class WorkoutPlansService {
+  async getAll() {
+    const { data } = await serverApi.get('/workoutPlans');
+    return data?.workoutPlans;
+  }
+
   async store(input: Store) {
     const { data } = await serverApi.post('/workoutPlans', { ...input });
     return data;

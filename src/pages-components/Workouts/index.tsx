@@ -17,6 +17,7 @@ import 'swiper/css/effect-cube';
 import { useRouter } from 'next/router';
 import { FaDumbbell } from 'react-icons/fa';
 import WorkoutService from 'services/WorkoutService';
+import WorkoutPlansService from 'services/WorkoutPlansService';
 import { SeeWorkoutModal } from './components/SeeWorkoutModal';
 
 const FAKE_WORKOUTS = [
@@ -60,8 +61,28 @@ export interface Workout {
   workoutExercise: any[];
 }
 
+interface WorkoutPlan {
+  id: number;
+  employee_id: number;
+  goal: string;
+  employee: {
+    name: string;
+  };
+  workoutPlanWorkout: {
+    id: number;
+    workout: {
+      id: number;
+      title: string;
+    };
+  }[];
+  memberWorkoutPlan: any[];
+}
+
 export const Workouts = () => {
   const [workouts, setWorkouts] = useState<Workout[]>([] as Workout[]);
+  const [workoutPlans, setWorkoutPlans] = useState<WorkoutPlan[]>(
+    [] as WorkoutPlan[]
+  );
   const router = useRouter();
 
   const [isSeeWorkoutOpen, setIsSeeWorkoutOpen] = useState(false);
@@ -71,6 +92,9 @@ export const Workouts = () => {
     (async () => {
       const allWorkouts = await WorkoutService.getAll();
       setWorkouts(allWorkouts);
+
+      const allWorkoutPlan = await WorkoutPlansService.getAll();
+      setWorkoutPlans(allWorkoutPlan);
     })();
   }, []);
 
@@ -103,8 +127,8 @@ export const Workouts = () => {
             loop
             style={{ borderRadius: '2rem' }}
           >
-            {FAKE_WORKOUTS.map((workout) => (
-              <SwiperSlide key={workout.id}>
+            {workoutPlans.map((workoutPlan) => (
+              <SwiperSlide key={`workout-plan-list-${workoutPlan.id}`}>
                 <div
                   style={{
                     backgroundImage:
@@ -113,7 +137,7 @@ export const Workouts = () => {
                   className="relative flex flex-col justify-center items-center gap-6 h-64 p-4 rounded-[2rem]  text-white "
                 >
                   <span className="text-white font-bold text-3xl">
-                    Foco em fortalecimento
+                    {workoutPlan.goal}
                   </span>
 
                   <Button
@@ -124,7 +148,9 @@ export const Workouts = () => {
                   </Button>
                   <footer className="absolute flex items-center gap-2 bottom-4 right-6 mt-auto">
                     <MdOutlinePeopleAlt />
-                    <span className="font-bold">129</span>
+                    <span className="font-bold">
+                      {workoutPlan.memberWorkoutPlan.length}
+                    </span>
                   </footer>
                 </div>
               </SwiperSlide>

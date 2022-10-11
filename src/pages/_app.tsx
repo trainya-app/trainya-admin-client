@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { useState } from 'react';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
@@ -14,6 +15,12 @@ import '../styles/index.css';
 import { ToastContainer } from 'components/Toast/ToastContainer';
 import { serverApi } from 'services/serverApi';
 import { UserContextProvider } from 'contexts/UserContext';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/effect-cube';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();

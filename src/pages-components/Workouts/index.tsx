@@ -8,12 +8,6 @@ import { MainContent } from 'layouts/MainContent';
 import { SubTitle } from 'pages-components/Employees/components/SubTitle';
 import { Button } from 'components/Button';
 
-// eslint-disable-next-line import/no-unresolved
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
-import 'swiper/css/effect-cube';
 import { useRouter } from 'next/router';
 import { FaDumbbell } from 'react-icons/fa';
 import WorkoutService from 'services/WorkoutService';
@@ -61,7 +55,7 @@ export interface Workout {
   workoutExercise: any[];
 }
 
-interface WorkoutPlan {
+export interface WorkoutPlan {
   id: number;
   employee_id: number;
   goal: string;
@@ -99,7 +93,7 @@ export const Workouts = () => {
   }, []);
 
   function handleGoToCreateWorkoutPlan() {
-    router.push('/workouts/create-workout-plan');
+    router.push('/workout-plan/create-workout-plan');
   }
 
   function handleGoToCreateWorkout() {
@@ -110,6 +104,10 @@ export const Workouts = () => {
     setIsSeeWorkoutOpen(true);
 
     setWorkoutToSee(workout);
+  }
+
+  function handleSeeWorkoutPlan(id: any) {
+    router.push(`/workout-plan/${id}`);
   }
 
   return (
@@ -143,6 +141,7 @@ export const Workouts = () => {
                   <Button
                     type="button"
                     className="w-full max-w-[150px] h-[3.6rem]"
+                    onClick={() => handleSeeWorkoutPlan(workoutPlan.id)}
                   >
                     Ver mais
                   </Button>

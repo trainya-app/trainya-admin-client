@@ -71,6 +71,11 @@ class WorkoutsService {
     const { data } = await serverApi.get('/workouts');
     return data?.workouts;
   }
+
+  async getOne(id: any) {
+    const { data } = await serverApi.get(`/workouts/${id}`);
+    return data.workout;
+  }
 }
 
 export default new WorkoutsService();

@@ -16,6 +16,11 @@ class WorkoutPlansService {
     const { data } = await serverApi.post('/workoutPlans', { ...input });
     return data;
   }
+
+  async getOne(id: number) {
+    const { data } = await serverApi(`/workoutPlans/${id}`);
+    return data.workoutPlan;
+  }
 }
 
 export default new WorkoutPlansService();

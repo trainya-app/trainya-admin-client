@@ -120,6 +120,7 @@ export const WorkoutPlan = () => {
       <FindMemberModal
         isOpen={isSelectMemberModalOpen}
         setIsOpen={setIsSelectMemberModalOpen}
+        workoutPlanId={Number(workoutPlanId)}
       />
     </>
   );

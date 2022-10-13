@@ -12,89 +12,22 @@ import {
   useState,
 } from 'react';
 import GymsService, { GymMember } from 'services/GymsService';
+import MembersWorkoutPlans from 'services/MembersWorkoutPlans';
+import { toast } from 'utils/toast';
 
 interface Props {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   title?: string;
+  workoutPlanId: number;
 }
 
-const MOCK_MEMBERS = [
-  {
-    id: 1,
-    name: 'Jul Martins',
-    profileImage: 'https://github.com/bryanmaraujo544.png',
-    document: {
-      name: 'RG',
-      value: '544709834',
-    },
-  },
-  {
-    id: 2,
-    name: 'Gordão da XRE 191',
-    profileImage: 'https://github.com/gordo.png',
-    document: {
-      name: 'RG',
-      value: '544709834',
-    },
-  },
-  {
-    id: 3,
-    name: 'Bryan Martins',
-    profileImage: 'https://github.com/bryanmaraujo544.png',
-    document: {
-      name: 'RG',
-      value: '544709834',
-    },
-  },
-  {
-    id: 4,
-    name: 'Bryan Martins',
-    profileImage: 'https://github.com/bryanmaraujo544.png',
-    document: {
-      name: 'RG',
-      value: '544709834',
-    },
-  },
-  {
-    id: 5,
-    name: 'Bryan Martins',
-    profileImage: 'https://github.com/bryanmaraujo544.png',
-    document: {
-      name: 'RG',
-      value: '544709834',
-    },
-  },
-  {
-    id: 6,
-    name: 'Bryan Martins',
-    profileImage: 'https://github.com/bryanmaraujo544.png',
-    document: {
-      name: 'RG',
-      value: '544709834',
-    },
-  },
-  {
-    id: 36,
-    name: 'Bryan Martins',
-    profileImage: 'https://github.com/bryanmaraujo544.png',
-    document: {
-      name: 'RG',
-      value: '544709834',
-    },
-  },
-  {
-    id: 7,
-    name: 'Bryan Martins',
-    profileImage: 'https://github.com/bryanmaraujo544.png',
-    document: {
-      name: 'RG',
-      value: '544709834',
-    },
-  },
-];
-
-export const FindMemberModal = ({ isOpen, setIsOpen, title }: Props) => {
+export const FindMemberModal = ({
+  isOpen,
+  setIsOpen,
+  title,
+  workoutPlanId,
+}: Props) => {
   const [memberSearch, setMemberSearch] = useState('');
   const [members, setMembers] = useState<GymMember[]>([] as GymMember[]);
   const { user } = useUser();
@@ -129,10 +62,17 @@ export const FindMemberModal = ({ isOpen, setIsOpen, title }: Props) => {
     return false;
   });
 
-  function handleSelectUser(member: GymMember) {
-    console.log({ member });
-    // setSelectedMember(member);
-    setIsOpen(false);
+  async function handleSelectUser(member: GymMember) {
+    try {
+      await MembersWorkoutPlans.store({ memberId: member.id, workoutPlanId });
+      toast({
+        status: 'success',
+        text: `O aluno ${member.member.name} foi inscrito em um plano de treino.`,
+      });
+      setIsOpen(false);
+    } catch (err: any) {
+      toast({ status: 'error', text: err?.response?.data?.message });
+    }
   }
 
   return (

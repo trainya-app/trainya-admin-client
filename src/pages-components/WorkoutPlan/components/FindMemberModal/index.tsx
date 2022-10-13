@@ -1,6 +1,7 @@
 import { Button } from 'components/Button';
 import { Input } from 'components/Input';
 import { Modal } from 'components/Modal';
+import { useUser } from 'hooks/useUser';
 import Image from 'next/image';
 import { IMember } from 'pages-components/CreateWorkoutsPlans';
 import {
@@ -10,12 +11,12 @@ import {
   useEffect,
   useState,
 } from 'react';
+import GymsService, { GymMember } from 'services/GymsService';
 
 interface Props {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   title?: string;
-  setSelectedMember: Dispatch<SetStateAction<IMember>>;
 }
 
 const MOCK_MEMBERS = [
@@ -93,17 +94,22 @@ const MOCK_MEMBERS = [
   },
 ];
 
-export const FindMemberModal = ({
-  isOpen,
-  setIsOpen,
-  title,
-  setSelectedMember,
-}: Props) => {
+export const FindMemberModal = ({ isOpen, setIsOpen, title }: Props) => {
   const [memberSearch, setMemberSearch] = useState('');
-  const [members, setMembers] = useState<IMember[]>([] as IMember[]);
+  const [members, setMembers] = useState<GymMember[]>([] as GymMember[]);
+  const { user } = useUser();
+
+  console.log('user', user);
 
   useEffect(() => {
-    setMembers(MOCK_MEMBERS);
+    (async () => {
+      try {
+        const gymMembers = await GymsService.getMembers(
+          user.gymEmployee.gym_id as number
+        );
+        setMembers(gymMembers);
+      } catch (err: any) {}
+    })();
   }, []);
 
   function handleCloseModal() {
@@ -123,8 +129,9 @@ export const FindMemberModal = ({
     return false;
   });
 
-  function handleSelectUser(member: IMember) {
-    setSelectedMember(member);
+  function handleSelectUser(member: GymMember) {
+    console.log({ member });
+    // setSelectedMember(member);
     setIsOpen(false);
   }
 
@@ -141,25 +148,22 @@ export const FindMemberModal = ({
           value={memberSearch}
           onChange={(e) => handleSearchMember(e.target.value)}
         />
-        {filteredMembers.map((member) => (
+        {filteredMembers.map((gymMember) => (
           <div
             className="flex flex-col mt-8 gap-6 h-full oveflow-y-scroll"
-            key={member.id}
+            key={gymMember.id}
           >
             <div className="flex items-center gap-2">
-              <div className="img relative w-16 h-16 rounded overflow-hidden mr-4">
-                <Image src={member.profileImage} layout="fill" alt="profile" />
-              </div>
+              <div className="img relative w-16 h-16 rounded overflow-hidden mr-4 bg-blue-400" />
               <div>
-                <p className="text-gray-900 font-bold">{member.name}</p>
-                <p className="text-gray-600 text-2xl">
-                  {member.document.name}: {member.document.value}
+                <p className="text-gray-900 font-bold">
+                  {gymMember.member.name}
                 </p>
               </div>
               <Button
                 className="ml-auto h-[3.2rem] px-4"
                 variant="outlined"
-                onClick={() => handleSelectUser(member)}
+                onClick={() => handleSelectUser(gymMember)}
               >
                 Selecionar
               </Button>

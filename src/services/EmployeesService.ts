@@ -10,6 +10,7 @@ interface Store {
   profileImg?: string;
   documentType: 'RG' | 'CPF' | 'CNH' | 'CNPJ';
   documentValue: string;
+  gymId: number;
 }
 
 class EmployeesService {

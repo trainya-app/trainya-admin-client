@@ -18,7 +18,7 @@ import { useRouter } from 'next/router';
 import { toast } from 'utils/toast';
 import WorkoutPlansService from 'services/WorkoutPlansService';
 import { useUser } from 'hooks/useUser';
-import { FindMemberModal } from './components/FindMemberModal';
+import { FindMemberModal } from '../WorkoutPlan/components/FindMemberModal';
 import { SelectedWorkouts } from './components/SelectedWorkouts';
 import { CreateExerciseModal } from '../CreateWorkout/components/CreateExerciseModal';
 import { SeeWorkoutModal } from './components/SeeWorkoutModal';
@@ -122,39 +122,6 @@ export const CreateWorkoutsPlans = () => {
           </h2>
         </header>
 
-        {/* <div className="flex justify-between mt-12">
-          <SubTitle>Selecione o aluno</SubTitle>
-          {selectedMember.id && (
-            <div className="flex gap-4 items-center">
-              <div className="img relative h-[3.6rem] w-[3.6rem] rounded-2xl overflow-hidden">
-                <Image
-                  layout="fill"
-                  src={
-                    selectedMember?.profileImage ||
-                    'https://github.com/bryanmaraujo544.png'
-                  }
-                  alt={selectedMember?.name}
-                />
-              </div>
-              <div className="flex flex-col">
-                <p className="font-semibold text-gray-900">
-                  Nome: {selectedMember?.name}
-                </p>
-                <p className="text-[1.4rem] text-gray-600">
-                  {selectedMember?.document?.name}:{' '}
-                  {selectedMember?.document?.value}
-                </p>
-              </div>
-            </div>
-          )}
-          <Button
-            className="h-16 px-12"
-            onClick={() => handleOpenFindMemberModal()}
-          >
-            Selecionar Aluno
-          </Button>
-        </div> */}
-
         <section className="flex w-100 gap-6 mt-10 items-end">
           <div className="flex-1">
             <SubTitle>Objetivo do Plano de Treino</SubTitle>
@@ -226,11 +193,7 @@ export const CreateWorkoutsPlans = () => {
           </div>
         </section>
       </MainContent>
-      {/* <FindMemberModal
-        isOpen={isFindMemberModalOpen}
-        setIsOpen={setIsFindMemberModalOpen}
-        setSelectedMember={setSelectedMember}
-      /> */}
+
       <SeeWorkoutModal
         workoutToSee={workoutToSee}
         isOpen={isSeeWorkoutModalOpen}

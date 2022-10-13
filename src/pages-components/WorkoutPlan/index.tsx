@@ -1,5 +1,11 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { Navigation, Pagination, Thumbs } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { toast } from 'utils/toast';
+import { MdLibraryAdd } from 'react-icons/md';
+import Image from 'next/image';
+
 import {
   Workout,
   WorkoutPlan as IWorkoutPlan,
@@ -10,9 +16,7 @@ import { SubTitle } from 'pages-components/Employees/components/SubTitle';
 import { SeeWorkoutModal } from 'pages-components/Workouts/components/SeeWorkoutModal';
 import WorkoutPlansService from 'services/WorkoutPlansService';
 import WorkoutService from 'services/WorkoutService';
-import { Navigation, Pagination, Thumbs } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { toast } from 'utils/toast';
+import { FindMemberModal } from './components/FindMemberModal';
 
 export const WorkoutPlan = () => {
   console.log('workout plan');
@@ -24,6 +28,8 @@ export const WorkoutPlan = () => {
 
   const [isSeeWorkoutOpen, setIsSeeWorkoutOpen] = useState(false);
   const [workoutToSee, setWorkoutToSee] = useState<Workout>({} as Workout);
+
+  const [isSelectMemberModalOpen, setIsSelectMemberModalOpen] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -53,14 +59,18 @@ export const WorkoutPlan = () => {
     }
   }
 
+  async function handleOpenModalToSelectMember() {
+    setIsSelectMemberModalOpen(true);
+  }
+
   return (
     <>
-      <MainContent className="overflow-hidden">
+      <MainContent className="overflow-hidden ">
         <SubTitle className="text-4xl">
           Plano de treino - {workoutPlan.goal}
         </SubTitle>
 
-        <p className="mt-8 mb-4 text-gray-500 font-medium">Treinos</p>
+        <p className="mt-8 mb-4 text-gray-500 font-medium text-3xl">Treinos</p>
         <section className="w-[100%] bg-white p-8 rounded-[2rem] shadow-sm ">
           <Swiper
             id="customSwiper"
@@ -91,12 +101,25 @@ export const WorkoutPlan = () => {
             ))}
           </Swiper>
         </section>
+
+        <Button
+          className="h-[4.8rem] px-8 flex items-center gap-6 mt-8"
+          onClick={() => handleOpenModalToSelectMember()}
+        >
+          Adicionar aluno ao plano de treino
+          <MdLibraryAdd />
+        </Button>
       </MainContent>
 
       <SeeWorkoutModal
         isOpen={isSeeWorkoutOpen}
         setIsOpen={setIsSeeWorkoutOpen}
         workoutToSee={workoutToSee}
+      />
+
+      <FindMemberModal
+        isOpen={isSelectMemberModalOpen}
+        setIsOpen={setIsSelectMemberModalOpen}
       />
     </>
   );

@@ -1,6 +1,7 @@
 import { Button } from 'components/Button';
 import { Modal } from 'components/Modal';
 import dayjs from 'dayjs';
+import { useUser } from 'hooks/useUser';
 import {
   Dispatch,
   FormEvent,
@@ -40,12 +41,15 @@ export const CreateEmployeeModal = ({ isOpen, setIsOpen }: Props) => {
     formState: { errors },
   } = useForm<Inputs>();
 
+  const { user } = useUser();
+
   const handleCreateEmployee: SubmitHandler<Inputs> = async (data) => {
     try {
-      const formattedData: Inputs & { documentValue: string } = {
+      const formattedData: Inputs & { documentValue: string; gymId: number } = {
         ...data,
         birthDate: dayjs(data.birthDate).format('DD/MM/YYYY'),
         documentValue: documentValue.replace(/\W/g, ''),
+        gymId: user.gymEmployee.gym_id as number,
       };
 
       const res = await EmployeesService.store(formattedData);

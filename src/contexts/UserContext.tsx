@@ -28,6 +28,9 @@ interface User {
   profile_img: string;
   created_at: string;
   updated_at: string;
+  gymEmployee: {
+    gym_id?: number;
+  };
 }
 
 export interface UserContextProps {
@@ -48,6 +51,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     (async () => {
       const { data } = await serverApi.get(`/employees/${userToken?.id}`);
+      console.log(data);
       setUser(data.employee);
     })();
   }, []);

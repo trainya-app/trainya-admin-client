@@ -1,22 +1,53 @@
+import { Button } from 'components/Button';
 import { Modal } from 'components/Modal';
 import { Workout } from 'pages-components/Workouts';
 import { Dispatch, SetStateAction } from 'react';
+import WorkoutService from 'services/WorkoutService';
+import { toast } from 'utils/toast';
 
 interface Props {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   workoutToSee: Workout;
+  setWorkouts: Dispatch<SetStateAction<Workout[]>>;
 }
 
-export const SeeWorkoutModal = ({ isOpen, setIsOpen, workoutToSee }: Props) => {
+export const SeeWorkoutModal = ({
+  isOpen,
+  setIsOpen,
+  workoutToSee,
+  setWorkouts,
+}: Props) => {
   function handleCloseModal() {
     setIsOpen(false);
   }
 
+  async function handleDeleteWorkout() {
+    try {
+      await WorkoutService.delete(workoutToSee.id);
+      toast({ status: 'success', text: 'Treino excluído. ' });
+      setWorkouts((prev) => prev.filter(({ id }) => workoutToSee.id !== id));
+      setIsOpen(false);
+    } catch (err: any) {
+      toast({ status: 'error', text: 'Erro ao excluir o treino. ' });
+    }
+  }
+
   return (
     <Modal isModalOpen={isOpen} handleCloseModal={handleCloseModal} title="">
-      <p className="text-4xl font-bold">{workoutToSee.title}</p>
-      <p className="text-gray-500">{workoutToSee.description}</p>
+      <div className="flex justify-between items-center pr-4">
+        <div>
+          <p className="text-4xl font-bold">{workoutToSee.title}</p>
+          <p className="text-gray-500">{workoutToSee.description}</p>
+        </div>
+        <Button
+          variant="danger"
+          className="px-6 h-[3.8rem]"
+          onClick={() => handleDeleteWorkout()}
+        >
+          Remover
+        </Button>
+      </div>
 
       <hr className="mx-6 my-8" />
 

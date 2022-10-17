@@ -218,6 +218,7 @@ export const Workouts = () => {
         isOpen={isSeeWorkoutOpen}
         setIsOpen={setIsSeeWorkoutOpen}
         workoutToSee={workoutToSee}
+        setWorkouts={setWorkouts}
       />
     </>
   );

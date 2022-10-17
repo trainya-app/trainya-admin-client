@@ -76,6 +76,11 @@ class WorkoutsService {
     const { data } = await serverApi.get(`/workouts/${id}`);
     return data.workout;
   }
+
+  async delete(id: any) {
+    const { data } = await serverApi.delete(`/workouts/${id}`);
+    return data;
+  }
 }
 
 export default new WorkoutsService();

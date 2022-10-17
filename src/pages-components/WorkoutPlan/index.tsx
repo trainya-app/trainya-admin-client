@@ -17,6 +17,7 @@ import { SeeWorkoutModal } from 'pages-components/Workouts/components/SeeWorkout
 import WorkoutPlansService from 'services/WorkoutPlansService';
 import WorkoutService from 'services/WorkoutService';
 import { FindMemberModal } from './components/FindMemberModal';
+import { MembersEngaged } from './components/MembersEngaged';
 
 export const WorkoutPlan = () => {
   console.log('workout plan');
@@ -40,8 +41,8 @@ export const WorkoutPlan = () => {
         });
         return;
       }
-
       const res = await WorkoutPlansService.getOne(Number(workoutPlanId));
+      console.log('WORKOUT PLAN', res);
       setWorkoutPlan(res);
     })();
   }, []);
@@ -109,6 +110,10 @@ export const WorkoutPlan = () => {
           Adicionar aluno ao plano de treino
           <MdLibraryAdd />
         </Button>
+
+        <hr className="my-12" />
+
+        <MembersEngaged members={workoutPlan.memberWorkoutPlan} />
       </MainContent>
 
       <SeeWorkoutModal

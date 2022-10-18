@@ -13,6 +13,12 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import EmployeesService from 'services/EmployeesService';
 import { formatCNPJ, formatCPF, formatRG } from 'utils/masks';
 import { toast } from 'utils/toast';
+import {
+  isRGValid,
+  isCNPJValid,
+  isCNHValid,
+  isCPFValid,
+} from '../../../../utils/document-validators';
 
 interface Props {
   isOpen: boolean;
@@ -45,6 +51,51 @@ export const CreateEmployeeModal = ({ isOpen, setIsOpen }: Props) => {
 
   const handleCreateEmployee: SubmitHandler<Inputs> = async (data) => {
     try {
+      switch (data.documentType) {
+        case 'RG': {
+          if (!isRGValid(documentValue)) {
+            toast({
+              status: 'error',
+              text: 'Documento de RG inválido. ',
+            });
+            return;
+          }
+          break;
+        }
+        case 'CPF': {
+          if (!isCPFValid(documentValue)) {
+            toast({
+              status: 'error',
+              text: 'Documento de CPF inválido. ',
+            });
+            return;
+          }
+          break;
+        }
+        case 'CNH': {
+          if (!isCNHValid(documentValue)) {
+            toast({
+              status: 'error',
+              text: 'Documento de CNH inválido. ',
+            });
+            return;
+          }
+          break;
+        }
+        case 'CNPJ': {
+          if (!isCNPJValid(documentValue)) {
+            toast({
+              status: 'error',
+              text: 'Documento de CNPJ inválido. ',
+            });
+            return;
+          }
+          break;
+        }
+        default: {
+          throw new Error('Documento não encontrado.');
+        }
+      }
       const formattedData: Inputs & { documentValue: string; gymId: number } = {
         ...data,
         birthDate: dayjs(data.birthDate).format('DD/MM/YYYY'),

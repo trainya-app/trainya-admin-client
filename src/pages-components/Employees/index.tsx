@@ -9,15 +9,6 @@ import { Container, NavButtons } from './styles';
 import { Employee, EmployeesTable } from './components/EmployeesTable';
 import { CreateEmployeeModal } from './components/CreateEmployeeModal';
 
-// const filterList = [
-//   'Filtrar',
-//   'Option 1',
-//   'Option 2',
-//   'Option 3',
-//   'Option 4',
-//   'Option 5',
-// ];
-
 const sortList = [
   {
     text: 'Ordernar',
@@ -45,45 +36,7 @@ const sortList = [
   },
 ];
 
-const EMPLOYEES_ARR = [
-  {
-    id: 23,
-    profile_img: 'https://github.com/bryanmaraujo544.png',
-    name: 'Bryan',
-    roll: {
-      title: 'Instrutor',
-    },
-    phone: 11990002676,
-    wage: 225000,
-    payment_date: '2022-08-02T22:37:15.143-03:00',
-  },
-  {
-    id: 235,
-    profile_img: 'https://github.com/bryanmaraujo544.png',
-    name: 'Bryan',
-    roll: {
-      title: 'Instrutor',
-    },
-    phone: 11990002676,
-    wage: 2235000,
-    payment_date: '2022-08-02T22:37:15.143-03:00',
-  },
-  {
-    id: 24,
-    profile_img: 'https://github.com/diego3.png',
-    name: 'Fernado martins',
-    roll: {
-      title: 'Professor',
-    },
-    phone: 11990002676,
-    wage: 426000,
-    payment_date: '2022-08-02T22:37:15.143-03:00',
-  },
-];
-
 export const Employees = () => {
-  // const [isFilterSelectOpen, setIsFilterSelectOpen] = useState(false);
-  // const [filterSelected, setFilterSelected] = useState(0);
   const [allEmployees, setAllEmployees] = useState<Employee[]>(
     [] as Employee[]
   );
@@ -154,6 +107,7 @@ export const Employees = () => {
           sortDirection={sortDirection}
           setSortDirection={setSortDirection}
           employees={employeesSorted}
+          setEmployees={setAllEmployees}
         />
       </Container>
       <CreateEmployeeModal

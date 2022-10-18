@@ -23,5 +23,10 @@ class EmployeesService {
     const { data } = await serverApi.get('/employees');
     return data.employees;
   }
+
+  async delete(employeeId: number) {
+    const { data } = await serverApi.delete(`/employees/${employeeId}`);
+    return data;
+  }
 }
 export default new EmployeesService();

@@ -1,13 +1,9 @@
-import type {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  NextPage,
-} from 'next';
-import { Employees as EmployeesComponent } from 'pages-components/Employees';
+import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next';
+import { Members as MembersComponent } from 'pages-components/Members';
 import { serverApi } from 'services/serverApi';
 import nookies from 'nookies';
 
-const Employees: NextPage = () => <EmployeesComponent />;
+const Members: NextPage = () => <MembersComponent />;
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
@@ -36,4 +32,4 @@ export const getServerSideProps: GetServerSideProps = async (
   }
 };
 
-export default Employees;
+export default Members;

@@ -51,7 +51,6 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     (async () => {
       const { data } = await serverApi.get(`/employees/${userToken?.id}`);
-      console.log(data);
       setUser(data.employee);
     })();
   }, []);

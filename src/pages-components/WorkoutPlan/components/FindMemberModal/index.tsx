@@ -32,8 +32,6 @@ export const FindMemberModal = ({
   const [members, setMembers] = useState<GymMember[]>([] as GymMember[]);
   const { user } = useUser();
 
-  console.log('user', user);
-
   useEffect(() => {
     (async () => {
       try {

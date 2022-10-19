@@ -5,14 +5,13 @@ export interface GymMember {
   gym: {
     name: string;
   };
-  member: { name: string };
+  member: { id: number; name: string; email: string; phone: string };
   member_id: number;
 }
 
 class GymsService {
   async getMembers(id: number): Promise<GymMember[]> {
     const { data } = await serverApi.get(`/gymMembers/${id}`);
-    console.log('DATA', data);
     return data.gymMembers as GymMember[];
   }
 }

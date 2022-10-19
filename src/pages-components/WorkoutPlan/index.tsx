@@ -16,11 +16,12 @@ import { SubTitle } from 'pages-components/Employees/components/SubTitle';
 import { SeeWorkoutModal } from 'pages-components/Workouts/components/SeeWorkoutModal';
 import WorkoutPlansService from 'services/WorkoutPlansService';
 import WorkoutService from 'services/WorkoutService';
+import { parseCookies } from 'nookies';
+import { serverApi } from 'services/serverApi';
 import { FindMemberModal } from './components/FindMemberModal';
 import { MembersEngaged } from './components/MembersEngaged';
 
 export const WorkoutPlan = () => {
-  console.log('workout plan');
   const router = useRouter();
   const workoutPlanId = router.query.id;
   const [workoutPlan, setWorkoutPlan] = useState<IWorkoutPlan>(
@@ -42,18 +43,14 @@ export const WorkoutPlan = () => {
         return;
       }
       const res = await WorkoutPlansService.getOne(Number(workoutPlanId));
-      console.log('WORKOUT PLAN', res);
       setWorkoutPlan(res);
     })();
   }, []);
-  console.log({ workoutPlan });
 
   async function handleSeeWorkout(workoutId: number) {
-    console.log({ workoutId });
     try {
       setIsSeeWorkoutOpen(true);
       const workout = await WorkoutService.getOne(workoutId);
-      console.log({ workout });
       setWorkoutToSee(workout);
     } catch (err) {
       toast({ status: 'error', text: 'Não foi possível carregar o treino.' });
@@ -120,6 +117,7 @@ export const WorkoutPlan = () => {
         isOpen={isSeeWorkoutOpen}
         setIsOpen={setIsSeeWorkoutOpen}
         workoutToSee={workoutToSee}
+        setWorkouts=""
       />
 
       <FindMemberModal

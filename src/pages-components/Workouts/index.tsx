@@ -12,6 +12,8 @@ import { useRouter } from 'next/router';
 import { FaDumbbell } from 'react-icons/fa';
 import WorkoutService from 'services/WorkoutService';
 import WorkoutPlansService from 'services/WorkoutPlansService';
+import { parseCookies } from 'nookies';
+import { serverApi } from 'services/serverApi';
 import { SeeWorkoutModal } from './components/SeeWorkoutModal';
 
 const FAKE_WORKOUTS = [

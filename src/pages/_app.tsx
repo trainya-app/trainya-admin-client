@@ -21,6 +21,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/effect-cube';
+import { parseCookies } from 'nookies';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -39,9 +40,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   });
 
-  const token =
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYzNTIyMjc3LCJleHAiOjE2NjYxMTQyNzd9.IyPEPbroW5k147XHZj7pTms2g_KHZ_-IG5tuu-sx8RM';
-  serverApi.defaults.headers.Authorization = token;
+  const { token } = parseCookies();
+
+  serverApi.defaults.headers.Authorization = `Bearer ${token}`;
 
   return (
     <CustomThemeProvider colorMode={colorMode} setColorMode={setColorMode}>

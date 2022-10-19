@@ -18,7 +18,7 @@ class WorkoutPlansService {
   }
 
   async getOne(id: number) {
-    const { data } = await serverApi(`/workoutPlans/${id}`);
+    const { data } = await serverApi.get(`/workoutPlans/${id}`);
     return data.workoutPlan;
   }
 }

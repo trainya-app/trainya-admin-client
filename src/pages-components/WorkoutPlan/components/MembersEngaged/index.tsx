@@ -5,8 +5,6 @@ import { useCallback, useState } from 'react';
 import { GymMember } from 'services/GymsService';
 
 export const MembersEngaged = ({ members }: { members: any }) => {
-  console.log({ members });
-
   const [memberSearch, setMemberSearch] = useState('');
 
   function handleSeeMember(member: any) {

@@ -9,7 +9,7 @@ interface Props {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   workoutToSee: Workout;
-  setWorkouts: Dispatch<SetStateAction<Workout[]>>;
+  setWorkouts?: Dispatch<SetStateAction<Workout[]>> | any;
 }
 
 export const SeeWorkoutModal = ({
@@ -26,7 +26,12 @@ export const SeeWorkoutModal = ({
     try {
       await WorkoutService.delete(workoutToSee.id);
       toast({ status: 'success', text: 'Treino excluído. ' });
-      setWorkouts((prev) => prev.filter(({ id }) => workoutToSee.id !== id));
+
+      if (setWorkouts) {
+        setWorkouts((prev: any) =>
+          prev.filter(({ id }: any) => workoutToSee.id !== id)
+        );
+      }
       setIsOpen(false);
     } catch (err: any) {
       toast({ status: 'error', text: 'Erro ao excluir o treino. ' });

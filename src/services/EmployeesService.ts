@@ -1,3 +1,4 @@
+import { AxiosInstance } from 'axios';
 import { serverApi } from './serverApi';
 
 interface Store {

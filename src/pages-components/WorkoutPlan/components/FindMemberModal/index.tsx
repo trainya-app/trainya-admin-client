@@ -13,13 +13,19 @@ import {
 } from 'react';
 import GymsService, { GymMember } from 'services/GymsService';
 import MembersWorkoutPlans from 'services/MembersWorkoutPlans';
+import WorkoutPlansService from 'services/WorkoutPlansService';
 import { toast } from 'utils/toast';
+import {
+  Workout,
+  WorkoutPlan as IWorkoutPlan,
+} from 'pages-components/Workouts';
 
 interface Props {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   title?: string;
   workoutPlanId: number;
+  setWorkoutPlan: Dispatch<SetStateAction<IWorkoutPlan>>;
 }
 
 export const FindMemberModal = ({
@@ -27,6 +33,7 @@ export const FindMemberModal = ({
   setIsOpen,
   title,
   workoutPlanId,
+  setWorkoutPlan,
 }: Props) => {
   const [memberSearch, setMemberSearch] = useState('');
   const [members, setMembers] = useState<GymMember[]>([] as GymMember[]);
@@ -63,6 +70,9 @@ export const FindMemberModal = ({
   async function handleSelectUser(member: GymMember) {
     try {
       await MembersWorkoutPlans.store({ memberId: member.id, workoutPlanId });
+
+      const res = await WorkoutPlansService.getOne(Number(workoutPlanId));
+      setWorkoutPlan(res);
       toast({
         status: 'success',
         text: `O aluno ${member.member.name} foi inscrito em um plano de treino.`,

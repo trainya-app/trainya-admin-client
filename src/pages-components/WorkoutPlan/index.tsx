@@ -144,6 +144,7 @@ export const WorkoutPlan = () => {
         isOpen={isSelectMemberModalOpen}
         setIsOpen={setIsSelectMemberModalOpen}
         workoutPlanId={Number(workoutPlanId)}
+        setWorkoutPlan={setWorkoutPlan}
       />
 
       <DeleteWorkoutPlanModal

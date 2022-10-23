@@ -57,6 +57,7 @@ export const CreateEmployeeModal = ({ isOpen, setIsOpen }: Props) => {
           break;
         }
         case 'CPF': {
+          console.log(documentValue);
           if (!isCPFValid(documentValue)) {
             toast({
               status: 'error',

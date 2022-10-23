@@ -66,7 +66,7 @@ export const Employees = () => {
         Object.values(employee)
           .join('')
           .toLowerCase()
-          .includes(searchContent.toLowerCase())
+          .includes(searchContent.toLowerCase().trim())
       ),
     [searchContent, allEmployees]
   );

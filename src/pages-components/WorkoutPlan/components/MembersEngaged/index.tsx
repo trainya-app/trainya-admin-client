@@ -11,17 +11,17 @@ export const MembersEngaged = ({ members }: { members: any }) => {
     console.log(member);
   }
 
-  const filteredMembers = members?.filter((member: any) => {
-    const objStr = Object.values(member).join('');
-    if (objStr.toLowerCase().includes(memberSearch.toLowerCase())) {
-      return true;
-    }
-    return false;
-  });
+  const filteredMembers = members?.filter((member: any) =>
+    JSON.stringify(member)
+      .toLowerCase()
+      .includes(memberSearch.toLowerCase().trim())
+  );
 
   return (
     <div className="flex flex-col p-2 overflow-y-hidden">
-      <SubTitle className="mb-6">Alunos registrado ao plano de treino</SubTitle>
+      <SubTitle className="mb-6">
+        Alunos registrados ao plano de treino
+      </SubTitle>
       <Input
         placeholder="Digite o nome do usuário"
         value={memberSearch}

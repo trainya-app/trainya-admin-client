@@ -73,10 +73,9 @@ export const Members = () => {
   const employeesSearched = useMemo(
     () =>
       allMembers.filter((member) =>
-        Object.values(member)
-          .join('')
+        JSON.stringify(member)
           .toLowerCase()
-          .includes(search.toLowerCase())
+          .includes(search.toLowerCase().trim())
       ),
     [search, allMembers]
   );

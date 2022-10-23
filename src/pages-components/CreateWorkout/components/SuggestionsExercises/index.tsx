@@ -45,7 +45,7 @@ export const SuggestionsExercises = ({
   const filteredSuggestionWorkouts = suggestionExercises.filter(
     (suggestion) => {
       const obj = Object.values(suggestion).join('').toLowerCase();
-      return obj.includes(searchExercises.toLowerCase());
+      return obj.includes(searchExercises.toLowerCase().trim());
     }
   );
 

@@ -4,7 +4,6 @@ import { Navigation, Pagination, Thumbs } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { toast } from 'utils/toast';
 import { MdLibraryAdd } from 'react-icons/md';
-import Image from 'next/image';
 
 import {
   Workout,
@@ -13,14 +12,12 @@ import {
 import { Button } from 'components/Button';
 import { MainContent } from 'layouts/MainContent';
 import { SubTitle } from 'pages-components/Employees/components/SubTitle';
-import { SeeWorkoutModal } from 'pages-components/Workouts/components/SeeWorkoutModal';
 import WorkoutPlansService from 'services/WorkoutPlansService';
 import WorkoutService from 'services/WorkoutService';
-import { parseCookies } from 'nookies';
-import { serverApi } from 'services/serverApi';
 import { FindMemberModal } from './components/FindMemberModal';
 import { MembersEngaged } from './components/MembersEngaged';
 import { DeleteWorkoutPlanModal } from './components/DeleteWorkoutPlanModal';
+import { SeeWorkoutModal } from './components/SeeWorkoutModal';
 
 export const WorkoutPlan = () => {
   const router = useRouter();

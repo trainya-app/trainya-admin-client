@@ -1,7 +1,7 @@
 import { Button } from 'components/Button';
 import { Input } from 'components/Input';
 import { SubTitle } from 'pages-components/Employees/components/SubTitle';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { GymMember } from 'services/GymsService';
 
 export const MembersEngaged = ({ members }: { members: any }) => {

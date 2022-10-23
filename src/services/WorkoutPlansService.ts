@@ -21,6 +21,11 @@ class WorkoutPlansService {
     const { data } = await serverApi.get(`/workoutPlans/${id}`);
     return data.workoutPlan;
   }
+
+  async delete(id: number) {
+    const { data } = await serverApi.delete(`/workoutPlans/${id}`);
+    return data;
+  }
 }
 
 export default new WorkoutPlansService();

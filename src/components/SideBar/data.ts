@@ -1,5 +1,4 @@
 import { MdOutlineGroup } from 'react-icons/md';
-import { BsTags } from 'react-icons/bs';
 import { HiOutlineUserGroup, HiOutlineBookOpen } from 'react-icons/hi';
 
 export const firstGroup = [

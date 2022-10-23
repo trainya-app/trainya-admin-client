@@ -2,26 +2,12 @@ import { Button } from 'components/Button';
 import { Modal } from 'components/Modal';
 import dayjs from 'dayjs';
 import { useUser } from 'hooks/useUser';
-import {
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import EmployeesService from 'services/EmployeesService';
 import GymsService, { GymMember } from 'services/GymsService';
 import MembersService from 'services/MembersService';
 import formatPhone from 'utils/format-phone';
-import { formatCNPJ, formatCPF, formatRG } from 'utils/masks';
 import { toast } from 'utils/toast';
-import {
-  isRGValid,
-  isCNPJValid,
-  isCNHValid,
-  isCPFValid,
-} from '../../../../utils/document-validators';
 
 interface Props {
   isOpen: boolean;

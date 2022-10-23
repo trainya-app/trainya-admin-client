@@ -1,8 +1,6 @@
 import { Button } from 'components/Button';
 import { Modal } from 'components/Modal';
-import { totalmem } from 'os';
 import { Dispatch, SetStateAction } from 'react';
-import EmployeesService from 'services/EmployeesService';
 import GymMembersService from 'services/GymMembersService';
 import { GymMember } from 'services/GymsService';
 import { toast } from 'utils/toast';

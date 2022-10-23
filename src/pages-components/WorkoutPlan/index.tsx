@@ -20,6 +20,7 @@ import { parseCookies } from 'nookies';
 import { serverApi } from 'services/serverApi';
 import { FindMemberModal } from './components/FindMemberModal';
 import { MembersEngaged } from './components/MembersEngaged';
+import { DeleteWorkoutPlanModal } from './components/DeleteWorkoutPlanModal';
 
 export const WorkoutPlan = () => {
   const router = useRouter();
@@ -32,6 +33,9 @@ export const WorkoutPlan = () => {
   const [workoutToSee, setWorkoutToSee] = useState<Workout>({} as Workout);
 
   const [isSelectMemberModalOpen, setIsSelectMemberModalOpen] = useState(false);
+
+  const [isDeleteWorkoutPlanModalOpen, setIsDeleteWorkoutPlanModalOpen] =
+    useState(false);
 
   useEffect(() => {
     (async () => {
@@ -61,12 +65,18 @@ export const WorkoutPlan = () => {
     setIsSelectMemberModalOpen(true);
   }
 
+  async function handleOpenDeleteWorkoutPlanModal() {
+    setIsDeleteWorkoutPlanModalOpen(true);
+  }
+
   return (
     <>
       <MainContent className="overflow-hidden ">
-        <SubTitle className="text-4xl">
-          Plano de treino - {workoutPlan.goal}
-        </SubTitle>
+        <header className="flex justify-between">
+          <SubTitle className="text-4xl">
+            Plano de treino - {workoutPlan.goal}
+          </SubTitle>
+        </header>
 
         <p className="mt-8 mb-4 text-gray-500 font-medium text-3xl">Treinos</p>
         <section className="w-[100%] bg-white p-8 rounded-[2rem] shadow-sm ">
@@ -111,6 +121,16 @@ export const WorkoutPlan = () => {
         <hr className="my-12" />
 
         <MembersEngaged members={workoutPlan.memberWorkoutPlan} />
+
+        <hr className="my-8" />
+
+        <Button
+          variant="danger"
+          className="py-4 px-8"
+          onClick={() => handleOpenDeleteWorkoutPlanModal()}
+        >
+          Deletar plano de treino
+        </Button>
       </MainContent>
 
       <SeeWorkoutModal
@@ -123,6 +143,12 @@ export const WorkoutPlan = () => {
       <FindMemberModal
         isOpen={isSelectMemberModalOpen}
         setIsOpen={setIsSelectMemberModalOpen}
+        workoutPlanId={Number(workoutPlanId)}
+      />
+
+      <DeleteWorkoutPlanModal
+        isOpen={isDeleteWorkoutPlanModalOpen}
+        setIsOpen={setIsDeleteWorkoutPlanModalOpen}
         workoutPlanId={Number(workoutPlanId)}
       />
     </>

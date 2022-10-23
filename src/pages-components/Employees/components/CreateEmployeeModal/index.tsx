@@ -2,13 +2,7 @@ import { Button } from 'components/Button';
 import { Modal } from 'components/Modal';
 import dayjs from 'dayjs';
 import { useUser } from 'hooks/useUser';
-import {
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import EmployeesService from 'services/EmployeesService';
 import { formatCNPJ, formatCPF, formatRG } from 'utils/masks';

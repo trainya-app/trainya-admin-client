@@ -5,7 +5,14 @@ export interface GymMember {
   gym: {
     name: string;
   };
-  member: { id: number; name: string; email: string; phone: string };
+  member: {
+    id: number;
+    name: string;
+    email: string;
+    phone: string;
+    weight: number;
+    height: number;
+  };
   member_id: number;
 }
 

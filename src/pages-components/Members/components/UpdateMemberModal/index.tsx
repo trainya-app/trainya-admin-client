@@ -2,32 +2,18 @@ import { Button } from 'components/Button';
 import { Modal } from 'components/Modal';
 import dayjs from 'dayjs';
 import { useUser } from 'hooks/useUser';
-import {
-  Dispatch,
-  FormEvent,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import EmployeesService from 'services/EmployeesService';
 import GymsService, { GymMember } from 'services/GymsService';
 import MembersService from 'services/MembersService';
 import formatPhone from 'utils/format-phone';
-import { formatCNPJ, formatCPF, formatRG } from 'utils/masks';
 import { toast } from 'utils/toast';
-import {
-  isRGValid,
-  isCNPJValid,
-  isCNHValid,
-  isCPFValid,
-} from '../../../../utils/document-validators';
 
 interface Props {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   setAllMembers: Dispatch<SetStateAction<GymMember[]>>;
-  memberToUpdate: any;
+  memberToUpdate: GymMember;
 }
 
 interface Inputs {
@@ -35,8 +21,6 @@ interface Inputs {
   weight: number;
   height: number;
   email: string;
-  avatarUrl: string;
-  birthDate: string;
 }
 
 export const UpdateMemberModal = ({
@@ -51,17 +35,27 @@ export const UpdateMemberModal = ({
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<Inputs>();
 
   const { user } = useUser();
+
+  const member = memberToUpdate?.member;
+
+  useEffect(() => {
+    setValue('email', member?.email);
+    setValue('name', member?.name);
+    setPhone(member?.phone);
+    setValue('height', member?.height);
+    setValue('weight', member?.weight);
+  }, [memberToUpdate]);
 
   const handleCreateMember: SubmitHandler<Inputs> = async (data) => {
     try {
       const formattedData: Inputs & { phone: string; id: number } = {
         ...data,
-        birthDate: dayjs(data.birthDate).format('DD/MM/YYYY'),
         phone,
-        id: memberToUpdate.id,
+        id: member?.id,
       };
 
       const res = await MembersService.update(formattedData);
@@ -76,7 +70,7 @@ export const UpdateMemberModal = ({
     } catch (err: any) {
       toast({
         status: 'error',
-        text: err?.response?.data?.message || 'Erro ao criar usuário',
+        text: err?.response?.data?.message || 'Erro ao atualizar usuário',
       });
     }
   };
@@ -86,7 +80,7 @@ export const UpdateMemberModal = ({
       isModalOpen={isOpen}
       handleCloseModal={() => setIsOpen(false)}
       className="max-w-[1400px]"
-      title="Cadastrar Membro"
+      title="Atualizar Membro"
     >
       <form
         onSubmit={handleSubmit(handleCreateMember)}
@@ -104,47 +98,28 @@ export const UpdateMemberModal = ({
           />
         </label>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <label className="flex flex-col">
-            Email *
-            <input
-              className="h-[4.2rem] px-4 rounded-2xl border"
-              {...register('email', { required: 'Email é obrigatório' })}
-            />
-            <ShowError
-              isWrong={!!errors.email}
-              message={errors?.email?.message as string}
-            />
-          </label>
-        </div>
+        <label className="flex flex-col">
+          Email *
+          <input
+            className="h-[4.2rem] px-4 rounded-2xl border"
+            {...register('email', { required: 'Email é obrigatório' })}
+          />
+          <ShowError
+            isWrong={!!errors.email}
+            message={errors?.email?.message as string}
+          />
+        </label>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <label className="flex flex-col">
-            Data de nascimento *
-            <input
-              type="date"
-              className="h-[4.2rem] px-4 rounded-2xl border"
-              {...register('birthDate', {
-                required: 'Data de Nascimento é obrigatório',
-              })}
-            />
-            <ShowError
-              isWrong={!!errors.birthDate}
-              message={errors?.birthDate?.message as string}
-            />
-          </label>
-
-          <label className="flex flex-col">
-            Celular *
-            <input
-              type=""
-              className="h-[4.2rem] px-4 rounded-2xl border"
-              onChange={(e) => setPhone(() => formatPhone(e.target.value))}
-              value={phone}
-            />
-            <ShowError isWrong={!phone} message="Telefone é obrigatório" />
-          </label>
-        </div>
+        <label className="flex flex-col">
+          Celular *
+          <input
+            type=""
+            className="h-[4.2rem] px-4 rounded-2xl border"
+            onChange={(e) => setPhone(() => formatPhone(e.target.value))}
+            value={phone}
+          />
+          <ShowError isWrong={!phone} message="Telefone é obrigatório" />
+        </label>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <label className="flex flex-col">
@@ -173,14 +148,7 @@ export const UpdateMemberModal = ({
           </label>
         </div>
 
-        <label className="flex flex-col">
-          URL de imagem de perfil
-          <input
-            className="h-[4.2rem] px-4 rounded-2xl border"
-            {...register('avatarUrl')}
-          />
-        </label>
-        <Button className="h-[4.2rem]">Submit</Button>
+        <Button className="h-[4.2rem]">Atualizar</Button>
       </form>
     </Modal>
   );

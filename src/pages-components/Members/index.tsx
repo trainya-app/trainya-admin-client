@@ -5,8 +5,10 @@ import { MainContent } from 'layouts/MainContent';
 import { useState, useEffect, useMemo } from 'react';
 import { MdDeleteOutline } from 'react-icons/md';
 import GymsService, { GymMember } from 'services/GymsService';
+import { CgOptions } from 'react-icons/cg';
 import { CreateMemberModal } from './components/CreateMemberModal';
 import { DeleteMemberModal } from './components/DeleteMemberModal';
+import { UpdateMemberModal } from './components/UpdateMemberModal';
 import { Table } from './styles';
 
 interface Member {
@@ -38,6 +40,11 @@ export const Members = () => {
   const [memberIdToDelete, setMemberIdToDelete] = useState(0);
   const [isCreateMemberModalOpen, setIsCreateMemberModalOpen] = useState(false);
 
+  const [isUpdateMemberModalOpen, setIsUpdateMemberModalOpen] = useState(false);
+  const [memberToUpdate, setMemberToUpdate] = useState<GymMember>(
+    {} as GymMember
+  );
+
   const { user } = useUser();
 
   useEffect(() => {
@@ -58,6 +65,11 @@ export const Members = () => {
     setIsCreateMemberModalOpen(true);
   }
 
+  function handleOpenUpdateMemberModal(gymMember: GymMember) {
+    setMemberToUpdate(gymMember);
+    setIsUpdateMemberModalOpen(true);
+  }
+
   const employeesSearched = useMemo(
     () =>
       allMembers.filter((member) =>
@@ -68,8 +80,6 @@ export const Members = () => {
       ),
     [search, allMembers]
   );
-
-  console.log(employeesSearched);
 
   return (
     <>
@@ -107,13 +117,20 @@ export const Members = () => {
                   <td>{gymMember.member.name}</td>
                   <td>{gymMember.member.phone}</td>
                   <td>{gymMember.member.email}</td>
-                  <td>
+                  <td className="flex gap-2">
                     <Button
                       variant="danger"
                       className="p-3"
                       onClick={() => handleOpenDeleteMemberModal(gymMember.id)}
                     >
                       <MdDeleteOutline />
+                    </Button>
+                    <Button
+                      variant="white"
+                      className="p-3"
+                      onClick={() => handleOpenUpdateMemberModal(gymMember)}
+                    >
+                      <CgOptions />
                     </Button>
                   </td>
                 </tr>
@@ -131,6 +148,12 @@ export const Members = () => {
       <CreateMemberModal
         isOpen={isCreateMemberModalOpen}
         setIsOpen={setIsCreateMemberModalOpen}
+        setAllMembers={setAllMembers}
+      />
+      <UpdateMemberModal
+        isOpen={isUpdateMemberModalOpen}
+        setIsOpen={setIsUpdateMemberModalOpen}
+        memberToUpdate={memberToUpdate}
         setAllMembers={setAllMembers}
       />
     </>

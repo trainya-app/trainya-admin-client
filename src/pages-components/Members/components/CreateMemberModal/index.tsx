@@ -192,7 +192,7 @@ export const CreateMemberModal = ({
             {...register('avatarUrl')}
           />
         </label>
-        <Button className="h-[4.2rem]">Submit</Button>
+        <Button className="h-[4.2rem]">Criar</Button>
       </form>
     </Modal>
   );

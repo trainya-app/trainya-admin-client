@@ -18,8 +18,6 @@ interface InputUpdateDTO {
   weight: number;
   height: number;
   email: string;
-  avatarUrl: string;
-  birthDate: string;
 }
 
 class MembersService {

@@ -9,10 +9,10 @@ import { toast } from 'utils/toast';
 interface Props {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setGym: Dispatch<SetStateAction<any>>;
 }
 
-export const ScanQrCode = ({ isOpen, setIsOpen }: Props) => {
-  const [code, setCode] = useState(null);
+export const ScanQrCode = ({ isOpen, setIsOpen, setGym }: Props) => {
   const [isReading, setIsReading] = useState(false);
 
   const { user } = useUser();
@@ -44,6 +44,13 @@ export const ScanQrCode = ({ isOpen, setIsOpen }: Props) => {
       const { data } = await serverApi.put(
         `/gyms/capacity/${user?.gymEmployee?.gym_id}/${userId}/${month + 1}`
       );
+
+      if (user?.gymEmployee?.gym_id) {
+        const { data: gymData } = await serverApi.get(
+          `/gyms/${user?.gymEmployee?.gym_id}`
+        );
+        setGym(gymData.gym);
+      }
 
       toast({ status: 'success', text: data?.message });
       setIsReading(false);

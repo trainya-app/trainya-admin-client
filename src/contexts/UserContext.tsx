@@ -30,6 +30,9 @@ interface User {
   updated_at: string;
   gymEmployee: {
     gym_id?: number;
+    gym: {
+      name: string;
+    };
   };
 }
 

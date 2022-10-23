@@ -2,11 +2,10 @@
 import { Button } from 'components/Button';
 import { useUser } from 'hooks/useUser';
 import { MainContent } from 'layouts/MainContent';
-import { parseCookies } from 'nookies';
 import { useState, useEffect, useMemo } from 'react';
 import { MdDeleteOutline } from 'react-icons/md';
 import GymsService, { GymMember } from 'services/GymsService';
-import { serverApi } from 'services/serverApi';
+import { CreateMemberModal } from './components/CreateMemberModal';
 import { DeleteMemberModal } from './components/DeleteMemberModal';
 import { Table } from './styles';
 
@@ -34,8 +33,10 @@ const columns = ['Nome', 'Celular', 'Email'];
 export const Members = () => {
   const [allMembers, setAllMembers] = useState<GymMember[]>([]);
   const [search, setSearch] = useState('');
+
   const [isDeleteMemberModalOpen, setIsDeleteMemberModalOpen] = useState(false);
   const [memberIdToDelete, setMemberIdToDelete] = useState(0);
+  const [isCreateMemberModalOpen, setIsCreateMemberModalOpen] = useState(false);
 
   const { user } = useUser();
 
@@ -53,6 +54,10 @@ export const Members = () => {
     setIsDeleteMemberModalOpen(true);
   }
 
+  function handleOpenCreateMemberModal() {
+    setIsCreateMemberModalOpen(true);
+  }
+
   const employeesSearched = useMemo(
     () =>
       allMembers.filter((member) =>
@@ -61,8 +66,10 @@ export const Members = () => {
           .toLowerCase()
           .includes(search.toLowerCase())
       ),
-    [search]
+    [search, allMembers]
   );
+
+  console.log(employeesSearched);
 
   return (
     <>
@@ -74,7 +81,12 @@ export const Members = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <Button className="h-[4.2rem] px-6">Adicionar Membro</Button>
+          <Button
+            className="h-[4.2rem] px-6"
+            onClick={() => handleOpenCreateMemberModal()}
+          >
+            Adicionar Membro
+          </Button>
         </header>
 
         <section>
@@ -94,7 +106,7 @@ export const Members = () => {
                 <tr key={`employeelistitem-${gymMember.id}`}>
                   <td>{gymMember.member.name}</td>
                   <td>{gymMember.member.phone}</td>
-                  <td>{gymMember.member.phone}</td>
+                  <td>{gymMember.member.email}</td>
                   <td>
                     <Button
                       variant="danger"
@@ -115,6 +127,11 @@ export const Members = () => {
         setIsOpen={setIsDeleteMemberModalOpen}
         memberId={memberIdToDelete}
         setMembers={setAllMembers}
+      />
+      <CreateMemberModal
+        isOpen={isCreateMemberModalOpen}
+        setIsOpen={setIsCreateMemberModalOpen}
+        setAllMembers={setAllMembers}
       />
     </>
   );

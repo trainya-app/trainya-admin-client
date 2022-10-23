@@ -35,7 +35,12 @@ export const DeleteMemberModal = ({
     setIsOpen(false);
   }
   return (
-    <Modal isModalOpen={isOpen} handleCloseModal={handleCloseModal}>
+    <Modal
+      isModalOpen={isOpen}
+      handleCloseModal={handleCloseModal}
+      className="max-w-[500px]"
+      title="Remover membro"
+    >
       <div className="w-full flex gap-4">
         <Button
           variant="white"

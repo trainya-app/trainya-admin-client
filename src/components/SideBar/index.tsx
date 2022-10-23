@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { Logo } from '../Logo';
 import { Container, CloseBtn, Content, MenuBtn } from './styles';
 
-import { firstGroup, secondGroup, thirdGroup } from './data';
+import { firstGroup } from './data';
 
 export const SideBar = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -26,13 +26,6 @@ export const SideBar = () => {
     }
   }
 
-  // const handleNavigateTo = useCallback(
-  //   (path: string) => {
-  //     router.push(path);
-  //   },
-  //   [router]
-  // );
-
   const handleNavigateTo = (path: string) => {
     router.push(path);
   };
@@ -46,36 +39,6 @@ export const SideBar = () => {
       <Content>
         <ul className="menu-group">
           {firstGroup.map(({ _id, icon: Icon, text, path }) => (
-            <MenuBtn
-              type="button"
-              key={_id}
-              onClick={() => handleNavigateTo(path as string)}
-              isActive={router?.asPath === path}
-            >
-              <Icon className="icon" />
-              <span>{text}</span>
-            </MenuBtn>
-          ))}
-        </ul>
-
-        <ul className="menu-group">
-          {secondGroup.map(({ _id, icon: Icon, text, path }) => (
-            <MenuBtn
-              type="button"
-              key={_id}
-              onClick={() => handleNavigateTo(path as string)}
-              isActive={router?.asPath === path}
-            >
-              <Icon className="icon" />
-              <span>{text}</span>
-            </MenuBtn>
-          ))}
-        </ul>
-
-        <hr />
-
-        <ul className="menu-group">
-          {thirdGroup.map(({ _id, icon: Icon, text, path }) => (
             <MenuBtn
               type="button"
               key={_id}

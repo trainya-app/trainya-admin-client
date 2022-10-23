@@ -36,13 +36,14 @@ export const ScanQrCode = ({ isOpen, setIsOpen }: Props) => {
           status: 'error',
           text: 'O membro não pertence a esta academia.',
         });
+        setIsReading(false);
+        handleCloseModal();
         return;
       }
 
       const { data } = await serverApi.put(
         `/gyms/capacity/${user?.gymEmployee?.gym_id}/${userId}/${month + 1}`
       );
-      console.log(data);
 
       toast({ status: 'success', text: data?.message });
       setIsReading(false);

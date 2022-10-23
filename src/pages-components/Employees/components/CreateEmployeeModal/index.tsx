@@ -27,7 +27,7 @@ interface Inputs {
   wage?: number;
   paymentDate?: string;
   profileImg?: string;
-  documentType: 'RG' | 'CPF' | 'CNH' | 'CNPJ';
+  documentType: 'RG' | 'CPF';
   roleName: string;
 }
 
@@ -57,31 +57,10 @@ export const CreateEmployeeModal = ({ isOpen, setIsOpen }: Props) => {
           break;
         }
         case 'CPF': {
-          console.log(documentValue);
           if (!isCPFValid(documentValue)) {
             toast({
               status: 'error',
               text: 'Documento de CPF inválido. ',
-            });
-            return;
-          }
-          break;
-        }
-        case 'CNH': {
-          if (!isCNHValid(documentValue)) {
-            toast({
-              status: 'error',
-              text: 'Documento de CNH inválido. ',
-            });
-            return;
-          }
-          break;
-        }
-        case 'CNPJ': {
-          if (!isCNPJValid(documentValue)) {
-            toast({
-              status: 'error',
-              text: 'Documento de CNPJ inválido. ',
             });
             return;
           }
@@ -107,7 +86,7 @@ export const CreateEmployeeModal = ({ isOpen, setIsOpen }: Props) => {
   };
 
   function handleChangeDocumentValue(value: string) {
-    const docType: 'RG' | 'CPF' | 'CNH' | 'CNPJ' = watch('documentType');
+    const docType: 'RG' | 'CPF' = watch('documentType');
 
     switch (docType) {
       case 'RG': {
@@ -116,14 +95,6 @@ export const CreateEmployeeModal = ({ isOpen, setIsOpen }: Props) => {
       }
       case 'CPF': {
         setDocumentValue(formatCPF(value));
-        break;
-      }
-      case 'CNH': {
-        setDocumentValue(value);
-        break;
-      }
-      case 'CNPJ': {
-        setDocumentValue(formatCNPJ(value));
         break;
       }
       default: {
@@ -174,8 +145,6 @@ export const CreateEmployeeModal = ({ isOpen, setIsOpen }: Props) => {
           <select {...register('documentType')} className="border rounded-2xl">
             <option value="RG">RG</option>
             <option value="CPF">CPF</option>
-            <option value="CNPJ">CNPJ</option>
-            <option value="CNH">CNH</option>
           </select>
           <input
             className="h-[4.2rem] px-4 rounded-2xl border"
@@ -225,24 +194,14 @@ export const CreateEmployeeModal = ({ isOpen, setIsOpen }: Props) => {
           />
         </label>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <label className="flex flex-col">
-            Salário
-            <input
-              type="number"
-              className="h-[4.2rem] px-4 rounded-2xl border"
-              {...register('wage')}
-            />
-          </label>
-          <label className="flex flex-col">
-            Data de Pagamento
-            <input
-              type="date"
-              className="h-[4.2rem] px-4 rounded-2xl border"
-              {...register('paymentDate')}
-            />
-          </label>
-        </div>
+        <label className="flex flex-col">
+          Salário
+          <input
+            type="number"
+            className="h-[4.2rem] px-4 rounded-2xl border"
+            {...register('wage')}
+          />
+        </label>
 
         <label className="flex flex-col">
           URL de imagem de perfil

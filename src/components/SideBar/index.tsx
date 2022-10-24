@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { FaAngleRight } from 'react-icons/fa';
 import { motion, useAnimation } from 'framer-motion';
 import { useRouter } from 'next/router';
+import { Button } from 'components/Button';
+import { useUser } from 'hooks/useUser';
 import { Logo } from '../Logo';
 import { Container, CloseBtn, Content, MenuBtn } from './styles';
 
@@ -14,6 +16,8 @@ export const SideBar = () => {
 
   const controls = useAnimation();
   const router = useRouter();
+
+  const { handleLogout } = useUser();
 
   async function handleToggleSidebarVisibility() {
     if (isVisible) {
@@ -37,7 +41,7 @@ export const SideBar = () => {
       </CloseBtn>
       <Logo />
       <Content>
-        <ul className="menu-group">
+        <ul className="menu-group h-full">
           {firstGroup.map(({ _id, icon: Icon, text, path }) => (
             <MenuBtn
               type="button"
@@ -49,6 +53,13 @@ export const SideBar = () => {
               <span>{text}</span>
             </MenuBtn>
           ))}
+          <Button
+            className="mt-auto h-[3.6rem]"
+            variant="danger"
+            onClick={() => handleLogout()}
+          >
+            Sair
+          </Button>
         </ul>
       </Content>
     </Container>

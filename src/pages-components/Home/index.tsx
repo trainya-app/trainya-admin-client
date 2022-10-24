@@ -108,11 +108,13 @@ export const Home = () => {
           </div>
         </section>
       </MainContent>
-      <ScanQrCode
-        isOpen={isScanOpen}
-        setIsOpen={setIsScanOpen}
-        setGym={setGym}
-      />
+      {isScanOpen && (
+        <ScanQrCode
+          isOpen={isScanOpen}
+          setIsOpen={setIsScanOpen}
+          setGym={setGym}
+        />
+      )}
     </>
   );
 };

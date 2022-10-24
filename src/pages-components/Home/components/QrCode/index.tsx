@@ -1,7 +1,7 @@
 import { Modal } from 'components/Modal';
 import dayjs from 'dayjs';
 import { useUser } from 'hooks/useUser';
-import { useState, Dispatch, SetStateAction } from 'react';
+import { useState, Dispatch, SetStateAction, useRef } from 'react';
 import QrReader from 'react-qr-reader';
 import { serverApi } from 'services/serverApi';
 import { toast } from 'utils/toast';
@@ -16,6 +16,8 @@ export const ScanQrCode = ({ isOpen, setIsOpen, setGym }: Props) => {
   const [isReading, setIsReading] = useState(false);
 
   const { user } = useUser();
+
+  const webCamRef = useRef<any>(null);
 
   const month = dayjs().month();
   async function handleScan(userId: string | any) {
@@ -66,6 +68,7 @@ export const ScanQrCode = ({ isOpen, setIsOpen, setGym }: Props) => {
   }
 
   function handleCloseModal() {
+    webCamRef?.current?.clearComponent();
     setIsOpen(false);
   }
 
@@ -78,8 +81,10 @@ export const ScanQrCode = ({ isOpen, setIsOpen, setGym }: Props) => {
     >
       <div className="flex justify-center w-full bg-blue-400">
         <QrReader
+          ref={webCamRef}
           onScan={handleScan}
           onError={handleError}
+          delay={300}
           // chooseDeviceId={()=>selected}
           style={{ width: '100%' }}
         />

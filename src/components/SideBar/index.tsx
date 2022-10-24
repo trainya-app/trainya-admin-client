@@ -1,6 +1,6 @@
 // import { useCallback, useState } from 'react';
 import { useState } from 'react';
-
+import { BiLogOut } from 'react-icons/bi';
 import { FaAngleRight } from 'react-icons/fa';
 import { motion, useAnimation } from 'framer-motion';
 import { useRouter } from 'next/router';
@@ -54,7 +54,7 @@ export const SideBar = () => {
             </MenuBtn>
           ))}
           <Button
-            className="mt-auto h-[3.6rem]"
+            className="mt-auto h-[3.6rem] flex items-center justify-center gap-4 p-4"
             variant="danger"
             onClick={() => handleLogout()}
           >

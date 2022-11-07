@@ -33,7 +33,8 @@ export const EditSelectedExerciseModal = ({
   }
 
   function handleUpdateExercise() {
-    const updatedExercise = { ...exercise, sets, reps };
+    const updatedExercise = { ...exercise, sets, repetitions: reps };
+
     selectedExercisesDispatch({
       type: 'UPDATE-WORKOUT',
       payload: updatedExercise,

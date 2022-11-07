@@ -3,6 +3,8 @@ import {
   HTMLAttributes,
   InputHTMLAttributes,
   SetStateAction,
+  useEffect,
+  useMemo,
   useState,
 } from 'react';
 import { Modal } from 'components/Modal';
@@ -10,6 +12,8 @@ import { Button } from 'components/Button';
 import { toast } from 'utils/toast';
 import ExercisesService from 'services/ExercisesService';
 import { IExercise } from 'types/IExercise';
+
+import { parseCookies } from 'nookies';
 
 interface CreateExercisesModalProps {
   isOpen: boolean;
@@ -61,6 +65,8 @@ export const CreateExerciseModal = ({
       toast({ status: 'error', text: err?.response?.data?.message });
     }
   }
+
+  const { token } = parseCookies();
 
   return (
     <Modal

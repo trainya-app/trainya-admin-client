@@ -191,7 +191,7 @@ export const Workouts = () => {
                   <span className="text-white font-bold text-3xl">
                     {workout.title}
                   </span>
-                  <span className="text-gray-200 text-[1.4rem] mt-[-0.8rem]">
+                  <span className="text-gray-200 text-[1.4rem] mt-[-0.8rem] text-center">
                     {workout.description}
                   </span>
                   <Button

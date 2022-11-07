@@ -2,6 +2,7 @@ import { Button } from 'components/Button';
 import { useUser } from 'hooks/useUser';
 import { MainContent } from 'layouts/MainContent';
 import { useEffect, useState } from 'react';
+import { MdOutlinePeopleAlt } from 'react-icons/md';
 import { serverApi } from 'services/serverApi';
 import { toast } from 'utils/toast';
 import { ScanQrCode } from './components/QrCode';

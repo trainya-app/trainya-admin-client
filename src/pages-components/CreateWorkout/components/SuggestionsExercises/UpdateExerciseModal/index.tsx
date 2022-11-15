@@ -179,7 +179,7 @@ export const UpdateExerciseModal = ({
           onClick={() => handleUpdateExercise()}
           disabled={isLoading}
         >
-          {isLoading ? 'Criando' : 'Criar'}
+          {isLoading ? 'Atualizando' : 'Atualizar'}
         </Button>
       </div>
     </Modal>

@@ -8,6 +8,14 @@ interface Store {
   videoUrl?: string;
 }
 
+interface Update {
+  id: number;
+  name: string;
+  advise: string;
+  needsEquipment: boolean;
+  videoUrl?: string;
+}
+
 class ExercisesController {
   token =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYzMDkxNDgzLCJleHAiOjE2NjU2ODM0ODN9.JL1xqkKYe8859l6-5ttD3_LLNLARTyW1RotzZWwNb6s';
@@ -31,6 +39,25 @@ class ExercisesController {
       comment: advise,
       needsEquipment,
       video_url: videoUrl,
+    });
+    return data;
+  }
+
+  async update({
+    id,
+    name,
+    advise,
+    needsEquipment,
+    videoUrl,
+  }: Update): Promise<{ message: string; exercise: IExercise }> {
+    const { data } = await serverApi.put<{
+      message: string;
+      exercise: IExercise;
+    }>(`/exercises/${id}`, {
+      name,
+      comment: advise,
+      needsEquipment,
+      video_url: videoUrl || undefined,
     });
     return data;
   }

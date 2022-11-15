@@ -57,7 +57,7 @@ class ExercisesController {
       name,
       comment: advise,
       needsEquipment,
-      video_url: videoUrl || undefined,
+      videoUrl: videoUrl || undefined,
     });
     return data;
   }

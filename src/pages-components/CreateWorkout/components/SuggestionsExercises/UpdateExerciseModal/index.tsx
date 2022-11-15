@@ -105,6 +105,7 @@ export const UpdateExerciseModal = ({
       toast({ status: 'success', text: message });
       setIsOpen(false);
       setIsLoading(false);
+      setImage({});
     } catch (err: any) {
       setIsLoading(false);
       toast({ status: 'error', text: err?.response?.data?.message });

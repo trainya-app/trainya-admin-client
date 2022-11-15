@@ -7,9 +7,7 @@ import { GymMember } from 'services/GymsService';
 export const MembersEngaged = ({ members }: { members: any }) => {
   const [memberSearch, setMemberSearch] = useState('');
 
-  function handleSeeMember(member: any) {
-    console.log(member);
-  }
+  function handleSeeMember(member: any) {}
 
   const filteredMembers = members?.filter((member: any) =>
     JSON.stringify(member)

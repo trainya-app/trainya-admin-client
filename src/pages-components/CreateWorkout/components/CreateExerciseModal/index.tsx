@@ -3,10 +3,9 @@ import {
   HTMLAttributes,
   InputHTMLAttributes,
   SetStateAction,
-  useEffect,
-  useMemo,
   useState,
 } from 'react';
+
 import { Modal } from 'components/Modal';
 import { Button } from 'components/Button';
 import { toast } from 'utils/toast';
@@ -14,6 +13,8 @@ import ExercisesService from 'services/ExercisesService';
 import { IExercise } from 'types/IExercise';
 
 import { parseCookies } from 'nookies';
+
+import { serverApi } from 'services/serverApi';
 
 interface CreateExercisesModalProps {
   isOpen: boolean;
@@ -29,6 +30,9 @@ export const CreateExerciseModal = ({
   const [needsEquipment, setNeedsEquipment] = useState(false);
   const [name, setName] = useState('');
   const [advise, setAdvise] = useState('');
+  const [image, setImage] = useState<any>(null as any);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleCloseModal() {
     setIsOpen(false);
@@ -44,24 +48,51 @@ export const CreateExerciseModal = ({
 
   async function handleCreateExercise() {
     try {
+      setIsLoading(true);
       if (!name) {
         toast({
           status: 'error',
           text: 'Campos obrigatórios não foram preenchidos.',
           duration: 1000,
         });
+        setIsLoading(false);
+
         return;
       }
+      const formData = new FormData();
+
+      formData.append('file', image);
+
+      const { data } = await serverApi.post(`/files`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      if (!data?.url) {
+        toast({
+          status: 'error',
+          text: 'Algo deu errado ao carregar sua imagem',
+        });
+        setIsLoading(false);
+
+        return;
+      }
+      const videoUrl = data?.url;
+
       const { message, exercise } = await ExercisesService.store({
         name,
         advise,
         needsEquipment,
+        videoUrl,
       });
+
       setSuggestionExercises((prev) => [...prev, exercise]);
 
       toast({ status: 'success', text: message });
       setIsOpen(false);
+      setIsLoading(false);
     } catch (err: any) {
+      setIsLoading(false);
       toast({ status: 'error', text: err?.response?.data?.message });
     }
   }
@@ -93,6 +124,8 @@ export const CreateExerciseModal = ({
             onChange={(e) => setAdvise(e.target.value)}
           />
         </Label>
+
+        <input type="file" onChange={(e) => setImage(e?.target?.files?.[0])} />
 
         <span className="text-[1.4rem] text-gray-500 text-semibold mt-4">
           Precisa de equipamento?
@@ -128,8 +161,9 @@ export const CreateExerciseModal = ({
         <Button
           className="h-[4.2rem] mt-4"
           onClick={() => handleCreateExercise()}
+          disabled={isLoading}
         >
-          Criar
+          {isLoading ? 'Criando' : 'Criar'}
         </Button>
       </div>
     </Modal>

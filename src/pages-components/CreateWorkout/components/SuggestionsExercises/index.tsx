@@ -24,7 +24,7 @@ export const SuggestionsExercises = ({
   }, []);
 
   const handleSelectWorkout = useCallback(
-    (workout: { id: number; name: string }) => {
+    (workout: { id: number; name: string; video_url?: string }) => {
       selectedExercisesDispatch({
         type: 'ADD-WORKOUT',
         payload: {
@@ -32,6 +32,7 @@ export const SuggestionsExercises = ({
           name: workout.name,
           sets: 3,
           repetitions: 12,
+          video_url: workout.video_url,
         },
       });
     },
@@ -75,7 +76,11 @@ export const SuggestionsExercises = ({
               <Button
                 type="button"
                 onClick={() =>
-                  handleSelectWorkout({ id: workout.id, name: workout.name })
+                  handleSelectWorkout({
+                    id: workout.id,
+                    name: workout.name,
+                    video_url: workout.video_url,
+                  })
                 }
                 variant="outlined"
                 className="w-full h-[3.6rem] mt-4 z-10"

@@ -12,40 +12,7 @@ import { useRouter } from 'next/router';
 import { FaDumbbell } from 'react-icons/fa';
 import WorkoutService from 'services/WorkoutService';
 import WorkoutPlansService from 'services/WorkoutPlansService';
-import { parseCookies } from 'nookies';
-import { serverApi } from 'services/serverApi';
 import { SeeWorkoutModal } from './components/SeeWorkoutModal';
-
-const FAKE_WORKOUTS = [
-  {
-    id: 'fdadfddkdjfds',
-    bg: 'https://i.pinimg.com/564x/b8/ea/06/b8ea0615898a93c0fd3907a07bbda69c.jpg',
-    target: 'Foco',
-    button: 'Ver mais',
-    footer: 129,
-  },
-  {
-    id: 'fdfaADFAddkdjfds',
-    bg: 'https://i.pinimg.com/564x/b8/ea/06/b8ea0615898a93c0fd3907a07bbda69c.jpg',
-    target: 'Foco',
-    button: 'Ver mais',
-    footer: 129,
-  },
-  {
-    id: 'fdFFddkdjfgfadfds',
-    bg: 'https://i.pinimg.com/564x/b8/ea/06/b8ea0615898a93c0fd3907a07bbda69c.jpg',
-    target: 'Foco',
-    button: 'Ver mais',
-    footer: 129,
-  },
-  {
-    id: 'FGaaFGafFda',
-    bg: 'https://i.pinimg.com/564x/b8/ea/06/b8ea0615898a93c0fd3907a07bbda69c.jpg',
-    target: 'Foco',
-    button: 'Ver mais',
-    footer: 129,
-  },
-];
 
 export interface Workout {
   id: number;

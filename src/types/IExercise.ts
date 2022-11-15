@@ -4,4 +4,5 @@ export interface IExercise {
   sets: number;
   repetitions: number;
   comment?: string;
+  video_url?: string;
 }

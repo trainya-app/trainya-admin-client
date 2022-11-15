@@ -44,8 +44,12 @@ export const SelectedExercises = ({
                 key={exercise.id}
                 className="relative flex flex-col items-center gap-4 w-full bg-blue-100 p-6 rounded-[1.6rem] bg-center overflow-hidden"
                 style={{
-                  backgroundImage:
-                    "url('https://i.pinimg.com/564x/b8/ea/06/b8ea0615898a93c0fd3907a07bbda69c.jpg')",
+                  backgroundPosition: 'center center',
+                  backgroundSize: 'cover',
+                  backgroundImage: `url(${
+                    exercise?.video_url ||
+                    'https://i.pinimg.com/564x/b8/ea/06/b8ea0615898a93c0fd3907a07bbda69c.jpg'
+                  })`,
                 }}
               >
                 <div className="absolute w-full h-full left-0 top-0 bg-[#00000050]" />

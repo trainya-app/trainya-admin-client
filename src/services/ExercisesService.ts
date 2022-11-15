@@ -5,6 +5,7 @@ interface Store {
   name: string;
   advise: string;
   needsEquipment: boolean;
+  videoUrl?: string;
 }
 
 class ExercisesController {
@@ -20,6 +21,7 @@ class ExercisesController {
     name,
     advise,
     needsEquipment,
+    videoUrl,
   }: Store): Promise<{ message: string; exercise: IExercise }> {
     const { data } = await serverApi.post<{
       message: string;
@@ -28,6 +30,7 @@ class ExercisesController {
       name,
       comment: advise,
       needsEquipment,
+      video_url: videoUrl,
     });
     return data;
   }
